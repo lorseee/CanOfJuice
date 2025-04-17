@@ -239,7 +239,7 @@ const ServicesPage = () => {
       });
     }
 
-    // IMPROVED IMAGE TRANSITION LOGIC WITH PLATEAUS
+    // IMPROVED IMAGE TRANSITION LOGIC
     // Set up initial images and preload them to avoid flickering
     const preloadImages = () => {
       const images = [
@@ -278,11 +278,10 @@ const ServicesPage = () => {
     });
 
     // Create an update function for image transitions that will be used by ScrollTriggers
-    // This version ensures images have plateaus of full opacity
     const updateImages = (fromImage, toImage, progress) => {
       if (!frontImageRef.current || !backImageRef.current) return;
       
-      // Set the right image sources based on direction of scroll
+      // Ensure we're always using the right image sources
       if (frontImageRef.current.src !== fromImage && progress < 0.5) {
         frontImageRef.current.src = fromImage;
       }
@@ -291,30 +290,24 @@ const ServicesPage = () => {
         backImageRef.current.src = toImage;
       }
       
-      // Modified progress to create plateaus at the beginning and end
-      let transitionProgress;
-      
-      // Only transition in the middle 60% of the scroll (20% plateau at each end)
-      if (progress <= 0.2) {
-        // First 20% - keep fromImage at full opacity
-        transitionProgress = 0;
-      } else if (progress >= 0.8) {
-        // Last 20% - keep toImage at full opacity
-        transitionProgress = 1;
-        
-        // If we're at full progress, update the front image to be the destination
-        if (progress >= 0.95) {
-          frontImageRef.current.src = toImage;
-          gsap.set(backImageRef.current, { opacity: 0 });
-        }
-      } else {
-        // Middle 60% - map progress from 0.2-0.8 to 0-1 for the transition
-        transitionProgress = (progress - 0.2) / 0.6;
+      // When progress is 0, we're at the start or have scrolled back
+      if (progress <= 0) {
+        frontImageRef.current.src = fromImage;
+        backImageRef.current.src = toImage;
+        gsap.set(backImageRef.current, { opacity: 0 });
+        return;
       }
       
-      // Apply the opacity transition
+      // When progress is 1, we're fully transitioned
+      if (progress >= 1) {
+        frontImageRef.current.src = toImage;
+        gsap.set(backImageRef.current, { opacity: 0 });
+        return;
+      }
+      
+      // During transition - smooth cross-fade
       gsap.to(backImageRef.current, { 
-        opacity: transitionProgress, 
+        opacity: progress, 
         duration: 0.2,
         ease: "power1.inOut"
       });
@@ -333,10 +326,10 @@ const ServicesPage = () => {
           self.progress
         );
         
-        // When we're nearly completed the transition, update the current image state
-        if (self.progress >= 0.95) {
+        // When we're nearly completed the transition, update the current image
+        if (self.progress >= 0.99) {
           currentImageState.current.current = "spaces";
-        } else if (self.progress <= 0.05) {
+        } else if (self.progress <= 0.01) {
           currentImageState.current.current = "designs";
         }
       }
@@ -355,10 +348,10 @@ const ServicesPage = () => {
           self.progress
         );
         
-        // When we're nearly completed the transition, update the current image state
-        if (self.progress >= 0.95) {
+        // When we're nearly completed the transition, update the current image
+        if (self.progress >= 0.99) {
           currentImageState.current.current = "installations";
-        } else if (self.progress <= 0.05) {
+        } else if (self.progress <= 0.01) {
           currentImageState.current.current = "spaces";
         }
       }
@@ -429,7 +422,7 @@ const ServicesPage = () => {
         </div>
       </ScrollWrapper>
 
-      {/* IMAGE CONTAINER - Improved to reduce flickering and maintain full opacity plateaus */}
+      {/* IMAGE CONTAINER - Improved to reduce flickering */}
       <div
         ref={slideContainerRef}
         className="fixed z-50 pointer-events-none rounded-2xl shadow-2xl"
