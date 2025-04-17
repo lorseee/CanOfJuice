@@ -65,9 +65,6 @@ html, body, #root {
   padding: 0;              /* Off-white text globally */
   background-color: #000000;   /* Black background globally */
 }
-html, body {
-  overflow-x: hidden;
-}
 
 /* Links */
 a {
