@@ -40,32 +40,57 @@ const ServicesPage = () => {
     inHelpSection: false
   });
 
-  // Immediate scroll reset on component mount
+  // Ensure images are loaded properly with error handling
   useEffect(() => {
-    // Using setTimeout with 0 delay ensures it runs after render
-    setTimeout(() => window.scrollTo(0, 0), 0);
+    // Preload images with error handling
+    const preloadImages = () => {
+      const images = [
+        currentImageState.current.designs,
+        currentImageState.current.spaces,
+        currentImageState.current.installations
+      ];
+      
+      images.forEach(src => {
+        const img = new Image();
+        img.src = src;
+        img.onerror = () => {
+          console.warn(`Failed to load image: ${src}, falling back to default`);
+          img.src = "/images/default.jpg";
+        };
+      });
+    };
     
-    // Disable browser's scroll restoration
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
-    }
+    preloadImages();
+  }, []);
 
-    // Set up event listener for hash changes (footer navigation)
-    const handleHashChange = () => {
-      // Check if hash indicates footer or help section
-      if (window.location.hash === "#help" || window.location.hash === "#footer") {
-        hideContainerImmediately();
+  // Immediate scroll reset on component mount - safe for SSR
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Using setTimeout with 0 delay ensures it runs after render
+      setTimeout(() => window.scrollTo(0, 0), 0);
+      
+      // Disable browser's scroll restoration
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
       }
-    };
 
-    window.addEventListener('hashchange', handleHashChange);
-    
-    // Check hash on initial load
-    handleHashChange();
-    
-    return () => {
-      window.removeEventListener('hashchange', handleHashChange);
-    };
+      // Set up event listener for hash changes (footer navigation)
+      const handleHashChange = () => {
+        // Check if hash indicates footer or help section
+        if (window.location.hash === "#help" || window.location.hash === "#footer") {
+          hideContainerImmediately();
+        }
+      };
+
+      window.addEventListener('hashchange', handleHashChange);
+      
+      // Check hash on initial load
+      handleHashChange();
+      
+      return () => {
+        window.removeEventListener('hashchange', handleHashChange);
+      };
+    }
   }, []);
 
   const showContainer = () => {
@@ -90,367 +115,438 @@ const ServicesPage = () => {
   };
 
   useLayoutEffect(() => {
-    // Animate hero heading on mount
-    if (heroRef.current) {
-      const heroHeading = heroRef.current.querySelector("h1");
-      gsap.fromTo(heroHeading, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 });
-    }
+    // Create a context for better cleanup
+    const ctx = gsap.context(() => {
+      // Animate hero heading on mount
+      if (heroRef.current) {
+        const heroHeading = heroRef.current.querySelector("h1");
+        gsap.fromTo(heroHeading, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 });
+      }
 
-    // SECTION HEADING ANIMATIONS
-    // Animate section headings with scroll trigger
-    [designsHeadingRef, spacesHeadingRef, installationsHeadingRef].forEach((ref) => {
-      if (ref.current) {
-        gsap.fromTo(
-          ref.current,
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
+      // SECTION HEADING ANIMATIONS
+      // Animate section headings with scroll trigger
+      [designsHeadingRef, spacesHeadingRef, installationsHeadingRef].forEach((ref) => {
+        if (ref.current) {
+          gsap.fromTo(
+            ref.current,
+            { opacity: 0, y: 30 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: ref.current,
+                start: "top 75%",
+                toggleActions: "play none none reverse"
+              },
+            }
+          );
+        }
+      });
+
+      // IMPROVED LIST ANIMATIONS
+      // Create staggered animations for each list item that sync with section transitions
+      const createListAnimation = (listRef, sectionRef, startPosition, endPosition) => {
+        if (!listRef.current || !sectionRef.current) return;
+        
+        const items = listRef.current.querySelectorAll("p");
+        if (!items.length) return;
+        
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: startPosition,
+            end: endPosition,
+            scrub: 0.5,
+          }
+        });
+        
+        // Stagger the items with a small delay between each
+        tl.fromTo(
+          items,
+          { 
+            opacity: 0, 
+            y: 20 
+          },
+          { 
+            opacity: 1, 
+            y: 0, 
+            stagger: 0.1,
             ease: "power2.out",
+            duration: 0.4
+          }
+        );
+        
+        // Add reverse animation when scrolling back
+        const reverseTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: startPosition,
+            scrub: 0.5,
+          }
+        });
+        
+        reverseTimeline.fromTo(
+          items,
+          { 
+            opacity: 1, 
+            y: 0 
+          },
+          { 
+            opacity: 0, 
+            y: 20, 
+            stagger: 0.05,
+            ease: "power2.in",
+            duration: 0.3
+          }
+        );
+      };
+
+      // Create list animations for each section
+      if (designsSectionRef.current && designsListRef.current) {
+        createListAnimation(designsListRef, designsSectionRef, "top 75%", "top 20%");
+      }
+      
+      if (spacesSectionRef.current && spacesListRef.current) {
+        createListAnimation(spacesListRef, spacesSectionRef, "top 75%", "top 20%");
+      }
+      
+      if (installationsSectionRef.current && installationsListRef.current) {
+        createListAnimation(installationsListRef, installationsSectionRef, "top 75%", "top 20%");
+      }
+
+      // SPACES SECTION ANIMATION
+      if (spacesSectionRef.current) {
+        gsap.fromTo(
+          spacesSectionRef.current,
+          { y: "100%" },
+          {
+            y: "33.33%",
+            ease: "power1.inOut",
             scrollTrigger: {
-              trigger: ref.current,
-              start: "top 75%",
-              toggleActions: "play none none reverse"
+              trigger: spacesSectionRef.current,
+              start: "top bottom",
+              end: "top 33.33%",
+              scrub: 0.5,
             },
           }
         );
       }
-    });
+      
+      // INSTALLATIONS SECTION ANIMATION - PART 1: Move into position
+      if (installationsSectionRef.current) {
+        gsap.fromTo(
+          installationsSectionRef.current,
+          { y: "100%" },
+          {
+            y: "66.67%",
+            ease: "power1.inOut",
+            scrollTrigger: {
+              trigger: installationsSectionRef.current,
+              start: "top bottom",
+              end: "top 66.67%",
+              scrub: 0.5,
+            },
+          }
+        );
+        
+        // INSTALLATIONS SECTION ANIMATION - PART 2: Keep sticky until help section
+        if (helpSectionRef.current) {
+          gsap.fromTo(
+            installationsSectionRef.current, 
+            { y: "66.67%" }, 
+            {
+              y: "0%",
+              ease: "power1.inOut",
+              scrollTrigger: {
+                trigger: helpSectionRef.current,
+                start: "top bottom",
+                end: "top top",
+                scrub: 0.5,
+              },
+            }
+          );
+        }
+      }
 
-    // IMPROVED LIST ANIMATIONS
-    // Create staggered animations for each list item that sync with section transitions
-    const createListAnimation = (listRef, sectionRef, startPosition, endPosition) => {
-      if (!listRef.current) return;
-      
-      const items = listRef.current.querySelectorAll("p");
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: startPosition,
-          end: endPosition,
-          scrub: 0.5,
-        }
-      });
-      
-      // Stagger the items with a small delay between each
-      tl.fromTo(
-        items,
-        { 
-          opacity: 0, 
-          y: 20 
-        },
-        { 
-          opacity: 1, 
-          y: 0, 
-          stagger: 0.1,
-          ease: "power2.out",
-          duration: 0.4
-        }
-      );
-      
-      // Add reverse animation when scrolling back
-      const reverseTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: startPosition,
-          scrub: 0.5,
-        }
-      });
-      
-      reverseTimeline.fromTo(
-        items,
-        { 
-          opacity: 1, 
-          y: 0 
-        },
-        { 
-          opacity: 0, 
-          y: 20, 
-          stagger: 0.05,
-          ease: "power2.in",
-          duration: 0.3
-        }
-      );
-    };
-
-    // Create list animations for each section
-    createListAnimation(designsListRef, designsSectionRef, "top 75%", "top 20%");
-    createListAnimation(spacesListRef, spacesSectionRef, "top 75%", "top 20%");
-    createListAnimation(installationsListRef, installationsSectionRef, "top 75%", "top 20%");
-
-    // SPACES SECTION ANIMATION
-    if (spacesSectionRef.current) {
-      gsap.fromTo(
-        spacesSectionRef.current,
-        { y: "100%" },
-        {
-          y: "33.33%",
-          ease: "power1.inOut",
-          scrollTrigger: {
-            trigger: spacesSectionRef.current,
-            start: "top bottom",
-            end: "top 33.33%",
-            scrub: 0.5,
-          },
-        }
-      );
-    }
-    
-    // INSTALLATIONS SECTION ANIMATION - PART 1: Move into position
-    if (installationsSectionRef.current) {
-      gsap.fromTo(
-        installationsSectionRef.current,
-        { y: "100%" },
-        {
-          y: "66.67%",
-          ease: "power1.inOut",
-          scrollTrigger: {
-            trigger: installationsSectionRef.current,
-            start: "top bottom",
-            end: "top 66.67%",
-            scrub: 0.5,
-          },
-        }
-      );
-      
-      // INSTALLATIONS SECTION ANIMATION - PART 2: Keep sticky until help section
-      gsap.fromTo(
-        installationsSectionRef.current, 
-        { y: "66.67%" }, 
-        {
-          y: "0%",
-          ease: "power1.inOut",
+      // Fade out all content and hero when help section appears
+      if (contentContainerRef.current && helpSectionRef.current) {
+        gsap.to(contentContainerRef.current, {
           scrollTrigger: {
             trigger: helpSectionRef.current,
             start: "top bottom",
             end: "top top",
             scrub: 0.5,
           },
-        }
-      );
-    }
+          opacity: 0,
+        });
+      }
 
-    // Fade out all content and hero when help section appears
-    if (contentContainerRef.current && helpSectionRef.current) {
-      gsap.to(contentContainerRef.current, {
-        scrollTrigger: {
-          trigger: helpSectionRef.current,
-          start: "top bottom",
-          end: "top top",
-          scrub: 0.5,
-        },
-        opacity: 0,
-      });
-    }
+      if (heroRef.current && helpSectionRef.current) {
+        gsap.to(heroRef.current, {
+          scrollTrigger: {
+            trigger: helpSectionRef.current,
+            start: "top bottom",
+            end: "top top",
+            scrub: 0.5,
+          },
+          opacity: 0,
+        });
+      }
 
-    if (heroRef.current && helpSectionRef.current) {
-      gsap.to(heroRef.current, {
-        scrollTrigger: {
-          trigger: helpSectionRef.current,
-          start: "top bottom",
-          end: "top top",
-          scrub: 0.5,
-        },
-        opacity: 0,
-      });
-    }
+      // Hide the hero section when the designs section scrolls past it
+      if (heroRef.current && designsSectionRef.current) {
+        gsap.to(heroRef.current, {
+          opacity: 0,
+          ease: "power1.inOut",
+          scrollTrigger: {
+            trigger: designsSectionRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 0.5,
+          },
+        });
+      }
 
-    // Hide the hero section when the designs section scrolls past it
-    if (heroRef.current && designsSectionRef.current) {
-      gsap.to(heroRef.current, {
-        opacity: 0,
-        ease: "power1.inOut",
-        scrollTrigger: {
-          trigger: designsSectionRef.current,
+      // COMPLETELY REVISED IMAGE TRANSITION LOGIC    
+      if (frontImageRef.current && backImageRef.current) {
+        // Set initial state
+        frontImageRef.current.src = currentImageState.current.designs;
+        backImageRef.current.src = currentImageState.current.spaces;
+        gsap.set(backImageRef.current, { opacity: 0 });
+        
+        // Apply rendering optimizations
+        gsap.set([frontImageRef.current, backImageRef.current], {
+          willChange: "transform, opacity",
+          backfaceVisibility: "hidden",
+          transform: "translateZ(0)" // Force GPU acceleration
+        });
+        
+        // Add error handling for images
+        frontImageRef.current.onerror = () => {
+          console.warn("Failed to load front image, falling back to default");
+          frontImageRef.current.src = "/images/default.jpg";
+        };
+        
+        backImageRef.current.onerror = () => {
+          console.warn("Failed to load back image, falling back to default");
+          backImageRef.current.src = "/images/default.jpg";
+        };
+        
+        // Ensure image container is hidden initially
+        gsap.set(slideContainerRef.current, { autoAlpha: 0 });
+      }
+
+      // CONTENT SECTION VISIBILITY TRACKING
+      // Create a ScrollTrigger to track when we're in the content sections
+      if (contentContainerRef.current) {
+        ScrollTrigger.create({
+          trigger: contentContainerRef.current,
           start: "top top",
+          end: "bottom bottom",
+          onEnter: () => {
+            if (visibilityState.current) {
+              visibilityState.current.inContentSections = true;
+              // Only show if we're not in help section
+              if (!visibilityState.current.inHelpSection) {
+                showContainer();
+              }
+            }
+          },
+          onLeave: () => {
+            if (visibilityState.current) {
+              visibilityState.current.inContentSections = false;
+              hideContainer();
+            }
+          },
+          onEnterBack: () => {
+            if (visibilityState.current) {
+              visibilityState.current.inContentSections = true;
+              // Only show if we're not in help section
+              if (!visibilityState.current.inHelpSection) {
+                showContainer();
+              }
+            }
+          },
+          onLeaveBack: () => {
+            if (visibilityState.current) {
+              visibilityState.current.inContentSections = false;
+              hideContainer();
+            }
+          }
+        });
+      }
+
+      // HELP SECTION VISIBILITY TRACKING
+      if (helpSectionRef.current) {
+        ScrollTrigger.create({
+          trigger: helpSectionRef.current,
+          start: "top bottom",
           end: "bottom top",
-          scrub: 0.5,
-        },
-      });
-    }
+          onEnter: () => {
+            if (visibilityState.current) {
+              visibilityState.current.inHelpSection = true;
+              hideContainerImmediately(); // Hide immediately when help section appears
+            }
+          },
+          onLeave: () => {
+            if (visibilityState.current) {
+              visibilityState.current.inHelpSection = false;
+              // Only show if we're in content sections
+              if (visibilityState.current.inContentSections) {
+                showContainer();
+              }
+            }
+          },
+          onEnterBack: () => {
+            if (visibilityState.current) {
+              visibilityState.current.inHelpSection = true;
+              hideContainerImmediately();
+            }
+          },
+          onLeaveBack: () => {
+            if (visibilityState.current) {
+              visibilityState.current.inHelpSection = false;
+              // Only show if we're in content sections
+              if (visibilityState.current.inContentSections) {
+                showContainer();
+              }
+            }
+          }
+        });
+      }
 
-    // COMPLETELY REVISED IMAGE TRANSITION LOGIC
-    // Preload images to avoid flickering
-    const preloadImages = () => {
-      const images = [
-        currentImageState.current.designs,
-        currentImageState.current.spaces,
-        currentImageState.current.installations
-      ];
-      
-      images.forEach(src => {
-        const img = new Image();
-        img.src = src;
-      });
-    };
-    
-    preloadImages();
-    
-    if (frontImageRef.current && backImageRef.current) {
-      // Set initial state
-      frontImageRef.current.src = currentImageState.current.designs;
-      backImageRef.current.src = currentImageState.current.spaces;
-      gsap.set(backImageRef.current, { opacity: 0 });
-      
-      // Apply rendering optimizations
-      gsap.set([frontImageRef.current, backImageRef.current], {
-        willChange: "transform, opacity",
-        backfaceVisibility: "hidden",
-        transform: "translateZ(0)" // Force GPU acceleration
-      });
-      
-      // Ensure image container is hidden initially
-      gsap.set(slideContainerRef.current, { autoAlpha: 0 });
-    }
+      // IMPROVED IMAGE TRANSITION FUNCTION
+      // This function handles the image swap with clearer transition thresholds
+      const transitionImages = (fromSection, toSection, fromImage, toImage) => {
+        if (!fromSection.current || !toSection.current) return;
+        
+        ScrollTrigger.create({
+          trigger: toSection.current,
+          start: "top 66.67%", // Start transition earlier (when next section is 1/3 into view)
+          end: "top 33.33%",   // Complete transition when next section is 2/3 into view
+          scrub: true,
+          onUpdate: (self) => {
+            if (!frontImageRef.current || !backImageRef.current) return;
+            
+            // Make sure we have the correct images loaded
+            if (self.progress === 0) {
+              frontImageRef.current.src = fromImage;
+              backImageRef.current.src = toImage;
+              gsap.set(backImageRef.current, { opacity: 0 });
+              return;
+            }
+            
+            // When transition is complete, swap the images and reset
+            if (self.progress === 1) {
+              frontImageRef.current.src = toImage;
+              backImageRef.current.src = toImage;
+              gsap.set(backImageRef.current, { opacity: 0 });
+              return;
+            }
+            
+            // During transition - use a step function for cleaner transitions
+            // Only start the transition once we're 50% through the scroll trigger
+            const threshold = 0.5;
+            let opacity;
+            
+            if (self.progress < threshold) {
+              // Show first image fully until threshold
+              opacity = 0;
+            } else {
+              // After threshold, quickly transition to second image
+              // Map progress from 0.5-1.0 to 0-1
+              opacity = (self.progress - threshold) * (1 / (1 - threshold));
+            }
+            
+            gsap.to(backImageRef.current, { 
+              opacity: opacity, 
+              duration: 0.1, // Faster transition for snappier feel
+              overwrite: true
+            });
+          }
+        });
+      };
 
-    // CONTENT SECTION VISIBILITY TRACKING
-    // Create a ScrollTrigger to track when we're in the content sections
-    if (contentContainerRef.current) {
-      ScrollTrigger.create({
-        trigger: contentContainerRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        onEnter: () => {
-          visibilityState.current.inContentSections = true;
-          // Only show if we're not in help section
-          if (!visibilityState.current.inHelpSection) {
-            showContainer();
-          }
-        },
-        onLeave: () => {
-          visibilityState.current.inContentSections = false;
-          hideContainer();
-        },
-        onEnterBack: () => {
-          visibilityState.current.inContentSections = true;
-          // Only show if we're not in help section
-          if (!visibilityState.current.inHelpSection) {
-            showContainer();
-          }
-        },
-        onLeaveBack: () => {
-          visibilityState.current.inContentSections = false;
-          hideContainer();
-        }
-      });
-    }
+      // Set up transitions between sections
+      if (designsSectionRef.current && spacesSectionRef.current && installationsSectionRef.current) {
+        transitionImages(
+          designsSectionRef,
+          spacesSectionRef,
+          currentImageState.current.designs,
+          currentImageState.current.spaces
+        );
+        
+        transitionImages(
+          spacesSectionRef,
+          installationsSectionRef,
+          currentImageState.current.spaces,
+          currentImageState.current.installations
+        );
+      }
 
-    // HELP SECTION VISIBILITY TRACKING
-    if (helpSectionRef.current) {
-      ScrollTrigger.create({
-        trigger: helpSectionRef.current,
-        start: "top bottom",
-        end: "bottom top",
-        onEnter: () => {
-          visibilityState.current.inHelpSection = true;
-          hideContainerImmediately(); // Hide immediately when help section appears
-        },
-        onLeave: () => {
-          visibilityState.current.inHelpSection = false;
-          // Only show if we're in content sections
-          if (visibilityState.current.inContentSections) {
-            showContainer();
-          }
-        },
-        onEnterBack: () => {
-          visibilityState.current.inHelpSection = true;
-          hideContainerImmediately();
-        },
-        onLeaveBack: () => {
-          visibilityState.current.inHelpSection = false;
-          // Only show if we're in content sections
-          if (visibilityState.current.inContentSections) {
-            showContainer();
-          }
-        }
-      });
-    }
-
-    // IMPROVED IMAGE TRANSITION FUNCTION
-    // This function handles the image swap with clearer transition thresholds
-    const transitionImages = (fromSection, toSection, fromImage, toImage) => {
-      ScrollTrigger.create({
-        trigger: toSection.current,
-        start: "top 66.67%", // Start transition earlier (when next section is 1/3 into view)
-        end: "top 33.33%",   // Complete transition when next section is 2/3 into view
-        scrub: true,
-        onUpdate: (self) => {
-          if (!frontImageRef.current || !backImageRef.current) return;
-          
-          // Make sure we have the correct images loaded
-          if (self.progress === 0) {
-            frontImageRef.current.src = fromImage;
-            backImageRef.current.src = toImage;
-            gsap.set(backImageRef.current, { opacity: 0 });
-            return;
-          }
-          
-          // When transition is complete, swap the images and reset
-          if (self.progress === 1) {
-            frontImageRef.current.src = toImage;
-            backImageRef.current.src = toImage;
-            gsap.set(backImageRef.current, { opacity: 0 });
-            return;
-          }
-          
-          // During transition - use a step function for cleaner transitions
-          // Only start the transition once we're 50% through the scroll trigger
-          const threshold = 0.5;
-          let opacity;
-          
-          if (self.progress < threshold) {
-            // Show first image fully until threshold
-            opacity = 0;
-          } else {
-            // After threshold, quickly transition to second image
-            // Map progress from 0.5-1.0 to 0-1
-            opacity = (self.progress - threshold) * (1 / (1 - threshold));
-          }
-          
-          gsap.to(backImageRef.current, { 
-            opacity: opacity, 
-            duration: 0.1, // Faster transition for snappier feel
-            overwrite: true
-          });
-        }
-      });
-    };
-
-    // Set up transitions between sections
-    if (designsSectionRef.current && spacesSectionRef.current && installationsSectionRef.current) {
-      transitionImages(
-        designsSectionRef,
-        spacesSectionRef,
-        currentImageState.current.designs,
-        currentImageState.current.spaces
-      );
-      
-      transitionImages(
-        spacesSectionRef,
-        installationsSectionRef,
-        currentImageState.current.spaces,
-        currentImageState.current.installations
-      );
-    }
-
-    // Handle direct navigation - if we start at a hash like #help or #footer
-    if (window.location.hash === "#help" || window.location.hash === "#footer") {
-      hideContainerImmediately();
-    }
+      // Handle direct navigation - if we start at a hash like #help or #footer
+      if (typeof window !== 'undefined' && (window.location.hash === "#help" || window.location.hash === "#footer")) {
+        hideContainerImmediately();
+      }
+    });
 
     // Force scroll position to top after GSAP has initialized
-    ScrollTrigger.refresh();
-    
-    // Only reset to top if not at a specific hash
-    if (!window.location.hash) {
-      window.scrollTo(0, 0);
+    if (typeof window !== 'undefined') {
+      ScrollTrigger.refresh();
+      
+      // Only reset to top if not at a specific hash
+      if (!window.location.hash) {
+        window.scrollTo(0, 0);
+      }
     }
 
     return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
+      // Clean up all GSAP animations
+      ctx.revert();
     };
+  }, []);
+
+  // Add an effect to refresh ScrollTrigger after all images are loaded
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Only refresh after all images have loaded
+      const allImages = document.querySelectorAll('img');
+      let loadedCount = 0;
+      const totalImages = allImages.length;
+      
+      // If no images, just refresh
+      if (totalImages === 0) {
+        ScrollTrigger.refresh();
+        return;
+      }
+      
+      // Track loaded images
+      const onImageLoad = () => {
+        loadedCount++;
+        if (loadedCount === totalImages) {
+          ScrollTrigger.refresh();
+        }
+      };
+      
+      allImages.forEach(img => {
+        if (img.complete) {
+          onImageLoad();
+        } else {
+          img.addEventListener('load', onImageLoad);
+          img.addEventListener('error', onImageLoad); // Count errors as "loaded" to avoid blocking
+        }
+      });
+      
+      return () => {
+        allImages.forEach(img => {
+          img.removeEventListener('load', onImageLoad);
+          img.removeEventListener('error', onImageLoad);
+        });
+      };
+    }
   }, []);
 
   return (
@@ -523,6 +619,7 @@ const ServicesPage = () => {
               backfaceVisibility: "hidden",
               transform: "translateZ(0)", // Force GPU acceleration
             }}
+            onError={(e) => { e.target.src = "/images/default.jpg"; }}
           />
           <img
             ref={backImageRef}
@@ -535,6 +632,7 @@ const ServicesPage = () => {
               transform: "translateZ(0)", // Force GPU acceleration
               opacity: 0 
             }}
+            onError={(e) => { e.target.src = "/images/default.jpg"; }}
           />
         </div>
       </div>
