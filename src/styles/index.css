@@ -1,4 +1,13 @@
 @import "tailwindcss";
+@import './navbar.css';
+@import './aboutus.css';
+@import './footer.css';
+@import './hero.css';
+@import './projects.css';
+@import './logos.css';
+@import './services.module.css';
+@import './works.css';
+@import './details.css';
 
 @font-face {
   font-family: 'InterH';

@@ -50,19 +50,17 @@ const AboutUs = () => {
     <section 
       id="about"
       ref={sectionRef}
-      className="h-screen w-full flex items-center justify-center relative bg-cover bg-center"
       style={{ backgroundImage: "url('/images/aboutus.JPG')" }}
     >
-      {/* Content overlay */}
       <div 
         ref={textRef}
-        className="relative z-10 max-w-5xl text-center space-y-6 bg-opacity-60 p-12 rounded-lg"
+        className="content-overlay"
       >
-        <h1 className="text-5xl font-bold text-white leading-snug">
+        <h1>
           At Studio CANOFJUICE, <br />
           we keep it FRESH.
         </h1>
-        <p className="text-xl max-w-2xl mx-auto leading-relaxed text-white">
+        <p>
           We are a design studio and manufacturing hub, dedicated to creating brands and crafting branded environments.
         </p>
       </div>

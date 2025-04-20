@@ -2,12 +2,12 @@ import React from "react";
 import Hero from "../components/Hero";
 import AboutUs from "../components/AboutUs";
 import Projects from "../components/Projects";
-import Logos from "../components/Logos"
+import Logos from "../components/Logos";
 
 const HomePage = () => {
   return (
-    <div id={"home"} className="bg-black text-white">
-      <Hero />
+    <div id="home" className="bg-black text-white">
+      <Hero id="hero" />
       <AboutUs />
       <Projects />
       <Logos />

@@ -1,0 +1,160 @@
+/* Logos section styles */
+.logos-section {
+    width: 100%;
+    text-align: center;
+    background-color: #000000;
+    color: #f5f5f5;
+  }
+  
+  .logos-heading {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    font-family: 'Khand', system-ui, Helvetica, Arial, sans-serif;
+  }
+  
+  .logos-subheading {
+    font-size: 1.125rem;
+    color: #a0aec0;
+    margin-bottom: 1.5rem;
+    font-family: 'Switzer', system-ui, Helvetica, Arial, sans-serif;
+  }
+  
+  .marquee-container {
+    width: 100%;
+    background-color: white;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .marquee-content {
+    display: flex;
+    white-space: nowrap;
+  }
+  
+  .logo-item {
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+    flex-shrink: 0;
+  }
+  
+  .logo-image {
+    height: 5rem;
+    width: 10rem;
+    object-fit: contain;
+  }
+  
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .animate-marquee {
+    animation: marquee 40s linear infinite;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 1280px) {
+    .logo-image {
+      height: 4.5rem;
+      width: 9rem;
+    }
+    
+    .animate-marquee {
+      animation-duration: 35s;
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    .logos-heading {
+      font-size: 2rem;
+    }
+    
+    .logos-subheading {
+      font-size: 1rem;
+    }
+    
+    .logo-image {
+      height: 4rem;
+      width: 8rem;
+    }
+    
+    .logo-item {
+      margin-left: 1rem;
+      margin-right: 1rem;
+    }
+    
+    .animate-marquee {
+      animation-duration: 30s;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .logo-image {
+      height: 3.5rem;
+      width: 7rem;
+    }
+    
+    .logo-item {
+      margin-left: 0.75rem;
+      margin-right: 0.75rem;
+    }
+    
+    .animate-marquee {
+      animation-duration: 25s;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .logos-heading {
+      font-size: 1.75rem;
+    }
+    
+    .logos-subheading {
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+    }
+    
+    .logo-image {
+      height: 3rem;
+      width: 6rem;
+    }
+    
+    .logo-item {
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
+    }
+    
+    .animate-marquee {
+      animation-duration: 20s;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .logo-image {
+      height: 2.5rem;
+      width: 5rem;
+    }
+    
+    .animate-marquee {
+      animation-duration: 15s;
+    }
+  }
+  
+  /* Handle reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee {
+      animation-duration: 120s;
+    }
+  }
+  
+  /* For faster devices and connections, use a dynamic calculation */
+  .responsive-marquee {
+    /* This will be populated by JavaScript based on the number of logos */
+    min-width: calc(var(--logo-count) * var(--logo-width) * 2);
+  }

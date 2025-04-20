@@ -1,0 +1,112 @@
+/* styles/services.module.css */
+.hero {
+  background-color: black;
+  color: white;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.heroImage {
+  width: 80%;
+  height: 80%;
+  margin: 0 auto;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+  position: relative;
+}
+.heroImage img { width: 100%; height: 100%; object-fit: cover; }
+.heroTitle {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(2.5rem,5vw,5rem);
+  font-weight: 800;
+  color: black;
+  opacity: 0;
+  transform: translateY(30px);
+}
+.section { height: 100vh; position: sticky; top: 0; overflow: hidden; }
+.designsSection { background-color: #f9fafb; color: black; z-index: 10; }
+.spacesSection { background-color: #20355f; color: #e5e7eb; z-index: 20; }
+.installationsSection {
+  background-color: black;
+  color: white;
+  z-index: 30;
+  height: 150vh; /* extended sticky */
+}
+.sectionContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+.sectionHeading { width: 40%; padding-right: 1rem; }
+.sectionHeading h3 {
+  font-size: clamp(1.5rem,4vw,2.25rem);
+  font-weight: 700;
+  opacity: 0;
+  transform: translateY(30px);
+}
+.sectionList { width: 60%; text-align: right; }
+.sectionList p {
+  font-size: clamp(1rem,2vw,1.25rem);
+  margin-bottom: 0.75rem;
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: opacity, transform;
+}
+.imageContainer {
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
+  border-radius: 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+  top: 10px;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 400px;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  will-change: opacity, transform;
+}
+.imageWrapper { position: relative; width: 100%; height: 100%; }
+.frontImage, .backImage {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 1rem;
+  will-change: opacity;
+}
+.backImage { opacity: 0; }
+.helpSection {
+  height: 50vh; /* reduced height */
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  color: black;
+  position: relative;
+  z-index: 40;
+}
+.helpSection h2 {
+  font-size: clamp(1.75rem,4vw,3rem);
+  font-weight: 700;
+  text-align: center;
+  padding: 0 1rem;
+}
+.slideInFromBottom { animation: slideInFromBottom 0.8s ease forwards; }
+@keyframes slideInFromBottom {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

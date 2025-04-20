@@ -1,0 +1,121 @@
+/* about-us.css */
+/* Base styles for the About Us section */
+#about {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  /* Content overlay styling */
+  #about .content-overlay {
+    position: relative;
+    z-index: 10;
+    max-width: 64rem; /* 5xl in Tailwind */
+    text-align: center;
+    padding: 3rem; /* p-12 in Tailwind */
+    border-radius: 0.5rem; /* rounded-lg in Tailwind */
+  }
+  
+  #about .content-overlay h1 {
+    font-size: 3rem; /* text-5xl in Tailwind */
+    font-weight: 700; /* font-bold in Tailwind */
+    color: white;
+    line-height: 1.375; /* leading-snug in Tailwind */
+    margin-bottom: 1.5rem;
+  }
+  
+  #about .content-overlay p {
+    font-size: 1.25rem; /* text-xl in Tailwind */
+    max-width: 42rem; /* max-w-2xl in Tailwind */
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.625; /* leading-relaxed in Tailwind */
+    color: white;
+  }
+  
+  /* Animation class for GSAP */
+  .about-animation-ready {
+    opacity: 0;
+    transform: translateY(300px) scale(0.7);
+  }
+  
+  /* Responsive styles */
+  /* For tablets (iPad, medium screens) */
+  @media screen and (max-width: 1024px) {
+    #about .content-overlay {
+      max-width: 90%;
+      padding: 2.5rem;
+    }
+  
+    #about .content-overlay h1 {
+      font-size: 2.5rem;
+    }
+  
+    #about .content-overlay p {
+      font-size: 1.125rem;
+    }
+  }
+  
+  /* For mobile phones (including iPhones) */
+  @media screen and (max-width: 768px) {
+    #about .content-overlay {
+      max-width: 95%;
+      padding: 1.5rem;
+    }
+  
+    #about .content-overlay h1 {
+      font-size: 2rem;
+    }
+  
+    #about .content-overlay p {
+      font-size: 1rem;
+      max-width: 100%;
+    }
+  }
+  
+  /* For small mobile phones */
+  @media screen and (max-width: 480px) {
+    #about .content-overlay h1 {
+      font-size: 1.75rem;
+    }
+  
+    #about .content-overlay p {
+      font-size: 0.875rem;
+    }
+  }
+  
+  /* For landscape orientation on mobile devices */
+  @media screen and (max-height: 600px) and (orientation: landscape) {
+    #about {
+      height: auto;
+      min-height: 100vh;
+      padding: 3rem 0;
+    }
+  }
+  
+  /* For high-density (retina) displays */
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    #about {
+      background-image: url('/images/aboutus@2x.JPG');
+    }
+  }
+  
+  /* Future-friendly features */
+  @supports (backdrop-filter: blur(10px)) {
+    #about .content-overlay {
+      backdrop-filter: blur(3px);
+    }
+  }
+  
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    #about .content-overlay {
+      transition: none;
+    }
+  }

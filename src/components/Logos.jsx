@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 gsap.registerPlugin(ScrollTrigger);
 
 const Logos = () => {
@@ -13,58 +14,68 @@ const Logos = () => {
     "/images/brands/brand21.png", "/images/brands/brand22.png", "/images/brands/brand23.png", "/images/brands/brand24.png", "/images/brands/brand25.png",
     "/images/brands/brand26.png", "/images/brands/brand27.png", "/images/brands/brand28.png", "/images/brands/brand29.png", "/images/brands/brand30.png",
   ];
+  
+  useEffect(() => {
+    // Set CSS variables for responsive marquee
+    if (marqueeRef.current) {
+      // Get the actual width based on screen size
+      const logoWidth = window.innerWidth < 480 ? 140 : 
+                        window.innerWidth < 640 ? 160 : 
+                        window.innerWidth < 768 ? 180 : 
+                        window.innerWidth < 1024 ? 200 : 220;
+                        
+      marqueeRef.current.style.setProperty('--logo-count', logos.length);
+      marqueeRef.current.style.setProperty('--logo-width', `${logoWidth}px`);
+      
+      // Update on resize
+      const handleResize = () => {
+        const newLogoWidth = window.innerWidth < 480 ? 140 : 
+                            window.innerWidth < 640 ? 160 : 
+                            window.innerWidth < 768 ? 180 : 
+                            window.innerWidth < 1024 ? 200 : 220;
+        marqueeRef.current.style.setProperty('--logo-width', `${newLogoWidth}px`);
+      };
+      
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, [logos.length]);
+
   return (
-    // No extra top padding; it will inherit the margin from the rotating text above
-    <div className="w-full text-center">
-      <h2 className="text-4xl font-bold mb-4">
+    <div className="logos-section">
+      <h2 className="logos-heading">
         Our Trusted Partners
       </h2>
-      <p className="text-lg text-gray-600 mb-6">
+      <p className="logos-subheading">
         We collaborate with industry leaders to bring you the best experience.
       </p>
 
       <div
         ref={marqueeRef}
-        className="w-full bg-white overflow-hidden"
-        style={{ margin: 0, padding: 0 }}
+        className="marquee-container"
       >
-        <div className="flex animate-marquee whitespace-nowrap">
+        <div className="marquee-content animate-marquee responsive-marquee">
           {/* First set of logos */}
           {logos.map((logo, index) => (
-            <div key={`first-${index}`} className="mx-5 flex-shrink-0">
+            <div key={`first-${index}`} className="logo-item">
               <img
                 src={logo}
                 alt={`Partner ${index + 1}`}
-                className="h-20 w-40 object-contain"
+                className="logo-image"
               />
             </div>
           ))}
           {/* Duplicate set for seamless looping */}
           {logos.map((logo, index) => (
-            <div key={`second-${index}`} className="mx-5 flex-shrink-0">
+            <div key={`second-${index}`} className="logo-item">
               <img
                 src={logo}
                 alt={`Partner ${index + 1}`}
-                className="h-20 w-40 object-contain"
+                className="logo-image"
               />
             </div>
           ))}
         </div>
-        <style jsx>{`
-          @keyframes marquee {
-            0% {
-              transform: translateX(0);
-            }
-            100% {
-              transform: translateX(-50%);
-            }
-          }
-          .animate-marquee {
-            animation: marquee 40s linear infinite;
-            /* The min-width ensures a full cycle before the logo row loops. */
-            min-width: ${logos.length * 200 * 2}px;
-          }
-        `}</style>
       </div>
     </div>
   );

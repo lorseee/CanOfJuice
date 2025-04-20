@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { HashLink as Link } from "react-router-hash-link";
 import gsap from "gsap";
 
 const Navbar = () => {
@@ -34,11 +34,31 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  
+  // Handle navigation to contact section
+  const handleContactClick = (e) => {
+    e.preventDefault();
+    
+    // Get the contact section
+    const contactSection = document.getElementById('contact');
+    
+    if (contactSection) {
+      // Scroll to contact section
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+      
+      // Update URL with hash
+      window.history.pushState(null, null, '#contact');
+      
+      // Dispatch a custom event to notify components to hide images if needed
+      const event = new CustomEvent('navigateToContact');
+      window.dispatchEvent(event);
+    }
+  };
 
   return (
     <nav className="fixed top-0 left-0 w-full z-[9999] text-white py-3 px-4 flex justify-between items-center pointer-events-none">
       {/* Logo */}
-      <Link to="/" className="text-2xl font-bold pointer-events-auto"> 
+      <Link to="/#home" className="text-2xl font-bold pointer-events-auto"> 
         <img
           ref={logoRef}
           src="/images/logo.png"
@@ -52,9 +72,9 @@ const Navbar = () => {
         className={`space-x-6 pointer-events-auto transition-all duration-300 ${isScrolled ? "opacity-0" : "opacity-100"}`}
         style={{ marginTop: "5px" }} // Adjust this value to move the text higher
       >  
-        <Link to="/works" className="hover:text-gray-300 transition-colors">Works</Link>
-        <Link to="/services" className="hover:text-gray-300 transition-colors">Services</Link>
-        <a href="#contact" className="hover:text-gray-300 transition-colors">Contact</a>
+        <Link to="/works#works" className="hover:text-gray-300 transition-colors">Works</Link>
+        <Link to="/services#services" className="hover:text-gray-300 transition-colors">Services</Link>
+        <a href="#contact" className="hover:text-gray-300 transition-colors" onClick={handleContactClick}>Contact</a>
       </div>
     </nav>
   );

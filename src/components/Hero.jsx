@@ -29,15 +29,16 @@ const Hero = () => {
   }, []);
 
   return (
-    <section id={"hero"}
+    <section 
+      id="hero"
       ref={sectionRef}
-      className="h-screen bg-black flex items-center justify-center"
+      className="hero-section"
     >
-      <div className="w-[80%] h-[80%] rounded-lg overflow-hidden shadow-lg bg-white">
+      <div className="hero-container">
         <img 
           src="/videos/video.gif" 
           alt="Hero GIF" 
-          className="w-full h-full object-cover"
+          className="hero-media"
         />
       </div>
     </section>

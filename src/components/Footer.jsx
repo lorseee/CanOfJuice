@@ -1,53 +1,66 @@
-import React, { useEffect, useRef} from "react";
-import { FaFacebookF, FaInstagram, FaLinkedin, FaEnvelope, FaPhone } from "react-icons/fa";
-import gsap from "gsap";
-
+import React from "react";
+import { FaInstagram, FaLinkedin, FaEnvelope, FaPhone } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer id="contact" className="w-full bg-[#20355f] text-white py-12 z-100">
-      <div className="max-w-6xl mx-auto px-6 text-center">
+    <footer id="contact" className="footer">
+      <div className="footer-container">
         
         {/* Logo */}
-        <div className="mb-8">
-        <img
-          src="/images/footerlogo.png"
-          alt="Logo"
-          className="h-25 w-auto mx-auto"
-        />
+        <div className="footer-logo">
+          <img
+            src="/images/logo.png"
+            alt="Logo"
+          />
         </div>
 
         {/* Social Icons */}
-        <div className="flex justify-center space-x-6 mb-8">
-          <a href="#" className="text-gray-400 hover:text-white transition">
-            <FaFacebookF size={24} />
-          </a>
-          <a href="#" className="text-gray-400 hover:text-white transition">
+        <div className="social-icons">
+          <a
+            href="https://www.instagram.com/studiocanofjuice/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="social-icon"
+          >
             <FaInstagram size={24} />
           </a>
-          <a href="#" className="text-gray-400 hover:text-white transition">
+          <a
+            href="https://www.linkedin.com/company/studio-canofjuice/posts/?feedView=all"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="social-icon"
+          >
             <FaLinkedin size={24} />
           </a>
-          <a href="mailto:scoj@canofjuice.com" className="text-gray-400 hover:text-white transition">
+          <a
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=canofjuice@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="social-icon"
+          >
             <FaEnvelope size={24} />
           </a>
-          <a href="tel:+918041112345" className="text-gray-400 hover:text-white transition">
+          <a
+            href="tel:+918041475441"
+            className="social-icon"
+          >
             <FaPhone size={24} />
           </a>
         </div>
 
         {/* Contact Info */}
-        <div className="text-sm text-gray-400 mb-4">
-          <p>10, 1st Main Rd, 1st Block Koramangala, Koramangala, Bengaluru, Karnataka 560034</p>
+        <div className="contact-info">
+          <p>10, 1st Main Rd, 1st Block Koramangala, Bengaluru, Karnataka 560034</p>
+          <p>080 4147 5441 | canofjuice@gmail.com</p>
         </div>
 
-        {/* Copyright Section */}
-        <div className="text-xs text-gray-500">
-          <p>©StudioCANOFJUICE - ALL REGISTERED</p>
+        {/* Copyright */}
+        <div className="copyright">
+          <p>© StudioCANOFJUICE – ALL REGISTERED</p>
         </div>
 
         {/* Divider */}
-        <div className="w-full border-t border-gray-200 mt-2"></div>
+        <div className="divider"></div>
       </div>
     </footer>
   );
