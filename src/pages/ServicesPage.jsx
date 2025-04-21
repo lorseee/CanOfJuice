@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useEffect } from "react";
+import React, { useLayoutEffect, useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ScrollWrapper from "../components/ScrollWrapper"; 
@@ -11,7 +11,6 @@ const ServicesPage = () => {
   const spacesSectionRef = useRef(null);
   const installationsSectionRef = useRef(null);
   const helpSectionRef = useRef(null);
-  const footerRef = useRef(null);
   const contentContainerRef = useRef(null);
 
   const designsHeadingRef = useRef(null);
@@ -25,6 +24,9 @@ const ServicesPage = () => {
   const slideContainerRef = useRef(null);
   const frontImageRef = useRef(null);
   const backImageRef = useRef(null);
+  
+  // Track if we're on mobile
+  const [isMobile, setIsMobile] = useState(false);
 
   // Track current image state with console debugging
   const currentImageState = useRef({
@@ -36,6 +38,20 @@ const ServicesPage = () => {
 
   // Track active section for proper image display
   const activeSection = useRef("none"); // none, designs, spaces, installations
+
+  // Check if we're on mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    
+    checkMobile(); // Initial check
+    window.addEventListener('resize', checkMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
 
   // Immediate scroll reset on component mount
   useEffect(() => {
@@ -82,8 +98,70 @@ const ServicesPage = () => {
 
   const updateActiveSection = (section) => {
     console.log("Setting active section:", section);
-    activeSection.current = section;
-    updateVisibleImage();
+    
+    // Only process section changes
+    if (activeSection.current !== section) {
+      const previousSection = activeSection.current;
+      activeSection.current = section;
+      
+      // Perform image transition when changing between valid sections
+      if (section !== "none" && section !== "help" && previousSection !== "none" && previousSection !== "help") {
+        crossfadeImages(previousSection, section);
+      } else {
+        // Simply update visibility
+        updateVisibleImage();
+      }
+    }
+  };
+
+  // New function to handle the crossfade between images
+  const crossfadeImages = (fromSection, toSection) => {
+    if (!slideContainerRef.current || !frontImageRef.current || !backImageRef.current) return;
+
+    console.log(`Crossfading from ${fromSection} to ${toSection}`);
+    
+    // Show container if not already visible
+    gsap.to(slideContainerRef.current, { 
+      duration: 0.3, 
+      autoAlpha: 1 
+    });
+    
+    // Set back image to new section's image
+    backImageRef.current.src = currentImageState.current[toSection];
+    
+    // Make sure back image is visible but fully transparent
+    gsap.set(backImageRef.current, { 
+      display: "block", 
+      opacity: 0 
+    });
+    
+    // Create crossfade animation
+    const tl = gsap.timeline();
+    
+    // Fade in back image while fading out front image
+    tl.to(backImageRef.current, { 
+      duration: 0.8, 
+      opacity: 1, 
+      ease: "power2.inOut" 
+    });
+    
+    tl.to(frontImageRef.current, { 
+      duration: 0.8, 
+      opacity: 0, 
+      ease: "power2.inOut" 
+    }, "-=0.8"); // Start at same time as back image fade in
+    
+    // Once animation completes, swap images and reset
+    tl.add(() => {
+      // Move back image content to front image
+      frontImageRef.current.src = backImageRef.current.src;
+      
+      // Reset opacity values
+      gsap.set(frontImageRef.current, { opacity: 1 });
+      gsap.set(backImageRef.current, { display: "none" });
+      
+      console.log("Crossfade complete, now showing:", toSection);
+    });
   };
 
   const updateVisibleImage = () => {
@@ -100,6 +178,9 @@ const ServicesPage = () => {
     // Switch front image based on active section
     if (frontImageRef.current) {
       frontImageRef.current.src = currentImageState.current[activeSection.current];
+      
+      // Reset opacity for front image
+      gsap.set(frontImageRef.current, { opacity: 1 });
       
       // Show the container with the appropriate image
       gsap.to(slideContainerRef.current, { 
@@ -225,59 +306,62 @@ const ServicesPage = () => {
     createListAnimation(spacesListRef, spacesSectionRef, "top 90%", "top 60%");
     createListAnimation(installationsListRef, installationsSectionRef, "top 90%", "top 60%");
 
-    // SPACES SECTION ANIMATION
-    if (spacesSectionRef.current) {
-      gsap.fromTo(
-        spacesSectionRef.current,
-        { y: "100%" },
-        {
-          y: "33.33%",
-          ease: "power1.inOut",
-          scrollTrigger: {
-            trigger: spacesSectionRef.current,
-            start: "top bottom",
-            end: "top 33.33%",
-            scrub: 0.5,
-          },
-        }
-      );
-    }
-    
-    // INSTALLATIONS SECTION ANIMATION - PART 1: Move into position
-    if (installationsSectionRef.current) {
-      gsap.fromTo(
-        installationsSectionRef.current,
-        { y: "100%" },
-        {
-          y: "66.67%",
-          ease: "power1.inOut",
-          scrollTrigger: {
-            trigger: installationsSectionRef.current,
-            start: "top bottom",
-            end: "top 66.67%",
-            scrub: 0.5,
-          },
-        }
-      );
+    // Only apply staggered section animations on desktop
+    if (!isMobile) {
+      // SPACES SECTION ANIMATION
+      if (spacesSectionRef.current) {
+        gsap.fromTo(
+          spacesSectionRef.current,
+          { y: "100%" },
+          {
+            y: "33.33%",
+            ease: "power1.inOut",
+            scrollTrigger: {
+              trigger: spacesSectionRef.current,
+              start: "top bottom",
+              end: "top 33.33%",
+              scrub: 0.5,
+            },
+          }
+        );
+      }
       
-      // INSTALLATIONS SECTION ANIMATION - PART 2: Keep sticky until help section
-      gsap.fromTo(
-        installationsSectionRef.current, 
-        { y: "66.67%" }, 
-        {
-          y: "0%",
-          ease: "power1.inOut",
-          scrollTrigger: {
-            trigger: helpSectionRef.current,
-            start: "top bottom",
-            end: "top top",
-            scrub: 0.5,
-          },
-        }
-      );
+      // INSTALLATIONS SECTION ANIMATION - PART 1: Move into position
+      if (installationsSectionRef.current) {
+        gsap.fromTo(
+          installationsSectionRef.current,
+          { y: "100%" },
+          {
+            y: "66.67%",
+            ease: "power1.inOut",
+            scrollTrigger: {
+              trigger: installationsSectionRef.current,
+              start: "top bottom",
+              end: "top 66.67%",
+              scrub: 0.5,
+            },
+          }
+        );
+        
+        // INSTALLATIONS SECTION ANIMATION - PART 2: Keep sticky until help section
+        gsap.fromTo(
+          installationsSectionRef.current, 
+          { y: "66.67%" }, 
+          {
+            y: "0%",
+            ease: "power1.inOut",
+            scrollTrigger: {
+              trigger: helpSectionRef.current,
+              start: "top bottom",
+              end: "top top",
+              scrub: 0.5,
+            },
+          }
+        );
+      }
     }
 
-    // Fade out all content and hero when help section appears
+    // Fade out all content and hero when help section appears - works on both mobile and desktop
     if (contentContainerRef.current && helpSectionRef.current) {
       gsap.to(contentContainerRef.current, {
         scrollTrigger: {
@@ -317,77 +401,122 @@ const ServicesPage = () => {
     }
 
     // SECTION VISIBILITY TRACKING - Show/hide appropriate images
-    // DESIGNS SECTION
-    if (designsSectionRef.current) {
-      ScrollTrigger.create({
-        trigger: designsListRef.current,  // Track the list specifically
-        start: "top 90%", // Changed to 90% as requested
-        end: "bottom 10%",
-        onEnter: () => {
-          console.log("Entered designs section");
-          updateActiveSection("designs");
-        },
-        onLeave: () => {
-          console.log("Left designs section");
-          // Don't update here, let the next section handle it
-        },
-        onEnterBack: () => {
-          console.log("Entered back designs section");
-          updateActiveSection("designs");
-        },
-        onLeaveBack: () => {
-          console.log("Left back designs section");
-          updateActiveSection("none");
-        }
-      });
-    }
+    // Only track visibility if we're not on mobile
+    if (!isMobile) {
+      // DESIGNS SECTION
+      if (designsSectionRef.current) {
+        ScrollTrigger.create({
+          trigger: designsListRef.current,  
+          start: "top 10%", 
+          end: "top 30%",
+          onEnter: () => {
+            console.log("Entered designs section");
+            updateActiveSection("designs");
+          },
+          onLeave: () => {
+            console.log("Left designs section");
+            // Don't update here, let the next section handle it
+          },
+          onEnterBack: () => {
+            console.log("Entered back designs section");
+            //
+          },
+          onLeaveBack: () => {
+            console.log("Left back designs section");
+            updateActiveSection("none");
+          }
+        });
+      }
 
-    // SPACES SECTION
-    if (spacesSectionRef.current) {
-      ScrollTrigger.create({
-        trigger: spacesListRef.current,  // Track the list specifically
-        start: "top 90%",
-        end: "bottom 10%",
-        onEnter: () => {
-          console.log("Entered spaces section");
-          updateActiveSection("spaces");
-        },
-        onLeave: () => {
-          console.log("Left spaces section");
-          // Don't update here, let the next section handle it
-        },
-        onEnterBack: () => {
-          console.log("Entered back spaces section");
-          updateActiveSection("spaces");
-        },
-        onLeaveBack: () => {
-          console.log("Left back spaces section");
-          // Let the previous section handle it
-        }
-      });
-    }
+      // SPACES SECTION
+      if (spacesSectionRef.current) {
+        ScrollTrigger.create({
+          trigger: spacesListRef.current,  // Track the list specifically
+          start: "top 90%",
+          end: "bottom 10%",
+          onEnter: () => {
+            console.log("Entered spaces section");
+            updateActiveSection("spaces");
+          },
+          onLeave: () => {
+            console.log("Left spaces section");
+            // Don't update here, let the next section handle it
+          },
+          onEnterBack: () => {
+            console.log("Entered back spaces section");
+            updateActiveSection("spaces");
+          },
+          onLeaveBack: () => {
+            console.log("Left back spaces section");
+            updateActiveSection("designs");
+          }
+        });
+      }
 
-    // INSTALLATIONS SECTION
-    if (installationsSectionRef.current) {
-      ScrollTrigger.create({
-        trigger: installationsListRef.current,  // Track the list specifically
-        start: "top 90%",
-        end: "bottom 10%",
-        onEnter: () => {
-          console.log("Entered installations section");
-          updateActiveSection("installations");
-        },
-        onLeave: () => {
-          console.log("Left installations section");
-          updateActiveSection("none");
-        },
-        onEnterBack: () => {
-          console.log("Entered back installations section");
-          updateActiveSection("installations");
-        },
-        onLeaveBack: () => {
-          console.log("Left back installations section");
-          // Let previous section handle it
+      // INSTALLATIONS SECTION
+      if (installationsSectionRef.current) {
+        ScrollTrigger.create({
+          trigger: installationsListRef.current,  // Track the list specifically
+          start: "top 90%",
+          end: "bottom 10%",
+          onEnter: () => {
+            console.log("Entered installations section");
+            updateActiveSection("installations");
+          },
+          onLeave: () => {
+            console.log("Left installations section");
+            updateActiveSection("none");
+          },
+          onEnterBack: () => {
+            console.log("Entered back installations section");
+            updateActiveSection("installations");
+          },
+          onLeaveBack: () => {
+            console.log("Left back installations section");
+            // Let previous section handle it
+          }
+        });
+      }
+    } else {
+      // On mobile, we'll use a different approach for section visibility
+      // Reset any transforms from desktop layout
+      if (spacesSectionRef.current) {
+        gsap.set(spacesSectionRef.current, { y: 0 });
+      }
+      
+      if (installationsSectionRef.current) {
+        gsap.set(installationsSectionRef.current, { y: 0 });
+      }
+      
+      // Make sure container heights are auto for mobile
+      if (contentContainerRef.current) {
+        gsap.set(contentContainerRef.current, { height: "auto" });
+      }
+
+      // Track all sections with a simple in/out visibility
+      [designsSectionRef, spacesSectionRef, installationsSectionRef].forEach((sectionRef, index) => {
+        if (sectionRef.current) {
+          const sectionName = ["designs", "spaces", "installations"][index];
+          
+          ScrollTrigger.create({
+            trigger: sectionRef.current,
+            start: "top 60%", 
+            end: "bottom 40%", 
+            onEnter: () => {
+              console.log(`Mobile: Entered ${sectionName} section`);
+              updateActiveSection(sectionName);
+            },
+            onLeave: () => {
+              // Don't update here, let the next section handle it
+            },
+            onEnterBack: () => {
+              console.log(`Mobile: Entered back ${sectionName} section`);
+              updateActiveSection(sectionName);
+            },
+            onLeaveBack: () => {
+              // Don't update here, let the previous section handle it
+            }
+          });
         }
       });
     }
@@ -463,6 +592,9 @@ const ServicesPage = () => {
       // Set initial state - hidden
       frontImageRef.current.src = currentImageState.current.designs;
       gsap.set(slideContainerRef.current, { autoAlpha: 0 });
+      
+      // Hide back image initially
+      gsap.set(backImageRef.current, { display: "none" });
     }
 
     // Handle direct navigation - if we start at a hash like #help or #footer
@@ -481,73 +613,41 @@ const ServicesPage = () => {
     return () => {
       ScrollTrigger.getAll().forEach((st) => st.kill());
     };
-  }, []);
+  }, [isMobile]); // Re-run when isMobile changes
 
   return (
-    <div className="relative">
+    <div className="services-container relative">
       {/* HERO */}
       <ScrollWrapper
         ref={heroRef}
         id="services"
         index={0}
-        className="bg-black text-white h-screen flex justify-center items-center slide-in-from-bottom"
+        className="services-hero slide-in-from-bottom"
       >
-        <style>{`
-          .slide-in-from-bottom {
-            animation: slideInFromBottom 0.8s ease forwards;
-          }
-          @keyframes slideInFromBottom {
-            from { transform: translateY(100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-          }
-          .animate-heading {
-            animation: fadeInScale 1.2s ease-in-out forwards;
-          }
-          @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-          }
-        `}</style>
-
-        <div className="w-[80%] h-[80%] mx-auto rounded-lg overflow-hidden shadow-lg">
+        <div className="services-hero-image-container">
           <img
             src="/images/services-hero.jpg"
             alt="Services Hero"
-            className="w-full h-full object-cover"
+            className="services-hero-image"
             onError={(e) => { 
               console.log("Hero image failed to load:", e.target.src);
               e.target.src = "/images/default.jpg"; 
             }}
           />
-          <h1 className="animate-heading absolute inset-0 flex justify-center items-center text-[10vw] md:text-[7vw] lg:text-[5vw] font-extrabold text-black">
+          <h1 className="services-hero-title animate-heading">
             OUR SERVICES
           </h1>
         </div>
       </ScrollWrapper>
 
-      {/* UPDATED FLOATING IMAGE CONTAINER - SINGLE IMAGE APPROACH */}
-      <div
-        ref={slideContainerRef}
-        className="fixed z-50 pointer-events-none rounded-2xl shadow-2xl"
-        style={{
-          top: "10px",
-          bottom: "10px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "90%",
-          maxWidth: "min(600px, 90vw)", 
-          overflow: "hidden",
-          opacity: 0,
-          visibility: "hidden",
-          borderRadius: "1rem"
-        }}
-      >
-        <div className="relative w-full h-full">
+      {/* FLOATING IMAGE CONTAINER - WITH CROSSFADE */}
+      <div ref={slideContainerRef} className="floating-image-container">
+        <div className="floating-image-wrapper">
           <img
             ref={frontImageRef}
             alt="Current Section"
             src="/images/designs.jpg"
-            className="absolute top-0 left-0 w-full h-full object-cover rounded-2xl"
+            className="floating-image"
             onError={(e) => { 
               console.log("Front image failed to load:", e.target.src);
               e.target.src = "/images/default.jpg"; 
@@ -555,10 +655,9 @@ const ServicesPage = () => {
           />
           <img
             ref={backImageRef}
-            style={{ display: 'none' }} // We're not using this in the new approach
             alt="Next Section"
             src="/images/spaces.jpg"
-            className="absolute top-0 left-0 w-full h-full object-cover rounded-2xl"
+            className="floating-image floating-image-back"
             onError={(e) => { 
               console.log("Back image failed to load:", e.target.src);
               e.target.src = "/images/default.jpg"; 
@@ -568,24 +667,24 @@ const ServicesPage = () => {
       </div>
 
       {/* MAIN CONTENT */}
-      <div ref={contentContainerRef} style={{ height: "400vh" }}>
+      <div ref={contentContainerRef} className="content-container">
         {/* DESIGNS */}
         <div
           ref={designsSectionRef}
-          className="h-screen sticky top-0 z-10 bg-gray-50 text-black overflow-hidden"
+          className="section-base section-designs"
         >
-          <div className="container mx-auto px-8 py-4 h-full flex items-start">
-            <div className="w-1/3 pr-4">
-              <h3 ref={designsHeadingRef} className="text-4xl font-bold">
+          <div className="container mx-auto section-inner">
+            <div className="section-heading-container">
+              <h3 ref={designsHeadingRef} className="section-heading">
                 Visual Design
               </h3>
             </div>
-            <div ref={designsListRef} className="w-2/3 text-right">
-              <p className="text-xl" style={{ willChange: "opacity, transform" }}>Web Design</p>
-              <p className="text-xl" style={{ willChange: "opacity, transform" }}>Logo Design</p>
-              <p className="text-xl" style={{ willChange: "opacity, transform" }}>Brand Identity</p>
-              <p className="text-xl" style={{ willChange: "opacity, transform" }}>Packaging Design</p>
-              <p className="text-xl" style={{ willChange: "opacity, transform" }}>Communication Design</p>
+            <div ref={designsListRef} className="section-list-container">
+              <p className="section-list-item">Web Design</p>
+              <p className="section-list-item">Logo Design</p>
+              <p className="section-list-item">Brand Identity</p>
+              <p className="section-list-item">Packaging Design</p>
+              <p className="section-list-item">Communication Design</p>
             </div>
           </div>
         </div>
@@ -593,20 +692,20 @@ const ServicesPage = () => {
         {/* SPACES */}
         <div
           ref={spacesSectionRef}
-          className="h-screen sticky top-0 z-20 bg-[#20355f] text-gray-200 overflow-hidden"
+          className="section-base section-spaces"
         >
-          <div className="container mx-auto px-8 py-4 h-full flex items-start">
-            <div className="w-1/3 pr-4">
-              <h3 ref={spacesHeadingRef} className="text-4xl font-bold">
+          <div className="container mx-auto section-inner">
+            <div className="section-heading-container">
+              <h3 ref={spacesHeadingRef} className="section-heading">
                 Space Design
               </h3>
             </div>
-            <div ref={spacesListRef} className="w-2/3 text-right">
-              <p className="text-xl" style={{ willChange: "opacity, transform" }}>Retail Display</p>
-              <p className="text-xl" style={{ willChange: "opacity, transform" }}>Exhibition Design</p>
-              <p className="text-xl" style={{ willChange: "opacity, transform" }}>Branded Environments</p>
-              <p className="text-xl" style={{ willChange: "opacity, transform" }}>Environmental Graphics</p>
-              <p className="text-xl" style={{ willChange: "opacity, transform" }}>Wayfinding and Signages</p>
+            <div ref={spacesListRef} className="section-list-container">
+              <p className="section-list-item">Retail Display</p>
+              <p className="section-list-item">Exhibition Design</p>
+              <p className="section-list-item">Branded Environments</p>
+              <p className="section-list-item">Environmental Graphics</p>
+              <p className="section-list-item">Wayfinding and Signages</p>
             </div>
           </div>
         </div>
@@ -614,21 +713,21 @@ const ServicesPage = () => {
         {/* INSTALLATIONS */}
         <div
           ref={installationsSectionRef}
-          className="h-screen sticky top-0 z-30 bg-black text-white overflow-hidden"
+          className="section-base section-installations"
         >
-          <div className="container mx-auto px-8 py-4 h-full flex items-start">
-            <div className="w-1/3 pr-4">
-              <h3 ref={installationsHeadingRef} className="text-4xl font-bold">
+          <div className="container mx-auto section-inner">
+            <div className="section-heading-container">
+              <h3 ref={installationsHeadingRef} className="section-heading">
                 Art Installations
               </h3>
             </div>
-            <div ref={installationsListRef} className="w-2/3 text-right">
-              <p className="text-xl" style={{ willChange: "opacity, transform" }}>Wall Murals</p>
-              <p className="text-xl" style={{ willChange: "opacity, transform" }}>Fine Art Printing</p>
-              <p className="text-xl" style={{ willChange: "opacity, transform" }}>Custom Wallpapers</p>
-              <p className="text-xl" style={{ willChange: "opacity, transform" }}>Store Window Display</p>
-              <p className="text-xl" style={{ willChange: "opacity, transform" }}>Custom Art Installations</p>
-              <p className="text-xl" style={{ willChange: "opacity, transform" }}>Signages & Name Boards</p>
+            <div ref={installationsListRef} className="section-list-container">
+              <p className="section-list-item">Wall Murals</p>
+              <p className="section-list-item">Fine Art Printing</p>
+              <p className="section-list-item">Custom Wallpapers</p>
+              <p className="section-list-item">Store Window Display</p>
+              <p className="section-list-item">Custom Art Installations</p>
+              <p className="section-list-item">Signages & Name Boards</p>
             </div>
           </div>
         </div>
@@ -638,9 +737,9 @@ const ServicesPage = () => {
       <div
         ref={helpSectionRef}
         id="help"
-        className="h-[50vh] flex items-center justify-center bg-white text-black relative z-40"
+        className="help-section"
       >
-        <h2 className="text-5xl font-bold">Need a Hand? We're happy to help!</h2>
+        <h2 className="help-heading">Need a Hand? We're happy to help!</h2>
       </div>
     </div>
   );

@@ -1,0 +1,269 @@
+/* services.css */
+
+/* Animation keyframes */
+@keyframes slideInFromBottom {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Hero section styles */
+.slide-in-from-bottom {
+  animation: slideInFromBottom 0.8s ease forwards;
+}
+
+.animate-heading {
+  animation: fadeInScale 1.2s ease-in-out forwards;
+}
+
+/* Services page specific styles */
+.services-container {
+  position: relative;
+}
+
+/* Hero section */
+.services-hero {
+  background-color: #000;
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.services-hero-image-container {
+  width: 80%;
+  height: 80%;
+  margin: 0 auto;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.services-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.services-hero-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(2rem, 10vw, 5rem); /* Responsive font size */
+  font-weight: 800;
+  color: #000;
+}
+
+/* Floating image container */
+.floating-image-container {
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
+  border-radius: 1rem;
+  top: 10px;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: min(600px, 90vw);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.floating-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.floating-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+.floating-image-back {
+  display: none;
+}
+
+/* Main content container */
+.content-container {
+  height: 400vh;
+}
+
+/* Section base styles */
+.section-base {
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+}
+
+/* Section specific backgrounds - Using !important to override any base styles */
+.section-designs {
+  background-color: #ffffff !important; /* White background */
+  color: #4b5563 !important; /* Dark grey text */
+  z-index: 10;
+}
+
+.section-spaces {
+  background-color: #20355f !important;
+  color: #e5e7eb !important; /* Light grey text */
+  z-index: 20;
+}
+
+.section-installations {
+  background-color: #000 !important;
+  color: #fff !important;
+  z-index: 30;
+}
+
+/* Section inner layout */
+.section-inner {
+  container-type: inline-size;
+  height: 100%;
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+@media (min-width: 640px) {
+  .section-inner {
+    padding: 1rem 2rem;
+    flex-direction: row;
+  }
+}
+
+/* Section headings */
+.section-heading-container {
+  width: 100%;
+  padding-right: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 640px) {
+  .section-heading-container {
+    width: 33.333333%;
+    margin-bottom: 0;
+  }
+}
+
+.section-heading {
+  font-size: clamp(1.5rem, 5vw, 3rem) !important; /* Responsive font size with !important */
+  font-weight: 700;
+  font-family: 'Khand', system-ui, Helvetica, Arial, sans-serif !important;
+}
+
+/* Section content lists */
+.section-list-container {
+  width: 100%;
+  text-align: left;
+}
+
+@media (min-width: 640px) {
+  .section-list-container {
+    width: 66.666667%;
+    text-align: right;
+  }
+}
+
+.section-list-item {
+  font-size: clamp(1rem, 2vw, 1.25rem) !important; /* Responsive font size with !important */
+  margin-bottom: 0.5rem;
+  will-change: opacity, transform;
+  font-family: 'Switzer', system-ui, Helvetica, Arial, sans-serif !important;
+}
+
+/* Help section */
+.help-section {
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff !important;
+  color: #000 !important;
+  position: relative;
+  z-index: 40;
+}
+
+.help-heading {
+  font-size: clamp(1.5rem, 6vw, 4rem) !important; /* Responsive font size with !important */
+  font-weight: 700;
+  text-align: center;
+  padding: 0 1rem;
+  font-family: 'Khand', system-ui, Helvetica, Arial, sans-serif !important;
+}
+
+/* Mobile adjustments - NOW WITH SCROLL TOP FIXES */
+@media (max-width: 639px) {
+  .floating-image-container {
+    max-width: 95%;
+    top: auto;
+    bottom: 10px;
+    height: 40vh;
+  }
+  
+  .section-inner {
+    justify-content: flex-start;
+    padding-top: 2rem;
+  }
+  
+  /* For small screens - sections scroll to top rather than staggered */
+  .section-spaces, 
+  .section-installations {
+    position: relative !important; /* Override sticky positioning for mobile */
+    transform: none !important;    /* Reset any transforms applied by JS */
+  }
+  
+  /* Force content container to auto height for mobile */
+  .content-container {
+    height: auto !important;
+  }
+  
+  /* Remove sticky behavior for all sections on mobile */
+  .section-base {
+    position: relative !important;
+    height: auto !important;
+    min-height: 100vh;
+  }
+}
+
+/* Print styles */
+@media print {
+  .floating-image-container {
+    display: none;
+  }
+  
+  .section-base {
+    position: relative;
+    page-break-inside: avoid;
+    height: auto;
+    min-height: 50vh;
+  }
+  
+  .content-container {
+    height: auto;
+  }
+}
+
+/* For accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .slide-in-from-bottom,
+  .animate-heading {
+    animation: none;
+  }
+}

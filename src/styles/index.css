@@ -5,7 +5,7 @@
 @import './hero.css';
 @import './projects.css';
 @import './logos.css';
-@import './services.module.css';
+@import './services.css';
 @import './works.css';
 @import './details.css';
 
@@ -64,7 +64,6 @@ nav a, nav button {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  background-color: #000000;       /* Black background */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -78,7 +77,6 @@ html, body, #root {
   width: 100%;
   margin: 0;
   padding: 0;              /* Off-white text globally */
-  background-color: #000000;   /* Black background globally */
   overflow-x: clip;
 }
 
@@ -105,7 +103,6 @@ body {
 section {
   min-height: 100vh;
   width: 100%;
-  background-color: #000000;         /* Black background for all sections */                /* Off-white text */
 }
 
 /* Buttons */
@@ -122,6 +119,5 @@ button {
 @media (prefers-color-scheme: light) {
   :root {
     color: #f5f5f5;                   /* Maintain off-white text in light mode */
-    background-color: #000000;        /* Always black background */
   }
 }
