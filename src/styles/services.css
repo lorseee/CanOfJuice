@@ -70,9 +70,9 @@
   top: 10px;
   bottom: 10px;
   left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: min(600px, 90vw);
+  transform: translateX(-40%);
+  width: 80%;
+  max-width: min(500px, 80vw);
   overflow: hidden;
   opacity: 0;
   visibility: hidden;
@@ -151,7 +151,7 @@
 /* Section headings */
 .section-heading-container {
   width: 100%;
-  padding-right: 1rem;
+  padding-left: 3rem;
   margin-bottom: 2rem;
 }
 
@@ -163,7 +163,7 @@
 }
 
 .section-heading {
-  font-size: clamp(1.5rem, 5vw, 3rem) !important; /* Responsive font size with !important */
+  font-size: clamp(1.25rem, 4vw, 2rem) !important; /* Responsive font size with !important */
   font-weight: 700;
   font-family: 'Khand', system-ui, Helvetica, Arial, sans-serif !important;
 }
@@ -182,8 +182,8 @@
 }
 
 .section-list-item {
-  font-size: clamp(1rem, 2vw, 1.25rem) !important; /* Responsive font size with !important */
-  margin-bottom: 0.5rem;
+  font-size: clamp(0.75rem, 1.75vw, 1rem) !important; /* Responsive font size with !important */
+  margin-bottom: 0.25rem;
   will-change: opacity, transform;
   font-family: 'Switzer', system-ui, Helvetica, Arial, sans-serif !important;
 }
@@ -192,7 +192,7 @@
 .help-section {
   height: 50vh;
   display: flex;
-  align-items: center;
+  align-items:end;
   justify-content: center;
   background-color: #fff !important;
   color: #000 !important;

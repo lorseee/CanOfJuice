@@ -277,8 +277,8 @@ export const projectImages = {
       "/images/projects/6/gallery-2.jpeg",
       "/images/projects/6/gallery-3.jpeg",
       "/images/projects/6/gallery-4.jpg",
-      "/images/projects/6/gallery-4.jpg",
-      "/images/projects/6/gallery-4.jpg",
+      "/images/projects/6/gallery-5.jpg",
+      "/images/projects/6/gallery-6.jpg",
     ],
     layout: "mosaic"
   },

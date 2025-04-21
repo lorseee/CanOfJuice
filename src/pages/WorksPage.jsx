@@ -41,17 +41,22 @@ const WorksPage = () => {
 
   return (
     <div className="works-page works-slide-in">
-      <ScrollWrapper id="works" index={0} className="works-hero">
-        <div className="works-hero-wrapper">
-          <img
-            src="/images/works-hero.png"
-            alt="Works Hero"
-            className="works-hero-image"
-            onError={handleImageError}
-          />
-          <h1 className="works-hero-title">OUR WORK</h1>
-        </div>
-      </ScrollWrapper>
+      <ScrollWrapper
+          id="works"
+          index={0}
+          className="works-hero slide-in-from-bottom"
+        >
+          <div className="works-hero-wrapper">
+            <img
+              src="/images/works-hero.png"
+              alt="Works Hero"
+              className="works-hero-image"
+              onError={handleImageError}
+            />
+            <h1 className="works-hero-title animate-heading">OUR WORK</h1>
+          </div>
+        </ScrollWrapper>
+
 
       <ScrollWrapper id="works-showcase" index={2} className="works-showcase">
         <div className="works-categories">

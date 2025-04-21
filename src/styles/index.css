@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import './details.css';
 @import './navbar.css';
 @import './aboutus.css';
 @import './footer.css';
@@ -7,12 +8,9 @@
 @import './logos.css';
 @import './services.css';
 @import './works.css';
-@import './details.css';
 
-/* ensure padding/borders don’t add to an element’s width */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
+
+
 
 
 @font-face {
@@ -64,7 +62,6 @@ nav a, nav button {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -90,21 +87,6 @@ a:hover {
   color: #bbbbbb;                    /* Lighter gray hover effect */
 }
 
-/* Body layout */
-body {
-  display: flex;
-  flex-direction: column;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-/* Sections */
-section {
-  min-height: 100vh;
-  width: 100%;
-}
-
 /* Buttons */
 button {
   border-radius: 8px;      /* Off-white border */
@@ -115,9 +97,3 @@ button {
   transition: all 0.3s ease;
 }
 
-/* Media Queries */
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #f5f5f5;                   /* Maintain off-white text in light mode */
-  }
-}

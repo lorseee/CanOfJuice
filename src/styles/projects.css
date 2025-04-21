@@ -274,7 +274,6 @@
   @media (max-width: 639px) {
     .cta-wrapper { padding: 1.5rem 0; }
   }
-  
   .cta-button {
     display: inline-flex;       /* make it a row‑flex container */
     flex-direction: row;        /* default, but explicit is nice */
@@ -286,6 +285,7 @@
     transition: transform 0.3s ease-out;
     transform-origin: center;
   }
+  
   
   .cta-arrow {
     /* remove margin-top and any absolute rules */

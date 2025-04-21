@@ -3,7 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projects as allProjects, projectImages } from "../constants";
-import projectLayouts from "../layouts/ProjectLayouts"; // Import the project layouts
+import GalleryLayout from "../layouts/GalleryLayouts.jsx";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,109 +15,27 @@ const ProjectDetailPage = () => {
   const [project, setProject] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [relatedProjects, setRelatedProjects] = useState([]);
-  const [projectLayout, setProjectLayout] = useState(null);
 
-  // Refs for animations
-  const heroRef = useRef(null);
-  const titleRef = useRef(null);
-  const descriptionRef = useRef(null);
-  const infoRef = useRef(null);
-  const imagesRef = useRef(null);
-  const imageRefs = useRef([]);
-  const relatedProjectsRef = useRef(null);
-  const relatedProjectItemsRef = useRef([]);
-  const viewAllBtnRef = useRef(null);
+  // Refs for animations with unique names
+  const detailHeroRef = useRef(null);
+  const detailTitleRef = useRef(null);
+  const detailDescriptionRef = useRef(null);
+  const detailInfoRef = useRef(null);
+  const detailImagesRef = useRef(null);
+  const detailGalleryRef = useRef(null); // New ref for the gallery section
+  const detailRelatedProjectsRef = useRef(null);
+  const detailRelatedProjectItemsRef = useRef([]);
+  const detailViewAllBtnRef = useRef(null);
   
-  imageRefs.current = [];
-  const addToImageRefs = (el) => {
-    if (el && !imageRefs.current.includes(el)) {
-      imageRefs.current.push(el);
-    }
-  };
-  
-  relatedProjectItemsRef.current = [];
-  const addToRelatedProjectRefs = (el) => {
-    if (el && !relatedProjectItemsRef.current.includes(el)) {
-      relatedProjectItemsRef.current.push(el);
-    }
-  };
-
-  // Helper function to determine image layout styling based on project layout configuration
-  const getImageLayoutStyle = (imageIndex) => {
-    if (!projectLayout) return "overflow-hidden aspect-[16/9]";
-    
-    const baseClasses = "overflow-hidden";
-    const customStyles = projectLayout.galleryConfig.customImageStyles;
-    
-    // Check if there's a custom style defined for this image index
-    if (customStyles && customStyles[imageIndex]) {
-      const { aspectRatio, colSpan } = customStyles[imageIndex];
-      const colSpanClass = colSpan > 1 ? `md:col-span-${colSpan}` : '';
-      return `${baseClasses} ${colSpanClass} aspect-[${aspectRatio}]`;
-    }
-    
-    // Default fallback if no custom style is defined
-    return `${baseClasses} aspect-[16/9]`;
-  };
-
-  // Function to determine the gallery grid layout based on project layout configuration
-  const getGalleryGridLayout = () => {
-    if (!projectLayout) return "grid grid-cols-1 md:grid-cols-2 gap-6";
-    
-    const { layout } = projectLayout;
-    const { spacing } = projectLayout.galleryConfig;
-    
-    // Map spacing values to actual gap classes
-    const gapSize = {
-      small: "gap-4",
-      medium: "gap-6",
-      large: "gap-8",
-    }[spacing] || "gap-6";
-    
-    switch(layout) {
-      case "mosaic":
-        return `grid grid-cols-1 md:grid-cols-3 ${gapSize}`;
-      case "staggered":
-        return `grid grid-cols-1 md:grid-cols-2 ${gapSize}`;
-      case "vertical":
-        return `grid grid-cols-1 md:grid-cols-2 ${gapSize}`;
-      case "horizontal":
-        return `grid grid-cols-1 md:grid-cols-2 ${gapSize}`;
-      case "fullwidth":
-        return `grid grid-cols-1 ${gapSize}`;
-      default:
-        return `grid grid-cols-1 md:grid-cols-2 ${gapSize}`;
-    }
-  };
-
-  // Helper for getting image hover effects from layout config
-  const getImageHoverEffect = () => {
-    if (!projectLayout) return "hover:scale-105";
-    
-    const { hover, transition } = projectLayout.galleryConfig.imageEffects || {};
-    
-    // Transition duration based on config
-    const duration = {
-      fast: "duration-500",
-      medium: "duration-1000",
-      slow: "duration-1500"
-    }[transition] || "duration-1000";
-    
-    // Hover effect based on config
-    switch(hover) {
-      case "scale":
-        return `hover:scale-110 ${duration}`;
-      case "fade":
-        return `hover:opacity-80 ${duration}`;
-      case "blur":
-        return `hover:blur-sm ${duration}`;
-      default:
-        return `hover:scale-105 ${duration}`;
+  detailRelatedProjectItemsRef.current = [];
+  const addToDetailRelatedProjectRefs = (el) => {
+    if (el && !detailRelatedProjectItemsRef.current.includes(el)) {
+      detailRelatedProjectItemsRef.current.push(el);
     }
   };
 
   // Fixed getProjectImage function to ensure consistent image retrieval
-  const getProjectImage = (projectId, imageType = 'main') => {
+  const getDetailProjectImage = (projectId, imageType = 'main') => {
     const id = projectId.toString();
     
     if (projectImages[id] && projectImages[id][imageType]) {
@@ -126,27 +45,11 @@ const ProjectDetailPage = () => {
     return projectImages["default"][imageType];
   };
 
-  // Function to get image text details if available
-  const getImageText = (imageIndex) => {
-    if (!projectLayout?.galleryConfig?.imageText?.[imageIndex]) return null;
-    
-    return projectLayout.galleryConfig.imageText[imageIndex];
-  };
-
   useEffect(() => {
     // Fetch project data
     const fetchedProject = allProjects.find(p => p.id === projectId);
     
     if (fetchedProject) {
-      // Get project layout configuration
-      const layoutConfig = projectLayouts[projectId.toString()];
-      if (layoutConfig) {
-        setProjectLayout(layoutConfig);
-        console.log("Found layout configuration for project:", projectId, layoutConfig);
-      } else {
-        console.log("No layout configuration found for project:", projectId);
-      }
-      
       // Format category for display
       const formattedCategory = fetchedProject.category
         .split('-')
@@ -154,18 +57,16 @@ const ProjectDetailPage = () => {
         .join(' ');
       
       // Get main image for the current project
-      const mainImage = getProjectImage(fetchedProject.id, 'main');
+      const mainImage = getDetailProjectImage(fetchedProject.id, 'main');
       
       // Prepare project data using the proper image paths
       const projectData = {
         ...fetchedProject,
         displayCategory: formattedCategory,
         image: mainImage,
-        // Add additional project images for gallery
+        // Add additional project images for gallery using the gallery array
         additionalImages: projectImages[fetchedProject.id]?.gallery || 
-                          projectImages["default"].gallery,
-        // Use layout type from project layouts if available
-        layoutType: layoutConfig?.layout || projectImages[fetchedProject.id]?.layout || 'default'
+                          projectImages["default"].gallery
       };
       
       setProject(projectData);
@@ -176,7 +77,7 @@ const ProjectDetailPage = () => {
         .slice(0, 3)
         .map(p => {
           // Get main image for each related project
-          const relatedImage = getProjectImage(p.id, 'main');
+          const relatedImage = getDetailProjectImage(p.id, 'main');
           
           const formattedRelatedCategory = p.category
             .split('-')
@@ -203,7 +104,7 @@ const ProjectDetailPage = () => {
       // Initialize animations
       const ctx = gsap.context(() => {
         // Hero section animation
-        gsap.fromTo(heroRef.current,
+        gsap.fromTo(detailHeroRef.current,
           { opacity: 0 },
           { 
             opacity: 1, 
@@ -213,8 +114,8 @@ const ProjectDetailPage = () => {
         );
         
         // Title animation with upward movement
-        if (titleRef.current && titleRef.current.children) {
-          gsap.fromTo(titleRef.current.children,
+        if (detailTitleRef.current && detailTitleRef.current.children) {
+          gsap.fromTo(detailTitleRef.current.children,
             { y: 100, opacity: 0 },
             {
               y: 0,
@@ -227,7 +128,7 @@ const ProjectDetailPage = () => {
         }
         
         // Description section animation with upward movement
-        gsap.fromTo(descriptionRef.current,
+        gsap.fromTo(detailDescriptionRef.current,
           { y: 100, opacity: 0 },
           {
             y: 0,
@@ -235,7 +136,7 @@ const ProjectDetailPage = () => {
             duration: 1.2,
             ease: "power2.out",
             scrollTrigger: {
-              trigger: descriptionRef.current,
+              trigger: detailDescriptionRef.current,
               start: "top 80%",
               end: "top 50%",
               scrub: true,
@@ -244,7 +145,7 @@ const ProjectDetailPage = () => {
         );
         
         // Project info animation with upward movement
-        gsap.fromTo(infoRef.current,
+        gsap.fromTo(detailInfoRef.current,
           { y: 100, opacity: 0 },
           {
             y: 0,
@@ -252,7 +153,7 @@ const ProjectDetailPage = () => {
             duration: 1.2,
             ease: "power2.out",
             scrollTrigger: {
-              trigger: infoRef.current,
+              trigger: detailInfoRef.current,
               start: "top 80%",
               end: "top 50%",
               scrub: true,
@@ -261,8 +162,8 @@ const ProjectDetailPage = () => {
         );
         
         // Gallery header animation
-        if (imagesRef.current && imagesRef.current.querySelector('div')) {
-          gsap.fromTo(imagesRef.current.querySelector('div'),
+        if (detailImagesRef.current && detailImagesRef.current.querySelector('div')) {
+          gsap.fromTo(detailImagesRef.current.querySelector('div'),
             { y: 100, opacity: 0 },
             {
               y: 0,
@@ -270,7 +171,7 @@ const ProjectDetailPage = () => {
               duration: 1.2,
               ease: "power2.out",
               scrollTrigger: {
-                trigger: imagesRef.current,
+                trigger: detailImagesRef.current,
                 start: "top 80%",
                 end: "top 60%",
                 scrub: true,
@@ -279,18 +180,17 @@ const ProjectDetailPage = () => {
           );
         }
         
-        // Gallery images animation with staggered upward movement
-        if (imageRefs.current.length > 0) {
-          gsap.fromTo(imageRefs.current,
+        // Gallery section animation
+        if (detailGalleryRef.current) {
+          gsap.fromTo(detailGalleryRef.current,
             { y: 100, opacity: 0 },
             {
               y: 0,
               opacity: 1,
-              duration: 1,
-              stagger: 0.2,
-              ease: "power3.out",
+              duration: 1.2,
+              ease: "power2.out",
               scrollTrigger: {
-                trigger: imagesRef.current,
+                trigger: detailGalleryRef.current,
                 start: "top 70%",
                 end: "center 60%",
                 scrub: true,
@@ -300,8 +200,8 @@ const ProjectDetailPage = () => {
         }
         
         // Related projects section animations
-        if (relatedProjectsRef.current && relatedProjectsRef.current.querySelector('h2')) {
-          gsap.fromTo(relatedProjectsRef.current.querySelector('h2'),
+        if (detailRelatedProjectsRef.current && detailRelatedProjectsRef.current.querySelector('h2')) {
+          gsap.fromTo(detailRelatedProjectsRef.current.querySelector('h2'),
             { y: 100, opacity: 0 },
             {
               y: 0,
@@ -309,7 +209,7 @@ const ProjectDetailPage = () => {
               duration: 1.2,
               ease: "power2.out",
               scrollTrigger: {
-                trigger: relatedProjectsRef.current,
+                trigger: detailRelatedProjectsRef.current,
                 start: "top 80%",
                 end: "top 60%",
                 scrub: true,
@@ -318,8 +218,8 @@ const ProjectDetailPage = () => {
           );
           
           // Related project items animation with staggered upward movement
-          if (relatedProjectItemsRef.current.length > 0) {
-            gsap.fromTo(relatedProjectItemsRef.current,
+          if (detailRelatedProjectItemsRef.current.length > 0) {
+            gsap.fromTo(detailRelatedProjectItemsRef.current,
               { y: 100, opacity: 0 },
               {
                 y: 0,
@@ -328,7 +228,7 @@ const ProjectDetailPage = () => {
                 stagger: 0.2,
                 ease: "power3.out",
                 scrollTrigger: {
-                  trigger: relatedProjectsRef.current,
+                  trigger: detailRelatedProjectsRef.current,
                   start: "top 70%",
                   end: "center 60%",
                   scrub: true,
@@ -338,8 +238,8 @@ const ProjectDetailPage = () => {
           }
           
           // View all button animation
-          if (viewAllBtnRef.current) {
-            gsap.fromTo(viewAllBtnRef.current,
+          if (detailViewAllBtnRef.current) {
+            gsap.fromTo(detailViewAllBtnRef.current,
               { y: 50, opacity: 0 },
               {
                 y: 0,
@@ -347,7 +247,7 @@ const ProjectDetailPage = () => {
                 duration: 1,
                 ease: "power2.out",
                 scrollTrigger: {
-                  trigger: viewAllBtnRef.current,
+                  trigger: detailViewAllBtnRef.current,
                   start: "top 90%",
                   end: "top 70%",
                   scrub: true,
@@ -377,109 +277,56 @@ const ProjectDetailPage = () => {
     e.target.src = projectImages["default"].main;
   };
 
-  // Apply hero style from layout config
-  const getHeroStyle = () => {
-    if (!projectLayout) return {};
-    
-    const { textPosition, overlayOpacity, imageColorFilter } = projectLayout.heroStyle;
-    
-    // Determine text position classes
-    let positionClasses = "justify-end";
-    if (textPosition === "center") {
-      positionClasses = "justify-center items-center text-center";
-    } else if (textPosition === "bottom-right") {
-      positionClasses = "justify-end items-end text-right";
-    } else if (textPosition === "bottom-left") {
-      positionClasses = "justify-end items-start";
-    }
-    
-    return {
-      positionClasses,
-      overlayOpacity: overlayOpacity || 0.3,
-      imageFilter: imageColorFilter === "grayscale" ? "grayscale" : 
-                  imageColorFilter === "sepia" ? "sepia" : ""
-    };
-  };
-
-  // Apply content style from layout config
-  const getContentStyle = () => {
-    if (!projectLayout) return { textSize: "text-lg", columns: 1 };
-    
-    const { textSize, descriptionColumns } = projectLayout.contentStyle;
-    
-    return {
-      textSize: textSize === "large" ? "text-xl" : "text-lg",
-      columns: descriptionColumns || 1
-    };
-  };
-
   if (isLoading) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-black text-white">
-        <div className="flex flex-col items-center">
-          <div className="w-16 h-16 border-t-2 border-white rounded-full animate-spin"></div>
-          <p className="mt-4 text-xl font-light">Loading project...</p>
+      <div className="detail-loading-container">
+        <div className="detail-loading-flex">
+          <div className="detail-loading-spinner"></div>
+          <p className="detail-loading-text">Loading project...</p>
         </div>
       </div>
     );
   }
 
-  const heroStyle = getHeroStyle();
-  const contentStyle = getContentStyle();
-
   return (
-    <main className="relative bg-black text-white min-h-screen">
-      {/* Hero section with dynamic styling */}
-      <div className="sticky top-0 h-screen w-full z-0">
-        <div ref={heroRef} className="h-full w-full flex justify-center items-center bg-black">
-          <div className="w-[80%] h-[80%] mx-auto rounded-lg overflow-hidden shadow-lg relative">
+    <main className="detail-page-main">
+      {/* Hero section */}
+      <div className="detail-hero-container">
+        <div ref={detailHeroRef} className="detail-hero-inner">
+          <div className="detail-hero-image-container">
             <img 
               src={project.image} 
               alt={project.title}
-              className={`w-full h-full object-cover ${heroStyle.imageFilter}`}
+              className="detail-hero-image"
               onError={handleImageError}
             />
             
-            {/* Dark overlay with configurable opacity */}
-            <div 
-              className="absolute inset-0 bg-black" 
-              style={{ opacity: heroStyle.overlayOpacity }}
-            ></div>
-            
-            {/* Hero content with configurable positioning */}
-            <div 
-              ref={titleRef} 
-              className={`absolute inset-0 flex flex-col p-8 md:p-16 ${heroStyle.positionClasses}`}
-            >
+            {/* Hero content */}
+            <div ref={detailTitleRef} className="detail-hero-content">
               {/* Category text */}
-              <p className="relative z-10 text-sm md:text-base font-light tracking-widest uppercase mb-3">
+              <p className="detail-hero-category">
                 {project.displayCategory}
               </p>
               
               {/* Title text */}
-              <h1 className="relative z-10 text-4xl md:text-6xl font-bold text-white animate-heading">
+              <h1 className="detail-hero-title detail-animate-heading">
                 {project.title}
               </h1>
               
-              <div className="relative z-10 w-24 h-[1px] bg-white opacity-70 mt-4"></div>
+              <div className="detail-hero-divider"></div>
             </div>
           </div>
         </div>
       </div>
       
       {/* Project content */}
-      <div className="relative z-10 bg-black text-white">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-24">
-          {/* Project description with configurable columns */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-24">
-            <div 
-              ref={descriptionRef} 
-              className={`${contentStyle.columns > 1 ? 'lg:col-span-2' : 'lg:col-span-3'}`}
-            >
-              <h2 className="text-3xl md:text-4xl font-light mb-8">About the Project</h2>
-              <div 
-                className={`${contentStyle.columns > 1 ? 'columns-1 md:columns-2' : ''} space-y-6 ${contentStyle.textSize} font-light text-gray-300`}
-              >
+      <div className="detail-project-content">
+        <div className="detail-content-inner">
+          {/* Project description */}
+          <div className="detail-project-description-grid">
+            <div ref={detailDescriptionRef} className="detail-description-section">
+              <h2>About the Project</h2>
+              <div className="detail-description-text">
                 <p>
                   {project.longDescription || `For ${project.title}, we developed a comprehensive design strategy that aligned with the client's vision and brand identity. The project demanded innovative approaches and meticulous attention to detail to create a seamless user experience.`}
                 </p>
@@ -489,102 +336,74 @@ const ProjectDetailPage = () => {
               </div>
             </div>
             
-            {/* Project details (only show if using columns) */}
-            {contentStyle.columns > 1 && (
-              <div ref={infoRef} className="lg:col-span-1">
-                <h3 className="text-2xl font-light mb-6">Project Details</h3>
-                <ul className="space-y-6">
-                  <li>
-                    <p className="text-sm font-light uppercase tracking-widest text-gray-400 mb-1">Services</p>
-                    <p className="text-lg">{project.displayCategory}</p>
-                  </li>
-                  <li>
-                    <p className="text-sm font-light uppercase tracking-widest text-gray-400 mb-1">Year</p>
-                    <p className="text-lg">{new Date().getFullYear()}</p>
-                  </li>
-                </ul>
-              </div>
-            )}
+            {/* Project details */}
+            <div ref={detailInfoRef} className="detail-info-section">
+              <h3>Project Details</h3>
+              <ul className="detail-info-list">
+                <li>
+                  <p className="detail-info-label">Services</p>
+                  <p className="detail-info-value">{project.displayCategory}</p>
+                </li>
+                <li>
+                  <p className="detail-info-label">Year</p>
+                  <p className="detail-info-value">{new Date().getFullYear()}</p>
+                </li>
+              </ul>
+            </div>
           </div>
           
-          {/* Image gallery with dynamic layout from project layouts */}
-          <div ref={imagesRef} className="mb-24">
+          {/* Image gallery */}
+          <div ref={detailImagesRef} className="detail-gallery-section">
             {/* Gallery header as vertical display */}
-            <div className="mb-12">
-              <h2 className="text-3xl md:text-4xl font-light mb-4">Project</h2>
-              <h2 className="text-3xl md:text-4xl font-light mb-4">Gallery</h2>
-              <h2 className="text-3xl md:text-4xl font-light">Showcase</h2>
+            <div className="detail-gallery-header">
+              <h2 className="detail-gallery-title">Project</h2>
+              <h2 className="detail-gallery-title">Gallery</h2>
+              <h2 className="detail-gallery-title">Showcase</h2>
             </div>
             
-            {/* Dynamic gallery layout based on project type */}
-            <div className={getGalleryGridLayout()}>
-              {project.additionalImages.map((image, index) => {
-                // Get layout style based on project layout config
-                const layoutStyle = getImageLayoutStyle(index);
-                const hoverEffect = getImageHoverEffect();
-                const imageText = getImageText(index);
-                
-                return (
-                  <div 
-                    key={index}
-                    ref={addToImageRefs}
-                    className={layoutStyle}
-                  >
-                    <div className="w-full h-full relative group">
-                      <img 
-                        src={image} 
-                        alt={`${project.title} - Image ${index + 1}`}
-                        className={`w-full h-full object-cover transform transition-all ${hoverEffect}`}
-                        onError={handleImageError}
-                      />
-                      
-                      {/* Image text overlay if specified in config */}
-                      {imageText && (
-                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 flex flex-col justify-end p-6 transition-all duration-500">
-                          <div className="transform translate-y-4 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                            <h4 className="text-xl font-medium mb-2">{imageText.title}</h4>
-                            <p className="text-sm text-gray-300">{imageText.description}</p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
+            {/* Import gallery layout based on project ID */}
+            <div ref={detailGalleryRef}>
+              <GalleryLayout 
+                projectId={project.id}
+                images={project.additionalImages}
+                handleImageError={handleImageError}
+              />
             </div>
           </div>
           
           {/* Related projects section */}
           {relatedProjects.length > 0 && (
-            <div ref={relatedProjectsRef}>
-              <h2 className="text-3xl md:text-4xl font-light mb-12">Related Projects</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {relatedProjects.map((relatedProject) => (
-                  <div 
-                    key={relatedProject.id}
-                    ref={addToRelatedProjectRefs}
-                    className="relative overflow-hidden group cursor-pointer aspect-[4/3]"
-                    onClick={() => handleRelatedProjectClick(relatedProject.id)}
-                  >
-                    <div className="absolute inset-0">
-                      <img 
-                        src={relatedProject.image} 
-                        alt={relatedProject.title}
-                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                        onError={handleImageError}
-                      />
-                      <div className="absolute inset-0 group-hover:bg-opacity-50 transition-all duration-500"></div>
+            <div ref={detailRelatedProjectsRef} className="detail-related-projects-section">
+              <h2>Related Projects</h2>
+              <div className="detail-related-projects-grid">
+                {relatedProjects.map((relatedProject, index) => {
+                  return (
+                    <div 
+                      key={relatedProject.id}
+                      ref={addToDetailRelatedProjectRefs}
+                      className="detail-related-project-item"
+                      onClick={() => handleRelatedProjectClick(relatedProject.id)}
+                    >
+                      <div className="detail-related-project-image-wrapper">
+                        <img 
+                          src={relatedProject.image} 
+                          alt={relatedProject.title}
+                          className="detail-related-project-image"
+                          onError={handleImageError}
+                        />
+                        <div className="detail-related-project-overlay"></div>
+                      </div>
+                      
+                      <div className="detail-related-project-content">
+                        <p className="detail-related-project-category">
+                          {relatedProject.displayCategory}
+                        </p>
+                        <h3 className="detail-related-project-title">{relatedProject.title}</h3>
+                        <div className="detail-related-project-divider"></div>
+                      </div>
                     </div>
-                    
-                    <div className="absolute inset-0 flex flex-col justify-end p-8">
-                      <p className="text-sm font-light tracking-widest uppercase mb-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                        {relatedProject.displayCategory}
-                      </p>
-                      <h3 className="text-2xl font-light tracking-wide transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">{relatedProject.title}</h3>
-                      <div className="mt-4 w-12 h-[1px] bg-white opacity-0 group-hover:opacity-70 transform origin-left scale-x-0 group-hover:scale-x-100 transition-all duration-500"></div>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}
