@@ -9,6 +9,12 @@
 @import './works.css';
 @import './details.css';
 
+/* ensure padding/borders don’t add to an element’s width */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+
 @font-face {
   font-family: 'InterH';
   src: url('/fonts/Inter_18pt-Bold.ttf') format('truetype');
@@ -73,6 +79,7 @@ html, body, #root {
   margin: 0;
   padding: 0;              /* Off-white text globally */
   background-color: #000000;   /* Black background globally */
+  overflow-x: clip;
 }
 
 /* Links */

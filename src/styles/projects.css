@@ -2,16 +2,17 @@
 .projects-section {
     position: relative;
     width: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
     background-color: #000;
     color: #fff;
     min-height: 100vh;
   }
-  
   .projects-container {
+    width: 100%;            /* fill the viewport */
+    max-width: 1800px;      /* or whatever your design max is */
     margin: 0 auto;
-    max-width: 1800px;
     padding: 0 1.5rem;
+    overflow-x: hidden;     /* clip any accidental spillover */
   }
   @media (min-width: 768px) {
     .projects-container {
@@ -24,6 +25,7 @@
     width: 100%;
     display: flex;
     align-items: center;
+    overflow-x: hidden;
     height: 40vh;
   }
   @media (min-width: 768px) {
@@ -267,22 +269,35 @@
     padding: 3rem 0;
     margin-bottom: 6rem;
     min-height: 20vh;
-    overflow: visible;
+    overflow-x: hidden;
   }
   @media (max-width: 639px) {
     .cta-wrapper { padding: 1.5rem 0; }
   }
   
   .cta-button {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
+    display: inline-flex;       /* make it a row‑flex container */
+    flex-direction: row;        /* default, but explicit is nice */
+    align-items: center;        /* vertical center of its children */
+    justify-content: center;    /* horizontal centering of the group */
+    gap: 0.2em;                 /* small space between text and arrow */
     cursor: pointer;
     padding: 1rem 2rem;
     transition: transform 0.3s ease-out;
     transform-origin: center;
   }
+  
+  .cta-arrow {
+    /* remove margin-top and any absolute rules */
+    margin: 0;
+    font-size: clamp(1.5rem, 6vw, 5rem);
+    font-weight: 300;
+    transition: transform 0.3s;
+    /* if you want a little breathing room, you can nudge with margin-left instead: */
+    /* margin-left: 0.2em; */
+  }
+  
+  
   
   .cta-text {
     font-size: clamp(1.5rem, 6vw, 5rem);
@@ -293,13 +308,7 @@
     margin: 0 1rem;
     text-shadow: 0 0 1px rgba(255,255,255,0.3);
   }
-  
-  .cta-arrow {
-    font-size: clamp(1.5rem, 6vw, 5rem);
-    font-weight: 300;
-    transition: transform 0.3s;
-    margin-top: 0.2em;
-  }
+
   
   .cta-button:hover .cta-arrow {
     transform: translateX(0.5rem);
