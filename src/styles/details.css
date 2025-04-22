@@ -143,6 +143,9 @@
   z-index: 10;
   background-color: #000000;
   color: #ffffff;
+  justify-content: center;
+  justify-items: center;
+  padding-left: 3rem;
 }
 
 .detail-content-inner {
@@ -227,6 +230,7 @@
 
 .detail-gallery-header {
   margin-bottom: 3rem;
+  display: inline-flex;
 }
 
 .detail-gallery-title {
