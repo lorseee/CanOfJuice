@@ -6,6 +6,7 @@
     background-color: #000;
     color: #fff;
     min-height: 100vh;
+    z-index: 3;
   }
   .projects-container {
     width: 100%;            /* fill the viewport */

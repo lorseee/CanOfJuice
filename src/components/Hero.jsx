@@ -12,27 +12,26 @@ const Hero = () => {
     
     if (!section) return;
 
-    // Modified ScrollTrigger with explicit end point
+    // Create a ScrollTrigger instance
     const trigger = ScrollTrigger.create({
       trigger: section,
       start: "top top",
-      end: "bottom-=100% top", // Adjust end point
+      end: "bottom top",
       pin: true,
       pinSpacing: false,
       scrub: true,
     });
 
     return () => {
+      // Clean up the ScrollTrigger when component unmounts
       trigger.kill();
     };
   }, []);
 
   return (
-    <section 
-      id="hero"
+    <section id={"hero"}
       ref={sectionRef}
       className="hero-section"
-      style={{ height: "100vh" }} // Inline style for direct control
     >
       <div className="hero-container">
         <img 

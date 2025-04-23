@@ -39,26 +39,29 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-[9999] text-white py-3 px-4 flex justify-between items-center pointer-events-none">
-      <Link to="/#home" className="text-2xl font-bold pointer-events-auto">
-        <img
-          ref={logoRef}
-          src="/images/logo.png"
-          alt="Logo"
-          className="h-14 w-auto"
-        />
-      </Link>
-      <div
-        className={`space-x-6 pointer-events-auto transition-all duration-300 ${
-          isScrolled ? "opacity-0" : "opacity-100"
-        }`}
-        style={{ marginTop: "5px" }}
-      >
-        <Link to="/works#works" className="hover:text-gray-300 transition-colors">Works</Link>
-        <Link to="/services#services" className="hover:text-gray-300 transition-colors">Services</Link>
-        <a href="#contact" className="hover:text-gray-300 transition-colors" onClick={handleContactClick}>Contact</a>
-      </div>
-    </nav>
+    <nav className="fixed top-0 left-0 w-full z-[9999] text-white py-3 px-4 flex items-center justify-between pointer-events-none">
+        <Link to="/#home" className="pointer-events-auto">
+          <img
+            ref={logoRef}
+            src="/images/logo.png"
+            alt="Logo"
+            className="h-14 w-auto"
+          />
+        </Link>
+
+        <div
+          className={`ml-auto flex items-center space-x-6 pointer-events-auto transition-all duration-300 ${
+            isScrolled ? "opacity-0" : "opacity-100"
+          }`}
+        >
+          <Link to="/works#works" className="hover:text-gray-300 transition-colors">Works</Link>
+          <Link to="/services#services" className="hover:text-gray-300 transition-colors">Services</Link>
+          <a href="#contact" className="hover:text-gray-300 transition-colors" onClick={handleContactClick}>
+            Contact
+          </a>
+        </div>
+      </nav>
+
   );
 };
 

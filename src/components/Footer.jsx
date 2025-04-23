@@ -33,7 +33,7 @@ const Footer = () => {
             <FaLinkedin size={24} />
           </a>
           <a
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=canofjuice@gmail.com"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=scoj@canofjuice.com"
             target="_blank"
             rel="noopener noreferrer"
             className="social-icon"

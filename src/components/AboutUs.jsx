@@ -52,6 +52,7 @@ const AboutUs = () => {
       ref={sectionRef}
       style={{ backgroundImage: "url('/images/aboutus.JPG')" }}
     >
+      {/* Content overlay */}
       <div 
         ref={textRef}
         className="content-overlay"
@@ -61,7 +62,7 @@ const AboutUs = () => {
           we keep it FRESH.
         </h1>
         <p>
-          We are a design studio and manufacturing hub, dedicated to creating brands and crafting branded environments.
+          From concept to on-site execution, we create bold brand spaces and visuals that stand out and stay memorable.
         </p>
       </div>
     </section>

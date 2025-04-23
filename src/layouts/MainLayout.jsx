@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Navbar from "../components/Navbar";
 import { useLocation } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

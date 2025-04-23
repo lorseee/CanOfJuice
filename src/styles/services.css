@@ -33,6 +33,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 60;
 }
 
 .services-hero-image-container {
@@ -192,7 +193,7 @@
 .help-section {
   height: 50vh;
   display: flex;
-  align-items:end;
+  align-items:center;
   justify-content: center;
   background-color: #fff !important;
   color: #000 !important;
@@ -262,8 +263,7 @@
 
 /* For accessibility */
 @media (prefers-reduced-motion: reduce) {
-  .slide-in-from-bottom,
-  .animate-heading {
+  .slide-in-from-bottom {
     animation: none;
   }
 }

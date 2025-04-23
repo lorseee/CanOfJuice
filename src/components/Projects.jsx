@@ -59,11 +59,11 @@ const Projects = () => {
 
   // CTA rotating phrases
   const ctaPhrases = [
-    "WE DO ENVIRONMENTAL GRAPHICS",
-    "WE DO BRAND IDENTITY",
-    "WE DO WAY FINDING",
-    "WE DO COMMUNICATION DESIGNS",
-    "WE DO ART INSTALLATIONS"
+    "ENVIRONMENTAL GRAPHICS",
+    "BRAND IDENTITY",
+    "WAY FINDING",
+    "COMMUNICATION DESIGNS",
+    "ART INSTALLATIONS"
   ];
   const [ctaTextIndex, setCtaTextIndex] = useState(0);
   const [showFinal, setShowFinal] = useState(false);
@@ -81,7 +81,7 @@ const Projects = () => {
           {
             opacity: 1,
             y: 0,
-            duration: 0.1,
+            duration: 0.2,
             ease: "power3.out",
             scrollTrigger: {
               trigger: headingWrapper,
@@ -216,7 +216,7 @@ const Projects = () => {
       <div className="projects-container">
         <div ref={headingWrapperRef} className="heading-wrapper">
           <h2 ref={headingRef} className="projects-heading">
-            OUR WORK — FEATURED PROJECTS — OUR WORK — FEATURED PROJECTS
+            OUR WORK — FEATURED PROJECTS — OUR WORK — FEATURED PROJECTS — OUR WORK — FEATURED PROJECTS
           </h2>
         </div>
 
@@ -249,7 +249,7 @@ const Projects = () => {
                       }}
                       className="project-view-btn"
                     >
-                      View project details <span className="project-arrow">→</span>
+                      View Project <span className="project-arrow">→</span>
                     </button>
                   </div>
                 </div>

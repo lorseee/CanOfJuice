@@ -356,9 +356,7 @@ const ProjectDetailPage = () => {
           <div ref={detailImagesRef} className="detail-gallery-section">
             {/* Gallery header as vertical display */}
             <div className="detail-gallery-header">
-              <h2 className="detail-gallery-title">Project</h2>
               <h2 className="detail-gallery-title">Gallery</h2>
-              <h2 className="detail-gallery-title">Showcase</h2>
             </div>
             
             {/* Import gallery layout based on project ID */}
