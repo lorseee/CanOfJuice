@@ -8,6 +8,7 @@ const AboutUs = () => {
   const sectionRef = useRef(null);
   const textRef = useRef(null);
   const lagRef = useRef(null);
+  const timelineRef = useRef(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -16,76 +17,120 @@ const AboutUs = () => {
 
     if (!section || !text || !lag) return;
 
-    // Animate text
-    gsap.fromTo(
+    // Create a main timeline for better control
+    timelineRef.current = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top 90%",
+        end: "top 30%",
+        scrub: 2, // Reduced from 5 for smoother response
+        invalidateOnRefresh: true, // Better handling of resize events
+      }
+    });
+
+    // Refine text animation with intermediate steps for smoother fade-in
+    timelineRef.current.fromTo(
       text,
-      { y: 300, opacity: 0, scale: 0.7 },
-      {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        ease: "power1.out",
-        duration: 4,
-        scrollTrigger: {
-          trigger: section,
-          start: "top 90%",
-          end: "top 30%",
-          scrub: 5,
-        },
+      { 
+        y: 300, 
+        opacity: 0, 
+        scale: 0.7 
+      },
+      { 
+        y: 0, 
+        opacity: 1, 
+        scale: 1, 
+        ease: "power2.out", // Changed to power2 for smoother ease
+        duration: 3, // Slightly reduced for crisper animation
+        immediateRender: true
       }
     );
 
-    // Pin AboutUs section but with a modified end point to allow complete overlay
+    // Pin with improved performance settings
     ScrollTrigger.create({
       trigger: section,
       start: "top top", 
-      end: "+=200%", // Pin for twice the section's height for complete overlay
+      end: "+=200%",
       pin: true,
       pinSpacing: false,
+      anticipatePin: 1, // Pre-calculates pin position for smoother initiation
+      fastScrollEnd: true, // Improves performance on fast scrolling
     });
 
-    // Create a lag buffer that delays when the next section overlaps
-    ScrollTrigger.create({
-      trigger: lag,
-      start: "top bottom",
-      end: "bottom top", 
-      scrub: true,
-      onEnter: () => {
-        // Optional: Fade text as next section appears
-        gsap.to(text, { 
-          opacity: 0.7, 
-          duration: 1.5,
-          ease: "power2.inOut" 
-        });
-      },
-      onLeave: () => {
-        // Further reduce opacity as lag section is fully scrolled
-        gsap.to(text, { 
-          opacity: 0.4, 
-          duration: 1,
-          ease: "power1.out" 
-        });
+    // Improve lag section animation with smoother opacity transitions
+    const lagTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: lag,
+        start: "top bottom",
+        end: "bottom top", 
+        scrub: 1, // More responsive scrub
+        onEnter: () => {
+          gsap.to(text, { 
+            opacity: 0.7, 
+            duration: 0.8, // Faster response
+            ease: "power3.inOut" // Smoother ease
+          });
+        },
+        onLeave: () => {
+          gsap.to(text, { 
+            opacity: 0.4, 
+            duration: 0.5,
+            ease: "power2.out" 
+          });
+        },
+        onLeaveBack: () => {
+          // Add reverse animation for smoother scrolling up
+          gsap.to(text, { 
+            opacity: 0.7, 
+            duration: 0.5,
+            ease: "power2.in" 
+          });
+        },
+        onEnterBack: () => {
+          // Add reverse animation for scrolling up
+          gsap.to(text, { 
+            opacity: 1, 
+            duration: 0.8,
+            ease: "power3.inOut" 
+          });
+        }
       }
     });
 
+    // Use ResizeObserver for better responsiveness
+    const resizeObserver = new ResizeObserver(() => {
+      ScrollTrigger.refresh(true);
+    });
+    
+    resizeObserver.observe(section);
+
     return () => {
       ScrollTrigger.getAll().forEach((t) => t.kill());
+      timelineRef.current.kill();
+      lagTimeline.kill();
+      resizeObserver.disconnect();
     };
   }, []);
 
   return (
     <>
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative", overflow: "hidden" }}>
         <section
           id="about"
           ref={sectionRef}
           style={{
             backgroundImage: "url('/images/aboutus.JPG')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            willChange: "transform", // Hardware acceleration hint
           }}
         >
           <div
             ref={textRef}
             className="content-overlay"
+            style={{
+              willChange: "transform, opacity", // Performance optimization
+            }}
           >
             <h1>
               At Studio CANOFJUICE, <br />
@@ -97,16 +142,16 @@ const AboutUs = () => {
           </div>
         </section>
 
-        {/* Lag section - positioned immediately after the AboutUs section */}
+        {/* Lag section with improved performance attributes */}
         <section
           ref={lagRef}
           className="about-lag"
           style={{
-            height: "100vh", // Full viewport height for the lag
+            height: "100vh",
             background: "transparent",
             position: "relative",
             zIndex: 0,
-            pointerEvents: "none", // Allows clicking through
+            pointerEvents: "none",
           }}
         />
       </div>
