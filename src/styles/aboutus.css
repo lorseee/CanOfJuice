@@ -26,6 +26,7 @@
   margin-bottom: 1.5rem;
   padding: 3rem; /* p-12 in Tailwind */
   border-radius: 0.5rem; /* rounded-lg in Tailwind */
+  text-Shadow: "0 2px 4px rgba(0, 0, 0, 0.6)",
 }
 
 #about h1 {

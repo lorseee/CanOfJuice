@@ -233,18 +233,6 @@
   display: inline-flex;
 }
 
-.detail-gallery-title {
-  font-size: 1.875rem;
-  font-weight: 300;
-  margin-bottom: 1rem;
-}
-
-@media (min-width: 768px) {
-  .detail-gallery-title {
-    font-size: 2.25rem;
-  }
-}
-
 /* Gallery Grid Layouts */
 .detail-gallery-grid-mosaic {
   display: grid;
@@ -502,10 +490,6 @@
     padding: 1rem;
     padding-top: 4rem;
     padding-bottom: 4rem;
-  }
-  
-  .detail-gallery-title {
-    font-size: 1.5rem;
   }
 }
 
