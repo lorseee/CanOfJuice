@@ -1,4 +1,4 @@
-// ServicesLists.jsx - modified version
+// ServicesLists.jsx - optimized version with adjusted visibility timing
 import React, { useLayoutEffect, useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -8,6 +8,7 @@ import ServicesHero from "./Services-hero";
 gsap.registerPlugin(ScrollTrigger);
 
 const ServicesLists = () => {
+  // Section refs
   const heroRef = useRef(null);
   const designsSectionRef = useRef(null);
   const spacesSectionRef = useRef(null);
@@ -15,73 +16,86 @@ const ServicesLists = () => {
   const helpSectionRef = useRef(null);
   const contentContainerRef = useRef(null);
 
+  // Heading refs
   const designsHeadingRef = useRef(null);
   const spacesHeadingRef = useRef(null);
   const installationsHeadingRef = useRef(null);
 
+  // List refs
   const designsListRef = useRef(null);
   const spacesListRef = useRef(null);
   const installationsListRef = useRef(null);
 
+  // Image refs
   const slideContainerRef = useRef(null);
   const frontImageRef = useRef(null);
   const backImageRef = useRef(null);
   
-  // Track if we're on mobile
+  // State refs
   const [isMobile, setIsMobile] = useState(false);
-
-  // Track current image state with console debugging
-  const currentImageState = useRef({
+  const activeSection = useRef("none");
+  const scrollTriggersRef = useRef([]);
+  const animationsInitialized = useRef(false);
+  
+  // Image paths consolidated in one place
+  const imagePaths = {
     designs: "/images/designs.jpg",
     spaces: "/images/spaces.jpg",
     installations: "/images/installations.jpg",
-    current: "designs"
-  });
+    default: "/images/default.jpg"
+  };
 
-  // Track active section for proper image display
-  const activeSection = useRef("none"); // none, designs, spaces, installations
-  
-  // Check if we're on mobile
+  // Check if we're on mobile - debounced resize handler
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 640);
+      const newIsMobile = window.innerWidth < 640;
+      if (newIsMobile !== isMobile) {
+        setIsMobile(newIsMobile);
+      }
+    };
+    
+    // Debounce the resize handler for better performance
+    let resizeTimeout;
+    const handleResize = () => {
+      if (resizeTimeout) {
+        clearTimeout(resizeTimeout);
+      }
+      resizeTimeout = setTimeout(checkMobile, 200);
     };
     
     checkMobile(); // Initial check
-    window.addEventListener('resize', checkMobile);
+    window.addEventListener('resize', handleResize);
     
     return () => {
-      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener('resize', handleResize);
+      if (resizeTimeout) clearTimeout(resizeTimeout);
     };
-  }, []);
+  }, [isMobile]);
 
-  // Don't attempt to scroll on component mount 
-  // Remove the section-specific scrolling from this component
-
-  // Immediate scroll reset on component mount
+  // Handle hash changes and navigation
   useEffect(() => {
-    // Hide image container immediately on mount
-    if (slideContainerRef.current) {
-      gsap.set(slideContainerRef.current, { autoAlpha: 0 });
-    }
+    // Set section IDs
+    if (designsSectionRef.current) designsSectionRef.current.id = "designs";
+    if (spacesSectionRef.current) spacesSectionRef.current.id = "spaces";
+    if (installationsSectionRef.current) installationsSectionRef.current.id = "installations";
+    if (helpSectionRef.current) helpSectionRef.current.id = "help";
     
-    // Set up event listener for hash changes (footer navigation)
+    // Hide image container initially
+    hideContainerImmediately();
+    
+    // Handle hash changes - using a single handler
     const handleHashChange = () => {
-      const hash = window.location.hash;
+      const hash = window.location.hash.substring(1); // Remove the # symbol
       
-      // Hide container for footer/help
-      if (hash === "#help" || hash === "#footer") {
+      // Hide container for help/footer
+      if (hash === "help" || hash === "footer") {
         hideContainerImmediately();
         return;
       }
       
-      // Handle specific section navigation
-      if (hash === "#designs") {
-        updateActiveSection("designs");
-      } else if (hash === "#spaces") {
-        updateActiveSection("spaces");
-      } else if (hash === "#installations") {
-        updateActiveSection("installations");
+      // Handle section navigation
+      if (["designs", "spaces", "installations"].includes(hash)) {
+        updateActiveSection(hash);
       }
     };
 
@@ -95,557 +109,522 @@ const ServicesLists = () => {
     };
   }, []);
 
-  // Add id attributes to each section for hash navigation
-  useEffect(() => {
-    // Ensure all sections have IDs for hash navigation
-    if (designsSectionRef.current) {
-      designsSectionRef.current.id = "designs";
-    }
-    
-    if (spacesSectionRef.current) {
-      spacesSectionRef.current.id = "spaces";
-    }
-    
-    if (installationsSectionRef.current) {
-      installationsSectionRef.current.id = "installations";
-    }
-  }, []);
-
-  // Handle hash changes
-  const handleHashChange = () => {
-    const hash = window.location.hash;
-    
-    // Hide container for footer/help
-    if (hash === "#help" || hash === "#footer") {
-      hideContainerImmediately();
-      return;
-    }
-    
-    // Handle specific section navigation
-    if (hash === "#designs") {
-      updateActiveSection("designs");
-    } else if (hash === "#spaces") {
-      updateActiveSection("spaces");
-    } else if (hash === "#installations") {
-      updateActiveSection("installations");
-    }
-  };
-
+  // Image handling
   const updateActiveSection = (section) => {
-    console.log("Setting active section:", section);
-    
-    // Only process section changes
+    // Only process changes
     if (activeSection.current !== section) {
       const previousSection = activeSection.current;
       activeSection.current = section;
       
-      // Perform image transition when changing between valid sections
-      if (section !== "none" && section !== "help" && previousSection !== "none" && previousSection !== "help") {
+      // Perform image transition between valid sections
+      if (["designs", "spaces", "installations"].includes(section) && 
+          ["designs", "spaces", "installations"].includes(previousSection)) {
         crossfadeImages(previousSection, section);
       } else {
-        // Simply update visibility
+        // Just update visibility
         updateVisibleImage();
       }
     }
   };
 
-  // New function to handle the crossfade between images
+  // Optimized crossfade - uses GSAP timeline once
   const crossfadeImages = (fromSection, toSection) => {
     if (!slideContainerRef.current || !frontImageRef.current || !backImageRef.current) return;
-
-    console.log(`Crossfading from ${fromSection} to ${toSection}`);
     
-    // Show container if not already visible
+    // Show container if needed
     gsap.to(slideContainerRef.current, { 
       duration: 0.3, 
-      autoAlpha: 1 
+      autoAlpha: 1,
+      overwrite: true
     });
     
-    // Set back image to new section's image
-    backImageRef.current.src = currentImageState.current[toSection];
+    // Set back image to new section
+    backImageRef.current.src = imagePaths[toSection] || imagePaths.default;
     
-    // Make sure back image is visible but fully transparent
+    // Make back image visible but transparent
     gsap.set(backImageRef.current, { 
       display: "block", 
       opacity: 0 
     });
     
-    // Create crossfade animation
-    const tl = gsap.timeline();
-    
-    // Fade in back image while fading out front image
-    tl.to(backImageRef.current, { 
-      duration: 0.8, 
-      opacity: 1, 
-      ease: "power2.inOut" 
-    });
-    
-    tl.to(frontImageRef.current, { 
-      duration: 0.8, 
-      opacity: 0, 
-      ease: "power2.inOut" 
-    }, "-=0.8"); // Start at same time as back image fade in
-    
-    // Once animation completes, swap images and reset
-    tl.add(() => {
-      // Move back image content to front image
-      frontImageRef.current.src = backImageRef.current.src;
-      
-      // Reset opacity values
-      gsap.set(frontImageRef.current, { opacity: 1 });
-      gsap.set(backImageRef.current, { display: "none" });
-      
-      console.log("Crossfade complete, now showing:", toSection);
-    });
+    // Create single timeline for crossfade
+    gsap.timeline()
+      .to(backImageRef.current, { 
+        duration: 0.8, 
+        opacity: 1, 
+        ease: "power2.inOut" 
+      })
+      .to(frontImageRef.current, { 
+        duration: 0.8, 
+        opacity: 0, 
+        ease: "power2.inOut" 
+      }, "-=0.8") // Start simultaneously
+      .call(() => {
+        // Swap images
+        frontImageRef.current.src = backImageRef.current.src;
+        gsap.set(frontImageRef.current, { opacity: 1 });
+        gsap.set(backImageRef.current, { display: "none" });
+      });
   };
 
+  // Update visible image without crossfade
   const updateVisibleImage = () => {
     if (!slideContainerRef.current || !frontImageRef.current) return;
-
-    console.log("Updating visible image for section:", activeSection.current);
     
-    // Only show container if we're in a valid section
+    // Hide for invalid sections
     if (activeSection.current === "none" || activeSection.current === "help") {
       hideContainer();
       return;
     }
 
-    // Switch front image based on active section
-    if (frontImageRef.current) {
-      frontImageRef.current.src = currentImageState.current[activeSection.current];
-      
-      // Reset opacity for front image
+    // Update front image
+    if (imagePaths[activeSection.current]) {
+      frontImageRef.current.src = imagePaths[activeSection.current];
       gsap.set(frontImageRef.current, { opacity: 1 });
       
-      // Show the container with the appropriate image
+      // Show container
       gsap.to(slideContainerRef.current, { 
         duration: 0.5, 
         autoAlpha: 1,
-        onStart: () => {
-          console.log("Now showing image for:", activeSection.current);
-        }
+        overwrite: true
       });
     }
   };
 
+  // Hide container with animation
   const hideContainer = () => {
     if (slideContainerRef.current) {
       gsap.to(slideContainerRef.current, { 
         duration: 0.5, 
         autoAlpha: 0,
-        onComplete: () => {
-          console.log("Image container hidden");
-        } 
+        overwrite: true
       });
     }
   };
 
+  // Hide container immediately
   const hideContainerImmediately = () => {
     if (slideContainerRef.current) {
       gsap.set(slideContainerRef.current, { autoAlpha: 0 });
-      console.log("Image container hidden immediately");
     }
   };
 
-  useLayoutEffect(() => {
-    // Force hide container at start
-    hideContainerImmediately();
+  // Preload images efficiently
+  useEffect(() => {
+    // Preload all images at once
+    Object.values(imagePaths).forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+    
+    // Set initial image state
+    if (frontImageRef.current) {
+      frontImageRef.current.src = imagePaths.designs;
+    }
+    
+    if (backImageRef.current) {
+      gsap.set(backImageRef.current, { display: "none" });
+    }
+  }, []);
 
-    // SECTION HEADING ANIMATIONS - Make them appear earlier
-    // Animate section headings with scroll trigger
-    [designsHeadingRef, spacesHeadingRef, installationsHeadingRef].forEach((ref) => {
+  // Main animation setup - with debouncing for isMobile changes
+  useLayoutEffect(() => {
+    // Clean up any existing ScrollTriggers
+    scrollTriggersRef.current.forEach(st => st.kill());
+    scrollTriggersRef.current = [];
+    
+    // Wait until next tick to ensure DOM measurements are accurate
+    requestAnimationFrame(() => {
+      // Create all animations
+      initializeAnimations();
+    });
+    
+    // Cleanup on unmount
+    return () => {
+      scrollTriggersRef.current.forEach(st => st.kill());
+      scrollTriggersRef.current = [];
+    };
+  }, [isMobile]);
+  
+  // Consolidated animation initialization
+  const initializeAnimations = () => {
+    // Reset any existing animations
+    gsap.set([designsHeadingRef.current, spacesHeadingRef.current, installationsHeadingRef.current], { clearProps: "all" });
+    
+    // Only on desktop: Reset positioning for spaces and installations
+    if (!isMobile) {
+      gsap.set(spacesSectionRef.current, { y: "100%" });
+      gsap.set(installationsSectionRef.current, { y: "100%" });
+    } else {
+      // On mobile: ensure normal positioning
+      gsap.set([spacesSectionRef.current, installationsSectionRef.current], { clearProps: "y" });
+      gsap.set(contentContainerRef.current, { height: "auto" });
+    }
+
+    // Create heading animations
+    [
+      { ref: designsHeadingRef, section: "designs" },
+      { ref: spacesHeadingRef, section: "spaces" },
+      { ref: installationsHeadingRef, section: "installations" }
+    ].forEach(({ ref, section }) => {
       if (ref.current) {
-        gsap.fromTo(
-          ref.current,
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: ref.current,
-              start: "top 85%", // Makes heading appear sooner
-              toggleActions: "play none none reverse"
-            },
+        const headingTrigger = ScrollTrigger.create({
+          trigger: ref.current,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+          onEnter: () => {
+            gsap.to(ref.current, {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              ease: "power2.out",
+              overwrite: true
+            });
+          },
+          onLeaveBack: () => {
+            gsap.to(ref.current, {
+              opacity: 0,
+              y: 30,
+              duration: 0.5,
+              ease: "power2.in",
+              overwrite: true
+            });
           }
-        );
+        });
+        
+        scrollTriggersRef.current.push(headingTrigger);
       }
     });
 
-    // Create list animations for each section
-    // Create staggered animations for each list item that sync with section transitions
-    // These animations should start AFTER headings are visible
-    const createListAnimation = (listRef, headingRef, sectionRef, startPosition, endPosition) => {
+    // Create list animations
+    createListAnimations();
+    
+    // Create section movements (desktop only)
+    if (!isMobile) {
+      createDesktopSectionAnimations();
+    }
+    
+    // Create section visibility tracking
+    createSectionTracking();
+    
+    // Fade out content when help section appears
+    createHelpSectionAnimations();
+    
+    // Set initial state based on hash
+    if (window.location.hash) {
+      const hash = window.location.hash.substring(1);
+      if (["designs", "spaces", "installations"].includes(hash)) {
+        updateActiveSection(hash);
+      } else if (hash === "help" || hash === "footer") {
+        hideContainerImmediately();
+      }
+    }
+  };
+  
+  // List animations with performance optimizations
+  const createListAnimations = () => {
+    const listConfigs = [
+      { listRef: designsListRef, headingRef: designsHeadingRef, sectionRef: designsSectionRef },
+      { listRef: spacesListRef, headingRef: spacesHeadingRef, sectionRef: spacesSectionRef },
+      { listRef: installationsListRef, headingRef: installationsHeadingRef, sectionRef: installationsSectionRef }
+    ];
+    
+    listConfigs.forEach(({ listRef, headingRef, sectionRef }) => {
       if (!listRef.current || !headingRef.current) return;
       
       const items = listRef.current.querySelectorAll("p");
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: headingRef.current, // Use heading as trigger
-          start: "top 70%", // Start after heading enters view
-          end: endPosition,
-          scrub: 0.5,
-        }
-      });
       
-      // Stagger the items with a small delay between each
-      tl.fromTo(
-        items,
-        { 
-          opacity: 0, 
-          y: 20 
+      // Initial state
+      gsap.set(items, { opacity: 0, y: 20 });
+      
+      // Create scroll trigger for appear animation
+      const listTrigger = ScrollTrigger.create({
+        trigger: headingRef.current,
+        start: "top 70%",
+        end: "bottom top",
+        onEnter: () => {
+          gsap.to(items, {
+            opacity: 1,
+            y: 0,
+            stagger: 0.08,
+            duration: 0.4,
+            ease: "power2.out",
+            overwrite: true
+          });
         },
-        { 
-          opacity: 1, 
-          y: 0, 
-          stagger: 0.1,
-          ease: "power2.out",
-          duration: 0.4
-        }
-      );
-      
-      // Add reverse animation when scrolling back
-      const reverseTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: startPosition,
-          scrub: 0.5,
-        }
-      });
-      
-      reverseTimeline.fromTo(
-        items,
-        { 
-          opacity: 1, 
-          y: 0 
-        },
-        { 
-          opacity: 0, 
-          y: 20, 
-          stagger: 0.05,
-          ease: "power2.in",
-          duration: 0.3
-        }
-      );
-    };
-
-    // Create list animations for each section - now using headings as reference
-    createListAnimation(designsListRef, designsHeadingRef, designsSectionRef, "top 90%", "top 50%");
-    createListAnimation(spacesListRef, spacesHeadingRef, spacesSectionRef, "top 90%", "top 50%");
-    createListAnimation(installationsListRef, installationsHeadingRef, installationsSectionRef, "top 90%", "top 50%");
-
-    // Only apply staggered section animations on desktop
-    if (!isMobile) {
-      // SPACES SECTION ANIMATION
-      if (spacesSectionRef.current) {
-        gsap.fromTo(
-          spacesSectionRef.current,
-          { y: "100%" },
-          {
-            y: "33.33%",
-            ease: "power1.inOut",
-            scrollTrigger: {
-              trigger: spacesSectionRef.current,
-              start: "top bottom",
-              end: "top 33.33%",
-              scrub: 0.5,
-            },
-          }
-        );
-      }
-      
-      // INSTALLATIONS SECTION ANIMATION - PART 1: Move into position
-      if (installationsSectionRef.current) {
-        gsap.fromTo(
-          installationsSectionRef.current,
-          { y: "100%" },
-          {
-            y: "66.67%",
-            ease: "power1.inOut",
-            scrollTrigger: {
-              trigger: installationsSectionRef.current,
-              start: "top bottom",
-              end: "top 66.67%",
-              scrub: 0.5,
-            },
-          }
-        );
-        
-        // INSTALLATIONS SECTION ANIMATION - PART 2: Keep sticky until help section
-        gsap.fromTo(
-          installationsSectionRef.current, 
-          { y: "66.67%" }, 
-          {
-            y: "0%",
-            ease: "power1.inOut",
-            scrollTrigger: {
-              trigger: helpSectionRef.current,
-              start: "top bottom",
-              end: "top top",
-              scrub: 0.5,
-            },
-          }
-        );
-      }
-    }
-
-    // Fade out all content and hero when help section appears - works on both mobile and desktop
-    if (contentContainerRef.current && helpSectionRef.current) {
-      gsap.to(contentContainerRef.current, {
-        scrollTrigger: {
-          trigger: helpSectionRef.current,
-          start: "top bottom",
-          end: "top top",
-          scrub: 0.5,
-        },
-        opacity: 0,
-      });
-    }
-
-    if (heroRef.current && helpSectionRef.current) {
-      gsap.to(heroRef.current, {
-        scrollTrigger: {
-          trigger: helpSectionRef.current,
-          start: "top bottom",
-          end: "top top",
-          scrub: 0.5,
-        },
-        opacity: 0,
-      });
-    }
-
-    // SECTION VISIBILITY TRACKING - Show/hide appropriate images
-    // Only track visibility if we're not on mobile
-    if (!isMobile) {
-      // DESIGNS SECTION
-      if (designsSectionRef.current) {
-        ScrollTrigger.create({
-          trigger: designsListRef.current,  
-          start: "top 10%", 
-          end: "top 30%",
-          onEnter: () => {
-            console.log("Entered designs section");
-            updateActiveSection("designs");
-          },
-          onLeave: () => {
-            console.log("Left designs section");
-            // Don't update here, let the next section handle it
-          },
-          onEnterBack: () => {
-            console.log("Entered back designs section");
-          },
-          onLeaveBack: () => {
-            console.log("Left back designs section");
-            updateActiveSection("none");
-          }
-        });
-      }
-
-      // SPACES SECTION
-      if (spacesSectionRef.current) {
-        ScrollTrigger.create({
-          trigger: spacesListRef.current,  // Track the list specifically
-          start: "top 90%",
-          end: "bottom 10%",
-          onEnter: () => {
-            console.log("Entered spaces section");
-            updateActiveSection("spaces");
-          },
-          onLeave: () => {
-            console.log("Left spaces section");
-            // Don't update here, let the next section handle it
-          },
-          onEnterBack: () => {
-            console.log("Entered back spaces section");
-            updateActiveSection("spaces");
-          },
-          onLeaveBack: () => {
-            console.log("Left back spaces section");
-            updateActiveSection("designs");
-          }
-        });
-      }
-
-      // INSTALLATIONS SECTION
-      if (installationsSectionRef.current) {
-        ScrollTrigger.create({
-          trigger: installationsListRef.current,  // Track the list specifically
-          start: "top 90%",
-          end: "bottom 10%",
-          onEnter: () => {
-            console.log("Entered installations section");
-            updateActiveSection("installations");
-          },
-          onLeave: () => {
-            console.log("Left installations section");
-            updateActiveSection("none");
-          },
-          onEnterBack: () => {
-            console.log("Entered back installations section");
-            updateActiveSection("installations");
-          },
-          onLeaveBack: () => {
-            console.log("Left back installations section");
-            // Let previous section handle it
-          }
-        });
-      }
-    } else {
-      // On mobile, we'll use a different approach for section visibility
-      // Reset any transforms from desktop layout
-      if (spacesSectionRef.current) {
-        gsap.set(spacesSectionRef.current, { y: 0 });
-      }
-      
-      if (installationsSectionRef.current) {
-        gsap.set(installationsSectionRef.current, { y: 0 });
-      }
-      
-      // Make sure container heights are auto for mobile
-      if (contentContainerRef.current) {
-        gsap.set(contentContainerRef.current, { height: "auto" });
-      }
-
-      // Track all sections with a simple in/out visibility
-      [designsSectionRef, spacesSectionRef, installationsSectionRef].forEach((sectionRef, index) => {
-        if (sectionRef.current) {
-          const sectionName = ["designs", "spaces", "installations"][index];
-          
-          ScrollTrigger.create({
-            trigger: sectionRef.current,
-            start: "top 60%", 
-            end: "bottom 40%", 
-            onEnter: () => {
-              console.log(`Mobile: Entered ${sectionName} section`);
-              updateActiveSection(sectionName);
-            },
-            onLeave: () => {
-              // Don't update here, let the next section handle it
-            },
-            onEnterBack: () => {
-              console.log(`Mobile: Entered back ${sectionName} section`);
-              updateActiveSection(sectionName);
-            },
-            onLeaveBack: () => {
-              // Don't update here, let the previous section handle it
-            }
+        onLeaveBack: () => {
+          gsap.to(items, {
+            opacity: 0,
+            y: 20,
+            stagger: 0.05,
+            duration: 0.3,
+            ease: "power2.in",
+            overwrite: true
           });
         }
       });
+      
+      scrollTriggersRef.current.push(listTrigger);
+    });
+  };
+  
+  // Desktop-only section animations
+  const createDesktopSectionAnimations = () => {
+    // SPACES SECTION
+    if (spacesSectionRef.current) {
+      const spacesTrigger = ScrollTrigger.create({
+        trigger: spacesSectionRef.current,
+        start: "top bottom",
+        end: "top 33.33%",
+        scrub: 0.5,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          // Smoother transform using GSAP's utility
+          gsap.set(spacesSectionRef.current, { 
+            y: gsap.utils.interpolate(100, 33.33, progress) + "%" 
+          });
+        }
+      });
+      
+      scrollTriggersRef.current.push(spacesTrigger);
     }
-
-    // HELP SECTION VISIBILITY TRACKING
+    
+    // INSTALLATIONS SECTION - PART 1
+    if (installationsSectionRef.current) {
+      const installationsTrigger1 = ScrollTrigger.create({
+        trigger: installationsSectionRef.current,
+        start: "top bottom",
+        end: "top 66.67%",
+        scrub: 0.5,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          gsap.set(installationsSectionRef.current, { 
+            y: gsap.utils.interpolate(100, 66.67, progress) + "%" 
+          });
+        }
+      });
+      
+      scrollTriggersRef.current.push(installationsTrigger1);
+      
+      // INSTALLATIONS SECTION - PART 2
+      if (helpSectionRef.current) {
+        const installationsTrigger2 = ScrollTrigger.create({
+          trigger: helpSectionRef.current,
+          start: "top bottom",
+          end: "top top",
+          scrub: 0.5,
+          onUpdate: (self) => {
+            const progress = self.progress;
+            gsap.set(installationsSectionRef.current, { 
+              y: gsap.utils.interpolate(66.67, 0, progress) + "%" 
+            });
+          }
+        });
+        
+        scrollTriggersRef.current.push(installationsTrigger2);
+      }
+    }
+  };
+  
+  // Section visibility tracking - optimized with adjusted timing
+  const createSectionTracking = () => {
+    if (isMobile) {
+      // Mobile approach - simpler tracking with adjusted timing
+      [
+        { ref: designsSectionRef, section: "designs", startPoint: "top 70%", endPoint: "bottom 30%" }, // Extended visibility
+        { ref: spacesSectionRef, section: "spaces", startPoint: "top 50%", endPoint: "bottom 50%" },   // Reduced visibility
+        { ref: installationsSectionRef, section: "installations", startPoint: "top 60%", endPoint: "bottom 40%" }
+      ].forEach(({ ref, section, startPoint, endPoint }) => {
+        if (ref.current) {
+          const sectionTrigger = ScrollTrigger.create({
+            trigger: ref.current,
+            start: startPoint,
+            end: endPoint,
+            onToggle: (self) => {
+              if (self.isActive) {
+                updateActiveSection(section);
+              }
+            }
+          });
+          
+          scrollTriggersRef.current.push(sectionTrigger);
+        }
+      });
+    } else {
+      // Desktop approach - more precise tracking with adjusted timing
+      if (designsListRef.current) {
+        const designsTrigger = ScrollTrigger.create({
+          trigger: designsListRef.current,
+          // Extended visibility for designs when scrolling back
+          start: "top 20%",         // Moved from 10% to 20% for earlier activation
+          end: "bottom 0%",         // Extended to bottom 0% for longer visibility
+          onToggle: (self) => {
+            if (self.isActive) {
+              updateActiveSection("designs");
+            } else if (self.direction < 0 && !self.isActive) {
+              // Only when scrolling up and not active
+              updateActiveSection("none");
+            }
+          }
+        });
+        
+        scrollTriggersRef.current.push(designsTrigger);
+      }
+      
+      if (spacesListRef.current) {
+        const spacesTrigger = ScrollTrigger.create({
+          trigger: spacesListRef.current,
+          // Reduced visibility for spaces when scrolling back
+          start: "top 95%",         // Moved from 90% to 95% for later activation
+          end: "bottom 30%",        // Changed from 10% to 30% for earlier deactivation
+          onToggle: (self) => {
+            if (self.isActive) {
+              updateActiveSection("spaces");
+            } else if (self.direction < 0 && !self.isActive) {
+              // When scrolling back and spaces section is no longer active
+              // This will help designs section take over earlier
+              if (designsListRef.current) {
+                const designsBounds = designsListRef.current.getBoundingClientRect();
+                if (designsBounds.bottom > 0) {
+                  updateActiveSection("designs");
+                }
+              }
+            }
+          }
+        });
+        
+        scrollTriggersRef.current.push(spacesTrigger);
+      }
+      
+      if (installationsListRef.current) {
+        const installationsTrigger = ScrollTrigger.create({
+          trigger: installationsListRef.current,
+          start: "top 90%",
+          end: "bottom 10%",
+          onToggle: (self) => {
+            if (self.isActive) {
+              updateActiveSection("installations");
+            } else if (self.direction > 0 && !self.isActive) {
+              // Only when scrolling down and not active
+              updateActiveSection("none");
+            } else if (self.direction < 0 && !self.isActive) {
+              // When scrolling back and installations section is no longer active
+              if (spacesListRef.current) {
+                const spacesBounds = spacesListRef.current.getBoundingClientRect();
+                if (spacesBounds.top < window.innerHeight * 0.95 && spacesBounds.bottom > window.innerHeight * 0.3) {
+                  updateActiveSection("spaces");
+                }
+              }
+            }
+          }
+        });
+        
+        scrollTriggersRef.current.push(installationsTrigger);
+      }
+    }
+    
+    // Help section tracking
     if (helpSectionRef.current) {
-      ScrollTrigger.create({
+      const helpTrigger = ScrollTrigger.create({
         trigger: helpSectionRef.current,
         start: "top bottom",
         end: "bottom top",
-        onEnter: () => {
-          console.log("Entered help section");
-          updateActiveSection("help");
-        },
-        onLeave: () => {
-          console.log("Left help section");
-          // Don't update here
-        },
-        onEnterBack: () => {
-          console.log("Entered back help section");
-          updateActiveSection("help");
-        },
-        onLeaveBack: () => {
-          console.log("Left back help section");
-          // Check which section we're in
-          if (installationsSectionRef.current && installationsListRef.current) {
-            const installationsBounds = installationsListRef.current.getBoundingClientRect();
-            if (installationsBounds.top < window.innerHeight * 0.9 && installationsBounds.bottom > 0) {
-              updateActiveSection("installations");
-              return;
-            }
+        onToggle: (self) => {
+          if (self.isActive) {
+            updateActiveSection("help");
+          } else if (self.direction < 0 && !self.isActive) {
+            // Only check previous section when scrolling up
+            checkVisibleSection();
           }
-          
-          if (spacesSectionRef.current && spacesListRef.current) {
-            const spacesBounds = spacesListRef.current.getBoundingClientRect();
-            if (spacesBounds.top < window.innerHeight * 0.9 && spacesBounds.bottom > 0) {
-              updateActiveSection("spaces");
-              return;
-            }
-          }
-          
-          if (designsSectionRef.current && designsListRef.current) {
-            const designsBounds = designsListRef.current.getBoundingClientRect();
-            if (designsBounds.top < window.innerHeight * 0.9 && designsBounds.bottom > 0) {
-              updateActiveSection("designs");
-              return;
-            }
-          }
-          
-          updateActiveSection("none");
         }
       });
-    }
-
-    // Preload images to avoid flickering
-    const preloadImages = () => {
-      const images = [
-        currentImageState.current.designs,
-        currentImageState.current.spaces,
-        currentImageState.current.installations
-      ];
       
-      images.forEach(src => {
-        const img = new Image();
-        img.src = src;
-        console.log("Preloading image:", src);
+      scrollTriggersRef.current.push(helpTrigger);
+    }
+  };
+  
+  // Check which section is visible with adjusted thresholds
+  const checkVisibleSection = () => {
+    const viewportHeight = window.innerHeight;
+    
+    // Customized visibility function with adjusted thresholds
+    const checkVisible = (el, topThreshold, bottomThreshold) => {
+      if (!el) return false;
+      const rect = el.getBoundingClientRect();
+      return rect.top < viewportHeight * topThreshold && rect.bottom > viewportHeight * bottomThreshold;
+    };
+    
+    // Check in reverse order with adjusted thresholds
+    // - installations gets standard visibility
+    // - spaces gets reduced visibility (smaller window)
+    // - designs gets extended visibility (larger window)
+    if (checkVisible(installationsListRef.current, 0.9, 0)) {
+      updateActiveSection("installations");
+    } else if (checkVisible(spacesListRef.current, 0.95, 0.3)) { // Reduced visibility window
+      updateActiveSection("spaces");
+    } else if (checkVisible(designsListRef.current, 0.9, -0.1)) { // Extended visibility window
+      updateActiveSection("designs");
+    } else {
+      updateActiveSection("none");
+    }
+  };
+  
+  // Help section animations
+  const createHelpSectionAnimations = () => {
+    if (contentContainerRef.current && helpSectionRef.current) {
+      const contentFadeTrigger = ScrollTrigger.create({
+        trigger: helpSectionRef.current,
+        start: "top bottom",
+        end: "top top",
+        scrub: 0.5,
+        onUpdate: (self) => {
+          gsap.set(contentContainerRef.current, { 
+            opacity: 1 - self.progress 
+          });
+        }
       });
-    };
-    
-    preloadImages();
-    
-    if (frontImageRef.current && backImageRef.current) {
-      // Set initial state - hidden
-      frontImageRef.current.src = currentImageState.current.designs;
-      gsap.set(slideContainerRef.current, { autoAlpha: 0 });
       
-      // Hide back image initially
-      gsap.set(backImageRef.current, { display: "none" });
+      scrollTriggersRef.current.push(contentFadeTrigger);
     }
-
-    // Handle direct navigation - if we start at a hash like #help or #footer
-    if (window.location.hash === "#help" || window.location.hash === "#footer") {
-      hideContainerImmediately();
+    
+    if (heroRef.current && helpSectionRef.current) {
+      const heroFadeTrigger = ScrollTrigger.create({
+        trigger: helpSectionRef.current,
+        start: "top bottom",
+        end: "top top",
+        scrub: 0.5,
+        onUpdate: (self) => {
+          gsap.set(heroRef.current, { 
+            opacity: 1 - self.progress 
+          });
+        }
+      });
+      
+      scrollTriggersRef.current.push(heroFadeTrigger);
     }
-
-    return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
-    };
-  }, [isMobile]); // Re-run when isMobile changes
+  };
 
   return (
     <div className="services-container relative">
-
       {/* FLOATING IMAGE CONTAINER - WITH CROSSFADE */}
       <div ref={slideContainerRef} className="floating-image-container">
         <div className="floating-image-wrapper">
           <img
             ref={frontImageRef}
             alt="Current Section"
-            src="/images/designs.jpg"
+            src={imagePaths.designs}
             className="floating-image"
             onError={(e) => { 
-              console.log("Front image failed to load:", e.target.src);
-              e.target.src = "/images/default.jpg"; 
+              e.target.src = imagePaths.default; 
             }}
           />
           <img
             ref={backImageRef}
             alt="Next Section"
-            src="/images/spaces.jpg"
+            src={imagePaths.spaces}
             className="floating-image floating-image-back"
             onError={(e) => { 
-              console.log("Back image failed to load:", e.target.src);
-              e.target.src = "/images/default.jpg"; 
+              e.target.src = imagePaths.default; 
             }}
           />
         </div>
@@ -721,7 +700,6 @@ const ServicesLists = () => {
       {/* HELP SECTION */}
       <div
         ref={helpSectionRef}
-        id="help"
         className="help-section"
       >
         <h2 className="help-heading">Need a Hand? We're happy to help!</h2>
