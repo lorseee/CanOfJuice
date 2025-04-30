@@ -5,157 +5,114 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const AboutUs = () => {
-  const sectionRef = useRef(null);
-  const textRef = useRef(null);
-  const lagRef = useRef(null);
-  const timelineRef = useRef(null);
+  const sectionRef  = useRef(null);
+  const textRef     = useRef(null);
+  const lagRef      = useRef(null);
+  const entranceTL  = useRef(null);   // main text-entrance timeline
+  const lagTL       = useRef(null);   // opacity timeline
+  const pinST       = useRef(null);   // sticky ScrollTrigger
+  const resizeObs   = useRef(null);   // ResizeObserver
 
   useEffect(() => {
     const section = sectionRef.current;
-    const text = textRef.current;
-    const lag = lagRef.current;
-
+    const text    = textRef.current;
+    const lag     = lagRef.current;
     if (!section || !text || !lag) return;
 
-    // Create a main timeline for better control
-    timelineRef.current = gsap.timeline({
+    /* ── 1. Text entrance (unchanged window) ───────────────── */
+    entranceTL.current = gsap.timeline({
       scrollTrigger: {
         trigger: section,
         start: "top 90%",
         end: "top 30%",
-        scrub: 2, // Reduced from 5 for smoother response
-        invalidateOnRefresh: true, // Better handling of resize events
+        scrub: 2,                 // smoother response
+        invalidateOnRefresh: true
       }
-    });
-
-    // Refine text animation with intermediate steps for smoother fade-in
-    timelineRef.current.fromTo(
+    })
+    .fromTo(
       text,
-      { 
-        y: 300, 
-        opacity: 0, 
-        scale: 0.7 
-      },
-      { 
-        y: 0, 
-        opacity: 1, 
-        scale: 1, 
-        ease: "power2.out", // Changed to power2 for smoother ease
-        duration: 3, // Slightly reduced for crisper animation
-        immediateRender: true
-      }
+      { y: 300, opacity: 0, scale: 0.7 },
+      { y: 0,   opacity: 1, scale: 1, ease: "power2.out", duration: 3 }
     );
 
-    // Pin with improved performance settings
-    ScrollTrigger.create({
+    /* ── 2. Sticky pin (+200 % of viewport) ───────────────── */
+    pinST.current = ScrollTrigger.create({
       trigger: section,
-      start: "top top", 
+      start: "top top",
       end: "+=200%",
       pin: true,
       pinSpacing: false,
-      anticipatePin: 1, // Pre-calculates pin position for smoother initiation
-      fastScrollEnd: true, // Improves performance on fast scrolling
+      anticipatePin: 1,
+      fastScrollEnd: true
     });
 
-    // Improve lag section animation with smoother opacity transitions
-    const lagTimeline = gsap.timeline({
+    /* ── 3. Lag-section linear opacity fade ───────────────── */
+    lagTL.current = gsap.timeline({
       scrollTrigger: {
         trigger: lag,
         start: "top bottom",
-        end: "bottom top", 
-        scrub: 1, // More responsive scrub
-        onEnter: () => {
-          gsap.to(text, { 
-            opacity: 0.7, 
-            duration: 0.8, // Faster response
-            ease: "power3.inOut" // Smoother ease
-          });
-        },
-        onLeave: () => {
-          gsap.to(text, { 
-            opacity: 0.4, 
-            duration: 0.5,
-            ease: "power2.out" 
-          });
-        },
-        onLeaveBack: () => {
-          // Add reverse animation for smoother scrolling up
-          gsap.to(text, { 
-            opacity: 0.7, 
-            duration: 0.5,
-            ease: "power2.in" 
-          });
-        },
-        onEnterBack: () => {
-          // Add reverse animation for scrolling up
-          gsap.to(text, { 
-            opacity: 1, 
-            duration: 0.8,
-            ease: "power3.inOut" 
-          });
-        }
+        end: "bottom top",
+        scrub: 1,
+        ease: "none"        // perfectly linear mapping
       }
-    });
+    })
+    .fromTo(text, { opacity: 1 }, { opacity: 0.4 });
 
-    // Use ResizeObserver for better responsiveness
-    const resizeObserver = new ResizeObserver(() => {
-      ScrollTrigger.refresh(true);
-    });
-    
-    resizeObserver.observe(section);
+    /* ── 4. Keep ScrollTrigger fresh on resize ─────────────── */
+    resizeObs.current = new ResizeObserver(() => ScrollTrigger.refresh(true));
+    resizeObs.current.observe(section);
 
+    /* ── 5. Cleanup on unmount ─────────────────────────────── */
     return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-      timelineRef.current.kill();
-      lagTimeline.kill();
-      resizeObserver.disconnect();
+      entranceTL.current?.kill();
+      lagTL.current?.kill();
+      pinST.current?.kill();
+      ScrollTrigger.getAll().forEach(t => t.kill());
+      resizeObs.current?.disconnect();
     };
   }, []);
 
   return (
-    <>
-      <div style={{ position: "relative", overflow: "hidden" }}>
-        <section
-          id="about"
-          ref={sectionRef}
-          style={{
-            backgroundImage: "url('/images/aboutus.JPG')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            willChange: "transform", // Hardware acceleration hint
-          }}
+    <div style={{ position: "relative", overflow: "hidden" }}>
+      {/* Pinned hero section */}
+      <section
+        id="about"
+        ref={sectionRef}
+        style={{
+          height: "100vh",
+          backgroundImage: "url('/images/aboutus.JPG')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          willChange: "transform"
+        }}
+      >
+        <div
+          ref={textRef}
+          className="content-overlay"
+          style={{ willChange: "transform, opacity" }}
         >
-          <div
-            ref={textRef}
-            className="content-overlay"
-            style={{
-              willChange: "transform, opacity", // Performance optimization
-            }}
-          >
-            <h1>
-              At Studio CANOFJUICE, <br />
-              we keep it FRESH.
-            </h1>
-            <p>
-              From concept to on-site execution, we create bold brand spaces and visuals that stand out and stay memorable.
-            </p>
-          </div>
-        </section>
+          <h1>
+            At Studio CANOFJUICE,<br />
+            we keep it FRESH.
+          </h1>
+          <p>
+            From concept to on-site execution, we create bold brand spaces and
+            visuals that stand out and stay memorable.
+          </p>
+        </div>
+      </section>
 
-        {/* Lag section with improved performance attributes */}
-        <section
-          ref={lagRef}
-          className="about-lag"
-          style={{
-            height: "100vh",
-            background: "transparent",
-            position: "relative",
-            zIndex: 0,
-            pointerEvents: "none",
-          }}
-        />
-      </div>
-    </>
+      {/* Transparent “lag” spacer */}
+      <section
+        ref={lagRef}
+        className="about-lag"
+        style={{
+          height: "100vh",
+          background: "transparent",
+          pointerEvents: "none"
+        }}
+      />
+    </div>
   );
 };
 

@@ -1,8 +1,5 @@
-/* AboutUs Component CSS */
-
-/* Base styles for the About Us section */
+/* Base hero section */
 #about {
-  height: 100vh;
   width: 100%;
   display: flex;
   align-items: center;
@@ -10,112 +7,69 @@
   position: relative;
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  z-index: 2; 
+  overflow: hidden;
+  z-index: 2;
 }
 
-/* Content overlay styling */
+/* Text overlay */
 .content-overlay {
   position: relative;
   z-index: 10;
-  max-width: 64rem; /* 5xl in Tailwind */
+  max-width: 64rem;            /* ≈ 5xl */
   text-align: center;
-  margin-top: 1.5rem; /* space-y-6 in Tailwind */
-  margin-bottom: 1.5rem;
-  padding: 3rem; /* p-12 in Tailwind */
-  border-radius: 0.5rem; /* rounded-lg in Tailwind */
-  text-Shadow: "0 2px 4px rgba(0, 0, 0, 0.6)",
+  margin: 1.5rem auto;
+  padding: 3rem;
+  border-radius: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 #about h1 {
-  font-size: 3rem; /* text-5xl in Tailwind */
-  font-weight: 700; /* font-bold in Tailwind */
-  color: white;
-  line-height: 1.375; /* leading-snug in Tailwind */
+  font-size: 3rem;             /* 5xl */
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.375;
   margin-bottom: 1.5rem;
 }
 
 #about p {
-  font-size: 1.25rem; /* text-xl in Tailwind */
-  max-width: 42rem; /* max-w-2xl in Tailwind */
-  margin-left: auto;
-  margin-right: auto;
-  line-height: 1.625; /* leading-relaxed in Tailwind */
-  color: white;
+  font-size: 1.25rem;          /* xl */
+  max-width: 42rem;            /* 2xl */
+  margin: 0 auto;
+  line-height: 1.625;
+  color: #fff;
 }
 
-/* Animation class for GSAP */
-.about-animation-ready {
-  opacity: 0;
-  transform: translateY(300px) scale(0.7);
+/* Tablet */
+@media (max-width: 1024px) {
+  .content-overlay { max-width: 90%; padding: 2.5rem; }
+  #about h1       { font-size: 2.5rem; }
+  #about p        { font-size: 1.125rem; }
 }
 
-/* Responsive styles */
-/* For tablets (iPad, medium screens) */
-@media screen and (max-width: 1024px) {
-  .content-overlay {
-    max-width: 90%;
-    padding: 2.5rem;
-  }
-
-  #about h1 {
-    font-size: 2.5rem;
-  }
-
-  #about p {
-    font-size: 1.125rem;
-  }
+/* Mobile */
+@media (max-width: 768px) {
+  .content-overlay { max-width: 95%; padding: 1.5rem; }
+  #about h1       { font-size: 2.5rem; }
+  #about p        { font-size: 2rem; max-width: 100%; }
 }
 
-/* For mobile phones (including iPhones) */
-@media screen and (max-width: 768px) {
-  .content-overlay {
-    max-width: 95%;
-    padding: 1.5rem;
-  }
-
-  #about h1 {
-    font-size: 2.5rem;
-  }
-
-  #about p {
-    font-size: 2rem;
-    max-width: 100%;
-  }
+/* Small mobile */
+@media (max-width: 480px) {
+  #about h1 { font-size: 2.25rem; }
+  #about p  { font-size: 1.25rem; }
 }
 
-/* For small mobile phones */
-@media screen and (max-width: 480px) {
-  #about h1 {
-    font-size: 2.25rem;
-  }
-
-  #about p {
-    font-size: 1.25rem;
-  }
+/* Landscape mobile */
+@media (max-height: 600px) and (orientation: landscape) {
+  #about { min-height: 100vh; padding: 3rem 0; }
 }
 
-/* For landscape orientation on mobile devices */
-@media screen and (max-height: 600px) and (orientation: landscape) {
-  #about {
-    height: auto;
-    min-height: 100vh;
-    padding: 3rem 0;
-  }
-}
-
-/* For high-density (retina) displays */
+/* Retina background */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  #about {
-    background-image: url('/images/aboutus@2x.JPG');
-  }
+  #about { background-image: url('/images/aboutus@2x.JPG'); }
 }
 
-/* Reduce motion for accessibility */
+/* Reduced-motion users */
 @media (prefers-reduced-motion: reduce) {
-  .content-overlay {
-    transition: none;
-  }
+  .content-overlay { transition: none; }
 }

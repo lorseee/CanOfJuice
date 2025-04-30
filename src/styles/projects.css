@@ -1,324 +1,383 @@
-/* Projects Section Styles */
+/* =========================================================
+   PROJECTS SECTION — square cards on phones
+========================================================= */
+
+/* ---------- Section container ---------- */
 .projects-section {
-    position: relative;
-    width: 100%;
-    overflow-x: hidden;
-    background-color: #000;
-    color: #fff;
-    min-height: 100vh;
-    z-index: 3;
-  }
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+  background: #000;
+  color: #fff;
+  min-height: 100vh;
+  z-index: 3;
+}
+
+.projects-container {
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 1024px) {
   .projects-container {
-    width: 100%;            /* fill the viewport */
-    max-width: 1800px;      /* or whatever your design max is */
-    margin: 0 auto;
-    padding: 0 1.5rem;
-    overflow-x: hidden;     /* clip any accidental spillover */
+    padding: 0 3rem;
   }
-  @media (min-width: 768px) {
-    .projects-container {
-      padding: 0 3rem;
-    }
-  }
-  
-  /* Heading Section */
+}
+
+/* ---------- Scrolling heading ---------- */
+.heading-wrapper {
+  display: flex;
+  align-items: center;
+  overflow-x: hidden;
+  height: 22vh;
+}
+
+@media (min-width: 1024px) {
   .heading-wrapper {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    overflow-x: hidden;
-    height: 40vh;
+    height: 30vh;
   }
-  @media (min-width: 768px) {
-    .heading-wrapper {
-      height: 50vh;
-    }
-  }
-  
+}
+
+.projects-heading {
+  font-size: clamp(3.5rem, 8vw, 9rem);
+  font-weight: 800;
+  width: 200%;
+  white-space: nowrap;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 767px) {
   .projects-heading {
-    font-size: clamp(3rem, 8vw, 9rem);
-    font-weight: 800;
-    white-space: nowrap;
-    width: 200%;
-    text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+    font-size: 3rem;
   }
-  
-  /* Projects Grid Layout */
+}
+
+/* ---------- Grid ---------- */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0.75rem;
+}
+
+@media (min-width: 1024px) {
   .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 1.5rem;
-    position: relative;
+    gap: 1.25rem;
   }
-  @media (min-width: 768px) {
-    .projects-grid {
-      gap: 2.5rem;
-    }
-  }
-  
-  /* Base Project Card */
+}
+
+/* ---------- Card shell ---------- */
+.project-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transform: translateZ(0);
+  transition: transform 1s ease;
+}
+
+.project-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ---------- MOBILE (≤ 767 px)  →  square cards ---------- */
+@media (max-width: 767px) {
   .project-card {
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    transform: translateZ(0);
-    transition: transform 1s ease;
-  }
-  
-  /* Mobile Layout */
-  @media (max-width: 639px) {
-    .project-card {
-      grid-column: span 12;
-      height: 70vh;
-      margin-bottom: 1rem;
-    }
-  }
-  
-  /* Tablet Layout */
-  @media (min-width: 640px) and (max-width: 1023px) {
-    .project-card-large { grid-column: span 12; height: 60vh; }
-    .project-card-medium,
-    .project-card-medium-alt { grid-column: span 6; height: 40vh; }
-    .project-card-medium-tall { grid-column: span 6; height: 60vh; }
-    .project-card-large-right { grid-column: span 12; height: 60vh; }
-    .project-card-standard { grid-column: span 4; height: 50vh; }
-  }
-  
-  /* Desktop Layout */
-  @media (min-width: 1024px) {
-    .project-card-large {
-      grid-column: 1 / span 8;
-      grid-row: 1 / span 2;
-      height: 80vh;
-    }
-    .project-card-medium { grid-column: 9 / span 4; grid-row: 1 / span 1; height: 40vh; }
-    .project-card-medium-alt { grid-column: 9 / span 4; grid-row: 2 / span 1; height: 35vh; }
-    .project-card-medium-tall { grid-column: 1 / span 4; grid-row: 3 / span 2; height: 75vh; }
-    .project-card-large-right { grid-column: 5 / span 8; grid-row: 3 / span 2; height: 75vh; }
-    .project-card-standard { grid-column: span 4; grid-row: 5 / span 1; height: 60vh; }
-  }
-  
-  /* Inner, Image & Overlay */
-  .project-inner { position: relative; height: 100%; width: 100%; overflow: hidden; }
-  .project-image-container { position: absolute; inset: 0; overflow: hidden; }
-  .project-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 1.2s ease-out;
-    transform: translateZ(0);
-  }
-  .project-overlay {
-    position: absolute;
-    inset: 0;
-    opacity: 0.2;
-    transition: opacity 1s;
-    background: linear-gradient(to top, #000, rgba(0,0,0,0.3), transparent);
-    z-index: 10;
-  }
-  .project-card:hover .project-overlay { opacity: 0.6; }
-  
-  /* Content & Details */
-  .project-content {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 2rem;
-    z-index: 20;
-  }
-  @media (min-width: 768px) {
-    .project-content { padding: 2.5rem; }
-  }
-  .project-details {
-    transform: translateY(3rem);
-    opacity: 0;
-    transition: all 0.7s ease-out;
-  }
-  .project-card:hover .project-details {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  .project-category {
-    color: #fff;
-    font-size: 0.875rem;
-    font-weight: 300;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-  }
-  @media (min-width: 768px) {
-    .project-category { font-size: 1rem; }
-  }
-  .project-title {
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: 300;
-    letter-spacing: 0.05em;
-  }
-  @media (min-width: 768px) {
-    .project-title { font-size: 2.25rem; }
-  }
-  .project-divider {
-    margin-top: 1rem;
-    width: 4rem;
-    height: 1px;
-    background-color: rgba(255,255,255,0.7);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.7s ease-out 0.1s;
-  }
-  .project-card:hover .project-divider { transform: scaleX(1); }
-  .project-view-btn {
-    color: rgba(255,255,255,0.7);
-    font-size: 0.875rem;
-    margin-top: 0.75rem;
-    font-weight: 300;
-    letter-spacing: 0.05em;
-    opacity: 0;
-    transition: opacity 0.5s 0.2s, color 0.3s;
-    display: flex;
-    align-items: center;
-    background: none;
-    border: none;
-    padding: 0;
-  }
-  @media (min-width: 768px) {
-    .project-view-btn { font-size: 1rem; }
-  }
-  .project-card:hover .project-view-btn { opacity: 1; }
-  .project-view-btn:hover { color: #fff; }
-  .project-arrow {
-    margin-left: 0.25rem;
-    transition: transform 0.3s;
-  }
-  .project-view-btn:hover .project-arrow { transform: translateX(0.25rem); }
-  
-  /* Corner Accent */
-  .project-accent {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 4rem;
-    height: 4rem;
-    opacity: 0;
-    transition: opacity 0.7s;
-  }
-  .project-card:hover .project-accent { opacity: 1; }
-  .project-accent-vertical,
-  .project-accent-horizontal {
-    background-color: rgba(255,255,255,0.5);
-    transition: transform 0.7s 0.15s;
-  }
-  .project-accent-vertical {
-    position: absolute;
-    bottom: 2rem;
-    right: 2rem;
-    width: 1px;
-    height: 2rem;
-    transform: scaleY(0);
-    transform-origin: bottom;
-  }
-  .project-accent-horizontal {
-    position: absolute;
-    bottom: 2rem;
-    right: 2rem;
-    width: 2rem;
-    height: 1px;
-    transform: scaleX(0);
-    transform-origin: right;
-  }
-  .project-card:hover .project-accent-vertical { transform: scaleY(1); }
-  .project-card:hover .project-accent-horizontal { transform: scaleX(1); }
-  
-  /* View All Projects Button */
-  .view-all-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin: 6rem 0;
-    overflow: hidden;
-  }
-  .view-all-btn {
-    cursor: pointer;
-    transform: translateZ(0);
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  .view-all-line {
-    height: 1px;
-    background-color: rgba(255,255,255,0.5);
-    transition: all 0.3s;
-  }
-  .left-line { margin-right: 1.5rem; }
-  .right-line { margin-left: 1.5rem; }
-  .view-all-text {
-    font-size: clamp(1rem, 4vw, 2rem);
-    font-weight: 300;
-    letter-spacing: 0.1em;
-    color: #fff;
-    white-space: nowrap;
-  }
-  
-  /* CTA Section (RESPONSIVE!) */
-  .cta-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 3rem 0;
-    margin-bottom: 6rem;
-    min-height: 20vh;
-    overflow-x: hidden;
-  }
-  @media (max-width: 639px) {
-    .cta-wrapper { padding: 1.5rem 0; }
-  }
-  .cta-button {
-    display: inline-flex;       /* make it a row‑flex container */
-    flex-direction: row;        /* default, but explicit is nice */
-    align-items: center;        /* vertical center of its children */
-    justify-content: center;    /* horizontal centering of the group */
-    gap: 0.2em;                 /* small space between text and arrow */
-    cursor: pointer;
-    padding: 1rem 2rem;
-    transition: transform 0.3s ease-out;
-    transform-origin: center;
-  }
-  
-  
-  .cta-arrow {
-    /* remove margin-top and any absolute rules */
-    margin: 0;
-    font-size: clamp(1.5rem, 6vw, 5rem);
-    font-weight: 300;
-    transition: transform 0.3s;
-    /* if you want a little breathing room, you can nudge with margin-left instead: */
-    /* margin-left: 0.2em; */
-  }
-  
-  
-  
-  .cta-text {
-    font-size: clamp(1.5rem, 6vw, 5rem);
-    font-weight: 800;
-    white-space: nowrap;
-    text-align: center;
-    color: #fff;
-    margin: 0 1rem;
-    text-shadow: 0 0 1px rgba(255,255,255,0.3);
+    grid-column: span 12;
+    aspect-ratio: 1 / 1;     /* perfect square */
+    height: auto;            /* let aspect-ratio drive it */
   }
 
-  
-  .cta-button:hover .cta-arrow {
-    transform: translateX(0.5rem);
+  /* fine-tune phone typography so nothing clips */
+  .project-category  { font-size: 0.9rem; }
+  .project-title     { font-size: 1.6rem; }
+  .project-view-btn  { font-size: 0.9rem; }
+}
+
+/* ---------- TABLET (768–1023 px)  →  single column ---------- */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .project-card {
+    grid-column: span 12;
+    height: 72vh;            /* tall enough for text */
+    margin-bottom: 1.2rem;
   }
-  
-  /* Make sure hover effects show on touch */
-  @media (hover: none) {
-    .project-details { transform: translateY(0); opacity: 1; }
-    .project-divider { transform: scaleX(1); }
-    .project-view-btn { opacity: 1; }
+}
+
+/* ---------- DESKTOP (≥ 1024 px)  →  multi-column grid ---------- */
+@media (min-width: 1024px) {
+  .project-card-large        { grid-column: 1 / span 8; grid-row: 1 / span 2; height: 85vh; }
+  .project-card-medium       { grid-column: 9 / span 4; grid-row: 1 / span 1; height: 42vh; }
+  .project-card-medium-alt   { grid-column: 9 / span 4; grid-row: 2 / span 1; height: 36vh; }
+  .project-card-medium-tall  { grid-column: 1 / span 4; grid-row: 3 / span 2; height: 80vh; }
+  .project-card-large-right  { grid-column: 5 / span 8; grid-row: 3 / span 2; height: 80vh; }
+  .project-card-standard     { grid-column: span 4;     grid-row: 5 / span 1; height: 65vh; }
+}
+
+/* ---------- Image & overlay ---------- */
+.project-image-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.project-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s ease-out;
+}
+
+.project-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  background: linear-gradient(to top, #000, rgba(0, 0, 0, 0.3), transparent);
+  transition: opacity 1s;
+  z-index: 10;
+}
+
+.project-card:hover .project-overlay {
+  opacity: 0.6;
+}
+
+/* ---------- Content block ---------- */
+.project-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+  z-index: 20;
+}
+
+@media (min-width: 1024px) {
+  .project-content {
+    padding: 2.5rem;
   }
-  
+}
+
+.project-details {
+  transform: translateY(2.5rem);
+  opacity: 0;
+  transition: all 0.7s ease-out;
+}
+
+.project-card:hover .project-details {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ---------- Category / Title / Divider ---------- */
+.project-category {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.project-title {
+  color: #fff;
+  font-size: 2.1rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  line-height: 1.15;
+  margin: 0;
+}
+
+@media (min-width: 1024px) {
+  .project-title {
+    font-size: 2.5rem;
+  }
+}
+
+.project-divider {
+  width: 3rem;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.7);
+  margin-top: 0.25rem;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s ease-out 0.1s;
+}
+
+.project-card:hover .project-divider {
+  transform: scaleX(1);
+}
+
+/* ---------- View button ---------- */
+.project-view-btn {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  margin-top: 0.6rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.5s 0.2s, color 0.3s;
+}
+
+@media (min-width: 1024px) {
+  .project-view-btn {
+    font-size: 1.1rem;
+  }
+}
+
+.project-card:hover .project-view-btn {
+  opacity: 1;
+}
+
+.project-view-btn:hover {
+  color: #fff;
+}
+
+.project-arrow {
+  margin-left: 0.25rem;
+  transition: transform 0.3s;
+}
+
+.project-view-btn:hover .project-arrow {
+  transform: translateX(0.25rem);
+}
+
+/* ---------- Accent corner ---------- */
+.project-accent {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 4rem;
+  height: 4rem;
+  opacity: 0;
+  transition: opacity 0.7s;
+}
+
+.project-card:hover .project-accent {
+  opacity: 1;
+}
+
+.project-accent-vertical,
+.project-accent-horizontal {
+  background: rgba(255, 255, 255, 0.5);
+  transition: transform 0.7s 0.15s;
+}
+
+.project-accent-vertical {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  width: 1px;
+  height: 2rem;
+  transform: scaleY(0);
+  transform-origin: bottom;
+}
+
+.project-accent-horizontal {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  width: 2rem;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+.project-card:hover .project-accent-vertical {
+  transform: scaleY(1);
+}
+
+.project-card:hover .project-accent-horizontal {
+  transform: scaleX(1);
+}
+
+/* ---------- View-all button (unchanged) ---------- */
+.view-all-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 6rem 0;
+  overflow: hidden;
+}
+
+.view-all-btn {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.view-all-line {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s;
+}
+
+.left-line  { margin-right: 1.5rem; }
+.right-line { margin-left: 1.5rem; }
+
+.view-all-text {
+  font-size: clamp(1.1rem, 4vw, 2rem);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* ---------- CTA banner (unchanged) ---------- */
+.cta-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 3rem 0;
+  margin-bottom: 6rem;
+  min-height: 20vh;
+  overflow-x: hidden;
+}
+
+@media (max-width: 639px) {
+  .cta-wrapper {
+    padding: 1.5rem 0;
+  }
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+  cursor: pointer;
+  padding: 1rem 2rem;
+  transition: transform 0.3s ease-out;
+}
+
+.cta-arrow {
+  font-size: clamp(1.75rem, 7vw, 5rem);
+  transition: transform 0.3s;
+}
+
+.cta-text {
+  font-size: clamp(2rem, 7vw, 5rem);
+  font-weight: 800;
+  white-space: nowrap;
+  color: #fff;
+  margin: 0 1rem;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.cta-button:hover .cta-arrow {
+  transform: translateX(0.5rem);
+}
+
+/* ---------- Touch fallbacks ---------- */
+@media (hover: none) {
+  .project-details { transform: translateY(0); opacity: 1; }
+  .project-divider { transform: scaleX(1);    }
+  .project-view-btn{ opacity: 1;              }
+}
