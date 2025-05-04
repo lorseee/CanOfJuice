@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { projects as allProjects, projectImages } from "../constants";
+import { projects } from "../constants";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -29,7 +29,7 @@ const Projects = () => {
   const featuredProjectIds = [16, 6, 18, 28, 19, 23, 11, 4];
 
   const featuredProjects = featuredProjectIds.map((id, index) => {
-    const project = allProjects.find((p) => p.id === id);
+    const project = projects.items.find((p) => p.id === id);
 
     const cardClasses = [
       "project-card-large",
@@ -50,7 +50,7 @@ const Projects = () => {
 
     return {
       ...project,
-      image: projectImages[id]?.main || projectImages.default.main,
+      image: project.images?.main || "/images/projects/default/main.jpg",
       name: project.title,
       displayCategory,
       className,
@@ -122,7 +122,7 @@ const Projects = () => {
         });
       }
 
-      /* “View all” button animation + hover */
+      /* "View all" button animation + hover */
       if (viewAllRef.current && leftLineRef.current && rightLineRef.current) {
         gsap.set(viewAllRef.current, { opacity: 0, y: 50, scale: 0.95 });
         gsap.set([leftLineRef.current, rightLineRef.current], {

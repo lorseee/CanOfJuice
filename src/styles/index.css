@@ -75,26 +75,25 @@ html, body, #root {
   margin: 0;
   padding: 0;            
   overflow-x: clip;
-  background-color: black;
+  background-color: #1e1e1e;
 }
 
 /* Links */
 a {
   font-weight: 500;
-  color: #f5f5f5;                   /* Off-white font */
+  color: #f5f5f5;                   
   text-decoration: inherit;
 }
 a:hover {
-  color: #bbbbbb;                    /* Lighter gray hover effect */
+  color: #bbbbbb;                  
 }
 
 /* Buttons */
 button {
-  border-radius: 8px;      /* Off-white border */
+  border-radius: 8px;      
   font-size: 1em;
-  font-weight: 500;        /* Black background */
-  color: #f5f5f5;                    /* Off-white text */
+  font-weight: 500;        
+  color: #f5f5f5;                    
   cursor: pointer;
   transition: all 0.3s ease;
 }
-

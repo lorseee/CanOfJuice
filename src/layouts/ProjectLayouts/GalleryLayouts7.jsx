@@ -66,7 +66,7 @@ const GalleryLayouts7 = ({ images = [], handleImageError }) => (
         src={images[2]}                      /* gallery-1.jpg */
         alt="Pursuit of Perfection sign"
         onError={handleImageError}
-        className="w-full h-full object-cover object-center"
+        className="w-full h-full object-contain object-center"
       />
     </div>
   </div>

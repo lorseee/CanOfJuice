@@ -31,7 +31,7 @@ const MainLayout = ({ children }) => {
   }, [location.pathname]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-black text-white overflow-x-hidden">
+    <div className="flex flex-col min-h-screen overflow-x-hidden">
       <main className="flex-grow relative">
         {children}
       </main>

@@ -10,7 +10,7 @@ const GalleryLayout = ({ images = [], handleImageError }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
       {/* Hero image - full width */}
-      <div className="col-span-1 md:col-span-3 lg:col-span-4 aspect-[3/2]">
+      <div className="col-span-1 md:col-span-3 lg:col-span-4 aspect-[3/3]">
         <img
           src={safeImages[0]}
           alt="Hero exterior view"
@@ -20,7 +20,7 @@ const GalleryLayout = ({ images = [], handleImageError }) => {
       </div>
 
       {/* Row 2 - Three equal columns */}
-      <div className="col-span-1 aspect-square">
+      <div className="col-span-1 md:col-span-1 lg:col-span-2 aspect-rectangle">
         <img
           src={safeImages[5]}
           alt="Detail shot"
@@ -28,7 +28,7 @@ const GalleryLayout = ({ images = [], handleImageError }) => {
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="col-span-1 md:col-span-1 aspect-square">
+      <div className="col-span-1 md:col-span-1 lg:col-span-2 aspect-rectangle">
         <img
           src={safeImages[1]}
           alt="Interior space"
@@ -36,17 +36,9 @@ const GalleryLayout = ({ images = [], handleImageError }) => {
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="hidden md:block md:col-span-1 lg:col-span-2 aspect-[2/1]">
-        <img
-          src={safeImages[6] || safeImages[2]}
-          alt="Additional view"
-          onError={handleImageError}
-          className="w-full h-full object-cover"
-        />
-      </div>
 
       {/* Row 3 - Two columns */}
-      <div className="col-span-1 md:col-span-2 aspect-[2/1]">
+      <div className="col-span-1 md:col-span-1 lg:col-span-2 aspect-rectangle">
         <img
           src={safeImages[2]}
           alt="Reception area"
@@ -54,7 +46,7 @@ const GalleryLayout = ({ images = [], handleImageError }) => {
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="col-span-1 md:col-span-1 lg:col-span-2 aspect-square">
+      <div className="col-span-1 md:col-span-1 lg:col-span-2 aspect-srectangle">
         <img
           src={safeImages[3]}
           alt="Cafe detail"

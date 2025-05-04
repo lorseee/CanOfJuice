@@ -6,7 +6,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
       grid grid-flow-dense
       grid-cols-6  sm:grid-cols-8  lg:grid-cols-12
       auto-rows-[12vw] sm:auto-rows-[10vw] lg:auto-rows-[8vw]
-      gap-4
+      gap-3
     "
   >
     {/* 1 │ HERO – full-width banner */}
@@ -20,17 +20,17 @@ const GalleryLayout = ({ images, handleImageError }) => (
     </div>
 
     {/* 2 │ WIDE LEFT – now uses object-contain (no crop) */}
-    <div className="col-span-4 sm:col-span-5 lg:col-span-8 row-span-4">
+    <div className="col-span-3 sm:col-span-4 lg:col-span-6 row-span-3">
       <img
         src={images[1]}
         alt="Gallery 2"
         onError={handleImageError}
-        className="w-full h-full object-contain object-center "
+        className="w-full h-full object-cover object-center "
       />
     </div>
 
     {/* 3 │ PORTRAIT RIGHT – unchanged */}
-    <div className="col-span-2 sm:col-span-3 lg:col-span-4 row-span-3">
+    <div className="col-span-3 sm:col-span-4 lg:col-span-6 row-span-3">
       <img
         src={images[2]}
         alt="Gallery 3"
@@ -46,26 +46,6 @@ const GalleryLayout = ({ images, handleImageError }) => (
         alt="Gallery 4"
         onError={handleImageError}
         className="w-full h-full object-contain object-center "
-      />
-    </div>
-
-    {/* 5 │ LANDSCAPE – unchanged */}
-    <div className="col-span-6 sm:col-span-8 lg:col-span-12 row-span-4">
-      <img
-        src={images[4]}
-        alt="Gallery 5"
-        onError={handleImageError}
-        className="w-full h-full object-cover object-center "
-      />
-    </div>
-
-    {/* 6 │ FOOTER STRIP – unchanged */}
-    <div className="col-span-6 sm:col-span-8 lg:col-span-12 row-span-4">
-      <img
-        src={images[5]}
-        alt="Gallery 6"
-        onError={handleImageError}
-        className="w-full h-full object-cover object-center"
       />
     </div>
   </div>

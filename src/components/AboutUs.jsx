@@ -1,41 +1,48 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const AboutUs = () => {
-  const sectionRef  = useRef(null);
-  const textRef     = useRef(null);
-  const lagRef      = useRef(null);
-  const entranceTL  = useRef(null);   // main text-entrance timeline
-  const lagTL       = useRef(null);   // opacity timeline
-  const pinST       = useRef(null);   // sticky ScrollTrigger
-  const resizeObs   = useRef(null);   // ResizeObserver
+  const sectionRef = useRef(null);
+  const textRef = useRef(null);
+  const lagRef = useRef(null);
+  const entranceTL = useRef(null);
+  const lagTL = useRef(null);
+  const pinST = useRef(null);
+  const resizeObs = useRef(null);
+
+  const [ready, setReady] = useState(false);
+
+  // Delay mount by 300ms to allow hero scroll to complete first
+  useEffect(() => {
+    const timer = setTimeout(() => setReady(true), 300);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
+    if (!ready) return;
+
     const section = sectionRef.current;
-    const text    = textRef.current;
-    const lag     = lagRef.current;
+    const text = textRef.current;
+    const lag = lagRef.current;
     if (!section || !text || !lag) return;
 
-    /* ── 1. Text entrance (unchanged window) ───────────────── */
     entranceTL.current = gsap.timeline({
       scrollTrigger: {
         trigger: section,
         start: "top 90%",
         end: "top 30%",
-        scrub: 2,                 // smoother response
+        scrub: 2,
         invalidateOnRefresh: true
       }
-    })
-    .fromTo(
+    }).fromTo(
       text,
       { y: 300, opacity: 0, scale: 0.7 },
-      { y: 0,   opacity: 1, scale: 1, ease: "power2.out", duration: 3 }
+      { y: 0, opacity: 1, scale: 1, ease: "power2.out", duration: 3 }
     );
 
-    /* ── 2. Sticky pin (+200 % of viewport) ───────────────── */
     pinST.current = ScrollTrigger.create({
       trigger: section,
       start: "top top",
@@ -46,23 +53,19 @@ const AboutUs = () => {
       fastScrollEnd: true
     });
 
-    /* ── 3. Lag-section linear opacity fade ───────────────── */
     lagTL.current = gsap.timeline({
       scrollTrigger: {
         trigger: lag,
         start: "top bottom",
         end: "bottom top",
         scrub: 1,
-        ease: "none"        // perfectly linear mapping
+        ease: "none"
       }
-    })
-    .fromTo(text, { opacity: 1 }, { opacity: 0.4 });
+    }).fromTo(text, { opacity: 1 }, { opacity: 0.4 });
 
-    /* ── 4. Keep ScrollTrigger fresh on resize ─────────────── */
     resizeObs.current = new ResizeObserver(() => ScrollTrigger.refresh(true));
     resizeObs.current.observe(section);
 
-    /* ── 5. Cleanup on unmount ─────────────────────────────── */
     return () => {
       entranceTL.current?.kill();
       lagTL.current?.kill();
@@ -70,11 +73,10 @@ const AboutUs = () => {
       ScrollTrigger.getAll().forEach(t => t.kill());
       resizeObs.current?.disconnect();
     };
-  }, []);
+  }, [ready]);
 
   return (
     <div style={{ position: "relative", overflow: "hidden" }}>
-      {/* Pinned hero section */}
       <section
         id="about"
         ref={sectionRef}
@@ -102,7 +104,6 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* Transparent “lag” spacer */}
       <section
         ref={lagRef}
         className="about-lag"

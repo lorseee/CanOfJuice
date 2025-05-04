@@ -60,7 +60,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
     </div>
 
     {/* 6 │ FOOTER STRIP – unchanged */}
-    <div className="col-span-6 sm:col-span-8 lg:col-span-12 row-span-4">
+    <div className="col-span-3 sm:col-span-4 lg:col-span- row-span-4">
       <img
         src={images[5]}
         alt="Gallery 6"

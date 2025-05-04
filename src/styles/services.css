@@ -20,7 +20,7 @@
 
 /* Hero section */
 .services-hero {
-  background-color: #000;
+  background-color: #1e1e1e ;
   color: #fff;
   height: 100vh;
   display: flex;
@@ -141,7 +141,7 @@
   align-items:center;
   justify-content:center;
   background:#fff !important;
-  color:#000 !important;
+  color: #1e1e1e  !important;
   position:relative;
   z-index:40;
 }

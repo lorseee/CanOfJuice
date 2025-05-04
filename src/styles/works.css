@@ -15,7 +15,7 @@
 .animate-heading     {animation:fadeInScale 1.2s ease-in-out forwards;}
 .works-container{position:relative;}
 .works-hero{
-  background:#000;color:#fff;height:100vh;
+  background:#1e1e1e;color:#fff;height:100vh;
   display:flex;justify-content:center;align-items:center;z-index:60;
 }
 .works-hero-image-container{
@@ -25,12 +25,12 @@
 .works-hero-image{width:100%;height:100%;object-fit:cover;}
 .works-hero-title{
   position:absolute;inset:0;display:flex;justify-content:center;align-items:center;
-  font-size:clamp(2rem,10vw,5rem);font-weight:800;color:#000;
+  font-size:clamp(2rem,10vw,5rem);font-weight:800;color:#ffffff;
 }
 
 /* ---------- Showcase Wrapper ---------- */
 .works-showcase{
-  max-width:1280px;margin:0 auto;padding:2rem 1.5rem;background:#000;
+  max-width:1280px;margin:0 auto;padding:2rem 1.5rem;background:#1e1e1e;
 }
 @media(min-width:768px){ .works-showcase{padding:3rem 2rem;} }
 @media(min-width:1280px){.works-showcase{padding-left:3rem;padding-right:3rem;} }
@@ -47,8 +47,8 @@
   content:"";pointer-events:none;position:absolute;top:0;bottom:0;width:3rem;
   z-index:1;
 }
-.works-cat-wrapper::before{left:0;background:linear-gradient(to right,#000 30%,transparent);}
-.works-cat-wrapper::after {right:0;background:linear-gradient(to left ,#000 30%,transparent);}
+.works-cat-wrapper::before{left:0;background:linear-gradient(to right,#1e1e1e 30%,transparent);}
+.works-cat-wrapper::after {right:0;background:linear-gradient(to left ,#1e1e1e 30%,transparent);}
 
 .works-categories{
   flex:1 1 auto;display:flex;flex-wrap:nowrap;
@@ -57,6 +57,115 @@
 }
 .works-categories::-webkit-scrollbar{display:none;}
 
+/* =========================================================
+   WORKS / SHOWCASE ENHANCEMENT - FIXES FOR SCROLLING ISSUES
+   ========================================================= */
+
+/* Force display of the works container */
+#works {
+  opacity: 1 !important;
+}
+
+/* Improve the category bar visibility and behavior */
+.works-cat-wrapper {
+  min-height: 60px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 3rem;
+  will-change: transform; /* Hardware acceleration hint */
+}
+
+/* Force display of categories */
+.works-categories {
+  flex: 1 1 auto;
+  display: flex !important; /* Force display */
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  will-change: transform; /* Hardware acceleration hint */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Ensure buttons are visible */
+.works-category-btn {
+  flex: 0 0 auto;
+  padding: 0.55rem 1.3rem;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  transition: transform 0.25s ease, color 0.25s ease;
+  will-change: transform; /* Hardware acceleration hint */
+}
+
+/* Fix hidden arrows */
+.works-cat-arrow {
+  opacity: 1;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-62%);
+  width: 3rem;
+  height: 3rem;
+  font-size: 2.6rem;
+  line-height: 1;
+  display: flex !important; /* Force display */
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+  z-index: 3;
+  transition: opacity 0.2s;
+}
+
+/* Ensure arrows are visible on load */
+.works-cat-arrow.left {
+  left: 0.35rem;
+  display: flex !important;
+}
+.works-cat-arrow.right {
+  right: 0.35rem;
+  display: flex !important;
+}
+
+/* Improve mobile experience with larger touch targets */
+@media (max-width: 768px) {
+  .works-cat-arrow {
+    width: 2.5rem;
+    height: 3rem; /* Taller touch target */
+    font-size: 2.2rem;
+  }
+  
+  .works-categories {
+    padding: 0.75rem 0; /* More space for touch targets */
+  }
+  
+  .works-category-btn {
+    padding: 0.6rem 1.2rem; /* Slightly larger buttons on mobile */
+  }
+}
+
+/* Reduce layout shift when categories load */
+.works-grid {
+  min-height: 200px; /* Minimum height to reduce layout shift */
+}
 .works-category-btn{
   flex:0 0 auto;padding:.55rem 1.3rem;background:transparent;border:none;border-radius:0;
   font-size:1rem;font-weight:600;color:#fff;
@@ -125,6 +234,59 @@
   opacity:0;transition:opacity .3s .15s;
 }
 .works-card:hover .works-card-desc{opacity:1;}
+/* Add these minimal styles to fix the scrollbar issue */
+
+/* Add these after the existing .works-categories styles */
+.works-categories {
+  /* This helps ensure the scrollbar is immediately accessible */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  /* Enhanced touch scrolling for mobile devices */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Enhance button cursor indication for user experience */
+.works-cat-arrow:not(.disabled) {
+  cursor: pointer;
+}
+
+/* Make sure images load with placeholders to maintain layout stability */
+.works-card-image {
+  min-height: 100px; /* Minimum height while loading */
+  background-color: rgba(30, 30, 30, 0.5); /* Dark placeholder */
+}
+
+/* Force hardware acceleration for smoother scrolling */
+.works-categories {
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Reduce layout shift when categories load */
+.works-cat-wrapper {
+  min-height: 60px; /* Ensure minimum height for container */
+}
+
+/* Help browser layout calculations by being more explicit */
+.works-categories button {
+  white-space: nowrap; /* Prevent wrapping text */
+}
+
+/* Improve mobile experience */
+@media (max-width: 768px) {
+  .works-cat-arrow {
+    width: 2.5rem; /* Slightly smaller on mobile */
+  }
+  
+  .works-categories {
+    padding: 0.75rem 0; /* More space for touch targets */
+  }
+}
 
 /* =========================================================
    ANCILLARY STATES
@@ -138,5 +300,5 @@
 }
 .works-no-projects{text-align:center;padding:2rem;}
 .works-no-projects-title{font-size:1.125rem;color:#fff;font-weight:500;}
-.works-view-all-btn{margin-top:1rem;padding:.5rem 1.25rem;background:#fff;color:#000;border:none;border-radius:.375rem;transition:background-color .3s;}
+.works-view-all-btn{margin-top:1rem;padding:.5rem 1.25rem;background:#fff;color:#1e1e1e ;border:none;border-radius:.375rem;transition:background-color .3s;}
 .works-view-all-btn:hover{background:#ccc;}

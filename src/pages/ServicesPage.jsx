@@ -35,7 +35,7 @@ const ServicesPage = () => {
   }, []);
   
   return (
-    <div id="services" className="bg-black text-white">
+    <div id="services" >
       <ServicesHero id="services-hero" />
       <ServicesLists />
     </div>

@@ -68,7 +68,7 @@ const GalleryLayouts3 = ({ images = [], handleImageError }) => (
     </div>
 
     {/* 5 │ HEY café doorway – full width portraitish */}
-    <div className="col-span-full row-span-3">
+    <div className="col-span-full row-span-4">
       <img
         src={images[4]}                 /* gallery-6.jpg */
         alt="Gallery 7"

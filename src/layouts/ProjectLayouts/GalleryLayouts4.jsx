@@ -10,16 +10,6 @@ const GalleryLayouts4 = ({ images = [], handleImageError }) => (
       auto-rows-[12vw] sm:auto-rows-[10vw] lg:auto-rows-[11vw]
     "
   >
-    {/* 0 │ HERO – reception desk (tall) */}
-    <div className="col-span-full row-span-4">
-      <img
-        src={images[0]}              /* gallery-1.jpeg */
-        alt="Reception"
-        onError={handleImageError}
-        className="w-full h-full object-cover object-center"
-      />
-    </div>
-
     {/* 1 │ Mural corridor – wide landscape */}
     <div className="col-span-full row-span-3">
       <img

@@ -1,74 +1,33 @@
-// GalleryLayout.jsx  –  original layout restored, width-safe
 import React from "react";
-const GalleryLayout = ({ images, handleImageError }) => (
-  <div
-    className="
-      grid grid-flow-dense
-      grid-cols-6  sm:grid-cols-8  lg:grid-cols-12
-      auto-rows-[12vw] sm:auto-rows-[10vw] lg:auto-rows-[8vw]
-      gap-4
-    "
-  >
-    {/* 1 │ HERO – full-width banner */}
-    <div className="col-span-6 sm:col-span-8 lg:col-span-12 row-span-4">
-      <img
-        src={images[0]}
-        alt="Gallery 1"
-        onError={handleImageError}
-        className="w-full h-full object-cover object-center" 
-      />
-    </div>
 
-    {/* 2 │ WIDE LEFT – now uses object-contain (no crop) */}
-    <div className="col-span-4 sm:col-span-5 lg:col-span-8 row-span-4">
-      <img
-        src={images[1]}
-        alt="Gallery 2"
-        onError={handleImageError}
-        className="w-full h-full object-contain object-center "
-      />
+const GalleryGrid = ({ images = [], handleImageError }) => {
+  return (
+    <div className="max-w-7xl mx-auto px-4 py-10">
+      <div
+        className="grid gap-4"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          gridAutoRows: "300px",
+        }}
+      >
+        {images.map((src, index) => (
+          <div
+            key={index}
+            className="border rounded overflow-hidden bg-white shadow"
+            style={{ width: "100%", height: "100%" }}
+          >
+            <img
+              src={src}
+              alt={`Gallery ${index + 1}`}
+              onError={handleImageError}
+              className="w-full h-full object-contain"
+            />
+          </div>
+        ))}
+      </div>
     </div>
+  );
+};
 
-    {/* 3 │ PORTRAIT RIGHT – unchanged */}
-    <div className="col-span-2 sm:col-span-3 lg:col-span-4 row-span-3">
-      <img
-        src={images[2]}
-        alt="Gallery 3"
-        onError={handleImageError}
-        className="w-full h-full object-cover object-center "
-      />
-    </div>
-
-    {/* 4 │ ULTRA-WIDE – also object-contain */}
-    <div className="col-span-6 sm:col-span-8 lg:col-span-12 row-span-4">
-      <img
-        src={images[3]}
-        alt="Gallery 4"
-        onError={handleImageError}
-        className="w-full h-full object-contain object-center "
-      />
-    </div>
-
-    {/* 5 │ LANDSCAPE – unchanged */}
-    <div className="col-span-6 sm:col-span-8 lg:col-span-12 row-span-4">
-      <img
-        src={images[4]}
-        alt="Gallery 5"
-        onError={handleImageError}
-        className="w-full h-full object-cover object-center "
-      />
-    </div>
-
-    {/* 6 │ FOOTER STRIP – unchanged */}
-    <div className="col-span-6 sm:col-span-8 lg:col-span-12 row-span-4">
-      <img
-        src={images[5]}
-        alt="Gallery 6"
-        onError={handleImageError}
-        className="w-full h-full object-cover object-center"
-      />
-    </div>
-  </div>
-);
-
-export default GalleryLayout;
+export default GalleryGrid;

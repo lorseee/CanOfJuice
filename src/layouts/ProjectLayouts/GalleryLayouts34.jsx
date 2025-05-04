@@ -20,17 +20,17 @@ const GalleryLayout = ({ images, handleImageError }) => (
     </div>
 
     {/* 2 │ WIDE LEFT – now uses object-contain (no crop) */}
-    <div className="col-span-4 sm:col-span-5 lg:col-span-8 row-span-4">
+    <div className="col-span-3 sm:col-span-4 lg:col-span-6 row-span-4">
       <img
         src={images[1]}
         alt="Gallery 2"
         onError={handleImageError}
-        className="w-full h-full object-contain object-center "
+        className="w-full h-full object-cover object-center "
       />
     </div>
 
     {/* 3 │ PORTRAIT RIGHT – unchanged */}
-    <div className="col-span-2 sm:col-span-3 lg:col-span-4 row-span-3">
+    <div className="col-span-3 sm:col-span-4 lg:col-span-6 row-span-4">
       <img
         src={images[2]}
         alt="Gallery 3"

@@ -66,16 +66,6 @@ const GalleryLayouts6 = ({ images = [], handleImageError }) => {
           className="w-full h-full object-cover object-center rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
         />
       </div>
-
-      {/* Image 5: Interior waiting area - Standard landscape */}
-      <div className="col-span-full row-span-2 md:row-span-2 lg:row-span-2">
-        <img
-          src={images[5]}
-          alt={getAltText(5)}
-          onError={handleImageError}
-          className="w-full h-full object-cover object-center rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
-        />
-      </div>
     </div>
   );
 };
