@@ -92,9 +92,9 @@
   }
 
   /* fine-tune phone typography so nothing clips */
-  .project-category  { font-size: 0.9rem; }
-  .project-title     { font-size: 1.6rem; }
-  .project-view-btn  { font-size: 0.9rem; }
+  .project-category  { font-size: 0.7rem; }
+  .project-title     { font-size: 1.2rem; }
+  .project-view-btn  { font-size: 0.7rem; }
 }
 
 /* ---------- TABLET (768–1023 px)  →  single column ---------- */
@@ -108,9 +108,11 @@
 
 /* ---------- DESKTOP (≥ 1024 px)  →  multi-column grid ---------- */
 @media (min-width: 1024px) {
+  /* Calculate the heights to account for the gap between medium cards */
+  /* For a 1.25rem gap and 85vh total height, each medium card should be (85vh - 1.25rem)/2 */
   .project-card-large        { grid-column: 1 / span 8; grid-row: 1 / span 2; height: 85vh; }
-  .project-card-medium       { grid-column: 9 / span 4; grid-row: 1 / span 1; height: 42vh; }
-  .project-card-medium-alt   { grid-column: 9 / span 4; grid-row: 2 / span 1; height: 36vh; }
+  .project-card-medium       { grid-column: 9 / span 4; grid-row: 1 / span 1; height: calc((85vh - 1.25rem) / 2); }
+  .project-card-medium-alt   { grid-column: 9 / span 4; grid-row: 2 / span 1; height: calc((85vh - 1.25rem) / 2); }
   .project-card-medium-tall  { grid-column: 1 / span 4; grid-row: 3 / span 2; height: 80vh; }
   .project-card-large-right  { grid-column: 5 / span 8; grid-row: 3 / span 2; height: 80vh; }
   .project-card-standard     { grid-column: span 4;     grid-row: 5 / span 1; height: 65vh; }
@@ -183,7 +185,7 @@
 
 .project-title {
   color: #fff;
-  font-size: 2.1rem;
+  font-size: 2rem;
   font-weight: 300;
   letter-spacing: 0.05em;
   line-height: 1.15;

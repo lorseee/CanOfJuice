@@ -204,7 +204,7 @@
 .works-grid.animate-in .works-card{animation:slideInFromRight .6s ease-out forwards;}
 
 .works-card{
-  border-radius:.5rem;overflow:hidden;cursor:pointer;
+  overflow:hidden;cursor:pointer;
   box-shadow:0 10px 15px -3px rgba(0,0,0,.1);
   transition:transform .3s,box-shadow .3s;animation:fadeInUp .5s ease-out both;
 }

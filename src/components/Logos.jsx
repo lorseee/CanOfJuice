@@ -13,32 +13,21 @@ const Logos = () => {
     "/images/brands/brand16.png", "/images/brands/brand17.png", "/images/brands/brand18.png", "/images/brands/brand19.png", "/images/brands/brand20.png",
     "/images/brands/brand21.png", "/images/brands/brand22.png", "/images/brands/brand23.png", "/images/brands/brand24.png", "/images/brands/brand25.png",
     "/images/brands/brand26.png", "/images/brands/brand27.png", "/images/brands/brand28.png", "/images/brands/brand29.png", "/images/brands/brand30.png",
-    "/images/brands/brand31.jpg", "/images/brands/brand32.png","/images/brands/brand33.png", "/images/brands/brand34.png","/images/brands/brand35.png", "/images/brands/brand36.png",
+    "/images/brands/brand31.jpg", "/images/brands/brand32.png", "/images/brands/brand33.png", "/images/brands/brand34.png", "/images/brands/brand35.png", "/images/brands/brand36.png",
   ];
   
   useEffect(() => {
     // Set CSS variables for responsive marquee
     if (marqueeRef.current) {
-      // Get the actual width based on screen size
-      const logoWidth = window.innerWidth < 480 ? 140 : 
-                        window.innerWidth < 640 ? 160 : 
-                        window.innerWidth < 768 ? 180 : 
-                        window.innerWidth < 1024 ? 200 : 220;
-                        
+      // Fixed logo width and spacing for consistency
+      const logoWidth = 120; // Slightly reduced width for better proportions
+      const logoSpacing = 40; // Equal spacing (20px on each side)
+      const totalItemWidth = logoWidth + logoSpacing;
+      
       marqueeRef.current.style.setProperty('--logo-count', logos.length);
       marqueeRef.current.style.setProperty('--logo-width', `${logoWidth}px`);
-      
-      // Update on resize
-      const handleResize = () => {
-        const newLogoWidth = window.innerWidth < 480 ? 140 : 
-                            window.innerWidth < 640 ? 160 : 
-                            window.innerWidth < 768 ? 180 : 
-                            window.innerWidth < 1024 ? 200 : 220;
-        marqueeRef.current.style.setProperty('--logo-width', `${newLogoWidth}px`);
-      };
-      
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
+      marqueeRef.current.style.setProperty('--logo-spacing', `${logoSpacing}px`);
+      marqueeRef.current.style.setProperty('--total-item-width', `${totalItemWidth}px`);
     }
   }, [logos.length]);
 
@@ -59,21 +48,25 @@ const Logos = () => {
           {/* First set of logos */}
           {logos.map((logo, index) => (
             <div key={`first-${index}`} className="logo-item">
-              <img
-                src={logo}
-                alt={`Partner ${index + 1}`}
-                className="logo-image"
-              />
+              <div className="logo-wrapper">
+                <img
+                  src={logo}
+                  alt={`Partner ${index + 1}`}
+                  className="logo-image"
+                />
+              </div>
             </div>
           ))}
           {/* Duplicate set for seamless looping */}
           {logos.map((logo, index) => (
             <div key={`second-${index}`} className="logo-item">
-              <img
-                src={logo}
-                alt={`Partner ${index + 1}`}
-                className="logo-image"
-              />
+              <div className="logo-wrapper">
+                <img
+                  src={logo}
+                  alt={`Partner ${index + 1}`}
+                  className="logo-image"
+                />
+              </div>
             </div>
           ))}
         </div>

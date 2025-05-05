@@ -45,7 +45,7 @@ const Navbar = () => {
             ref={logoRef}
             src="/images/logo.png"
             alt="Logo"
-            className="h-14 w-auto"
+            className="h-16 w-auto"
           />
         </Link>
 

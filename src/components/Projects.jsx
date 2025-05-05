@@ -26,7 +26,7 @@ const Projects = () => {
   };
 
   /* ──────────────────────────── project data ───────────────────────────── */
-  const featuredProjectIds = [16, 6, 18, 28, 19, 23, 11, 4];
+  const featuredProjectIds = [16, 6, 18, 28, 19, 23, 13, 4];
 
   const featuredProjects = featuredProjectIds.map((id, index) => {
     const project = projects.items.find((p) => p.id === id);
@@ -240,17 +240,10 @@ const Projects = () => {
                 <div className="project-content">
                   <div className="project-details">
                     <p className="project-category">{p.displayCategory}</p>
-                    <h3 className="project-title">{p.name}</h3>
+                    <h3 className="project-title">
+                      {p.name} <span className="project-arrow">→</span>
+                    </h3>
                     <div className="project-divider" />
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        goProject(p.id);
-                      }}
-                      className="project-view-btn"
-                    >
-                      View Project <span className="project-arrow">→</span>
-                    </button>
                   </div>
                 </div>
 
