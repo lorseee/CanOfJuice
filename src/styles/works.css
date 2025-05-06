@@ -101,7 +101,7 @@
   /* Improve scroll performance and smoothness */
   scroll-behavior: smooth;
   will-change: transform, scroll-position;
-  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .works-category-btn {
@@ -173,7 +173,7 @@
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
-  gap: 1rem; /* Reduced gap for mobile */
+  gap: 3rem; 
   padding: 0.75rem 0;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -278,9 +278,9 @@
   pointer-events: none;
   min-height: 200px;
 }
-@media (min-width: 480px)  { .works-grid { gap: 1.5rem; } }
-@media (min-width: 640px)  { .works-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1024px) { .works-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 480px)  { .works-grid { gap: 1.5rem;   padding: 1rem 1rem;} }
+@media (min-width: 640px)  { .works-grid { grid-template-columns: repeat(2, 1fr);  padding: 3rem 3rem; } }
+@media (min-width: 1024px) { .works-grid { grid-template-columns: repeat(3, 1fr);   padding: 3rem 3rem;} }
 
 .works-grid.animate-in {
   opacity: 1;
