@@ -80,13 +80,13 @@ const GalleryLayout = ({ images, handleImageError }) => (
     {/* 5 │ LANDSCAPE */}
     <div className="
       /* Small screens and up: original layout */
-      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-3
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-3
     ">
       <img
         src={images[1]}
         alt="Gallery 5"
         onError={handleImageError}
-        className="w-full h-full object-cover object-center"
+        className="w-full h-full object-contain object-center"
       />
     </div>
 
@@ -96,13 +96,13 @@ const GalleryLayout = ({ images, handleImageError }) => (
       aspect-square w-full
       
       /* Small screens and up: original layout */
-      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-3
     ">
       <img
         src={images[2]}
         alt="Gallery 6"
         onError={handleImageError}
-        className="w-full h-full object-cover object-center"
+        className="w-full h-full object-contain object-center"
       />
     </div>
         {/* 6 │ FOOTER STRIP */}
@@ -117,7 +117,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
         src={images[4]}
         alt="Gallery 6"
         onError={handleImageError}
-        className="w-full h-full object-cover object-center"
+        className="w-full h-full object-contain object-center"
       />
     </div>
         {/* 6 │ FOOTER STRIP */}
@@ -132,7 +132,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
         src={images[5]}
         alt="Gallery 6"
         onError={handleImageError}
-        className="w-full h-full object-cover object-center"
+        className="w-full h-full object-contain object-center"
       />
     </div>
 

@@ -25,7 +25,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
         src={images[0]}
         alt="Gallery 1"
         onError={handleImageError}
-        className="w-full h-full object-cover object-center"
+        className="w-full h-full object-contain object-center"
       />
     </div>
 
@@ -38,7 +38,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
         src={images[1]}
         alt="Gallery 1"
         onError={handleImageError}
-        className="w-full h-full object-cover object-center"
+        className="w-full h-full object-contain object-center"
       />
     </div>
 
@@ -52,7 +52,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
         src={images[2]}
         alt="Gallery 1"
         onError={handleImageError}
-        className="w-full h-full object-cover object-center"
+        className="w-full h-full object-contain object-center"
       />
     </div>
 
@@ -95,7 +95,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
         src={images[5]}
         alt="Gallery 6"
         onError={handleImageError}
-        className="w-full h-full object-cver object-center"
+        className="w-full h-full object-cover object-center"
       />
     </div>
   </div>
