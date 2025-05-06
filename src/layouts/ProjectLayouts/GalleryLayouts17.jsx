@@ -121,7 +121,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
         src={images[7]}
         alt="Gallery 3"
         onError={handleImageError}
-        className="w-full h-full object-cover object-center"
+        className="w-full h-full object-contain object-center"
       />
     </div>
      {/* 2 │ WIDE LEFT */}
