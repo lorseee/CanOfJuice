@@ -1,33 +1,142 @@
 import React from "react";
 
-const GalleryGrid = ({ images = [], handleImageError }) => {
-  return (
-    <div className="max-w-7xl mx-auto px-4 py-10">
-      <div
-        className="grid gap-4"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-          gridAutoRows: "300px",
-        }}
-      >
-        {images.map((src, index) => (
-          <div
-            key={index}
-            className="border rounded overflow-hidden bg-white shadow"
-            style={{ width: "100%", height: "100%" }}
-          >
-            <img
-              src={src}
-              alt={`Gallery ${index + 1}`}
-              onError={handleImageError}
-              className="w-full h-full object-contain"
-            />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
+const GalleryLayout = ({ images, handleImageError }) => (
+  <div
+    className="
+      /* Container with consistent padding on all screen sizes */
+      px-4 mx-auto w-full max-w-screen-2xl
+      
+      /* Grid layout with consistent gaps */
+      grid-cols-1 gap-6
+      
+      /* Small screens and up: original grid layout */
+      sm:grid-cols-8 lg:grid-cols-12
+      sm:auto-rows-[10vw] lg:auto-rows-[8vw]
+      sm:gap-4
+    "
+  >
+    {/* 1 │ HERO – full-width banner */}
+    <div className="
 
-export default GalleryGrid;
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-3
+    ">
+      <img
+        src={images[7]}
+        alt="Gallery 1"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
+    </div>
+
+    {/* 2 │ WIDE LEFT */}
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-4
+    ">
+      <img
+        src={images[0]}
+        alt="Gallery 2"
+        onError={handleImageError}
+        className="w-full h-full object-contain object-center"
+      />
+    </div>
+
+    {/* 3 │ PORTRAIT RIGHT */}
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-4
+    ">
+      <img
+        src={images[3]}
+        alt="Gallery 3"
+        onError={handleImageError}
+        className="w-full h-full object-contain object-center"
+      />
+    </div>
+
+    {/* 4 │ ULTRA-WIDE */}
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+    ">
+      <img
+        src={images[6]}
+        alt="Gallery 4"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
+    </div>
+
+    {/* 5 │ LANDSCAPE */}
+    <div className="
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-3
+    ">
+      <img
+        src={images[1]}
+        alt="Gallery 5"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
+    </div>
+
+    {/* 6 │ FOOTER STRIP */}
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+    ">
+      <img
+        src={images[2]}
+        alt="Gallery 6"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
+    </div>
+        {/* 6 │ FOOTER STRIP */}
+        <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+    ">
+      <img
+        src={images[4]}
+        alt="Gallery 6"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
+    </div>
+        {/* 6 │ FOOTER STRIP */}
+        <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+    ">
+      <img
+        src={images[5]}
+        alt="Gallery 6"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
+    </div>
+
+  </div>
+);
+
+export default GalleryLayout;

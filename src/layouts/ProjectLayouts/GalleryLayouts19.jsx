@@ -1,74 +1,100 @@
 import React from "react";
 
-const GalleryLayout = ({ images = [], handleImageError }) => {
-  // Ensure we have at least 6 images to work with, use placeholders if needed
-  const safeImages = [...images];
-  while (safeImages.length < 6) {
-    safeImages.push("/api/placeholder/800/600");
-  }
+const GalleryLayout = ({ images, handleImageError }) => (
+  <div
+    className="
+      /* Container with consistent padding on all screen sizes */
+      px-4 mx-auto w-full max-w-screen-2xl
+      
+      /* Grid layout with consistent gaps */
+      grid-cols-1 gap-6
+      
+      /* Small screens and up: original grid layout */
+      sm:grid-cols-8 lg:grid-cols-12
+      sm:auto-rows-[10vw] lg:auto-rows-[8vw]
+      sm:gap-4
+    "
+  >
+    {/* 1 │ HERO – full-width banner */}
+    <div className="
 
-  return (
-    <div className="container mx-auto p-4">
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {/* First row - hero image */}
-        <div className="md:col-span-3 lg:col-span-4 aspect-[16/9]">
-          <img
-            src={safeImages[0]}
-            alt="Vesoma Fitness Center Interior"
-            onError={handleImageError}
-            className="w-full h-full object-cover"
-          />
-        </div>
-        
-        {/* Second row - 3 images */}
-        <div className="aspect-[3/4]">
-          <img
-            src={safeImages[1]}
-            alt="Motivational Wall Art"
-            onError={handleImageError}
-            className="w-full h-full object-cover"
-          />
-        </div>
-        
-        <div className="aspect-[3/4]">
-          <img
-            src={safeImages[2]}
-            alt="Vesoma Reception Area"
-            onError={handleImageError}
-            className="w-full h-full object-cover"
-          />
-        </div>
-        
-        <div className="md:col-span-1 lg:col-span-2 aspect-[16/9]">
-          <img
-            src={safeImages[3]}
-            alt="Cardio Equipment Area"
-            onError={handleImageError}
-            className="w-full h-full object-cover"
-          />
-        </div>
-        
-        {/* Third row - 2 images */}
-        <div className="md:col-span-2 lg:col-span-2 aspect-[16/9]">
-          <img
-            src={safeImages[4]}
-            alt="Jump Height Measurement Wall"
-            onError={handleImageError}
-            className="w-full h-full object-cover"
-          />
-        </div>
-        
-        <div className="md:col-span-1 lg:col-span-2 aspect-[3/4] md:aspect-[16/9]">
-          <img
-            src={safeImages[5]}
-            alt="Fitness Program Board"
-            onError={handleImageError}
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </div>
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+    ">
+      <img
+        src={images[1]}
+        alt="Gallery 1"
+        onError={handleImageError}
+        className="w-full h-full object-contain object-center"
+      />
     </div>
-  );
-};
+
+    {/* 2 │ WIDE LEFT */}
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-4
+    ">
+      <img
+        src={images[0]}
+        alt="Gallery 2"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
+    </div>
+
+    {/* 3 │ PORTRAIT RIGHT */}
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-4
+    ">
+      <img
+        src={images[2]}
+        alt="Gallery 3"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
+    </div>
+
+
+    {/* 2 │ WIDE LEFT */}
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-3
+    ">
+      <img
+        src={images[4]}
+        alt="Gallery 2"
+        onError={handleImageError}
+        className="w-full h-full object-contain object-center"
+      />
+    </div>
+
+    {/* 3 │ PORTRAIT RIGHT */}
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-3
+    ">
+      <img
+        src={images[3]}
+        alt="Gallery 3"
+        onError={handleImageError}
+        className="w-full h-full object-contain object-center"
+      />
+    </div>
+
+  </div>
+);
 
 export default GalleryLayout;

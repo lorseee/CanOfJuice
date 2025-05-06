@@ -6,7 +6,7 @@ const Footer = () => {
     <footer id="contact" className="footer">
       <div className="footer-container">
         <div className="footer-content">
-          {/* Logo - On the left */}
+          {/* Logo - Complete left */}
           <div className="footer-logo">
             <img
               src="/images/logo.png"
@@ -14,7 +14,7 @@ const Footer = () => {
             />
           </div>
 
-          {/* Contact Info - Centered */}
+          {/* Contact Info - Centered and lowered */}
           <div className="footer-center">
             <div className="contact-info">
               <p>10, 1st Main Rd, 1st Block Koramangala, Bengaluru, Karnataka 560034</p>

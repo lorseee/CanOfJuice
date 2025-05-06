@@ -1,71 +1,123 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import WorksHero from "../components/Works-hero";
 import WorksCategories from "../components/Works-categories";
 
 const WorksPage = () => {
-  // Track page loading state
+  // Track page loading and navigation states
   const [pageLoaded, setPageLoaded] = useState(false);
+  const [isBackNavigation, setIsBackNavigation] = useState(false);
+  const lastScrollPosition = useRef(0);
+  const location = useLocation();
+  
+  // Track first load vs subsequent loads
+  const isFirstLoad = useRef(true);
   
   useEffect(() => {
-    // Mark the component as ready to render
-    setPageLoaded(true);
+    // Detect if this is a back navigation using history state
+    const isNavigatingBack = window.performance && 
+      window.performance.navigation && 
+      window.performance.navigation.type === 2;
+      
+    // Also check for popstate events
+    setIsBackNavigation(isNavigatingBack || !!sessionStorage.getItem('wasOnProjectPage'));
     
-    // Reset scroll position on mount
-    window.scrollTo(0, 0);
+    // Always force manual scroll restoration
     if ("scrollRestoration" in history) {
       history.scrollRestoration = "manual";
     }
-
-    // Ensure the works element is visible immediately
-    const worksElement = document.getElementById("works");
-    if (worksElement) {
-      worksElement.style.opacity = "1";
-    }
-
-    // Handle hash-based navigation
-    const handleHashChange = () => {
-      const hash = window.location.hash;
-      
-      if (!hash || hash === "#works" || hash === "#works-hero") {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      } else {
+    
+    // Ensure works element is immediately visible (no flashing)
+    document.documentElement.style.scrollBehavior = isBackNavigation ? "auto" : "smooth";
+    
+    // First load setup (refresh or direct URL)
+    if (isFirstLoad.current) {
+      // If NOT coming back from a project page, scroll to top
+      if (!isBackNavigation) {
+        // Use a visibility approach to prevent flashing
+        document.body.style.opacity = "0";
+        document.body.style.transition = "opacity 0.3s ease-in";
+        
+        // Reset scroll position using instant behavior
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'instant'
+        });
+        
+        // Fade in content after positioning is complete
         setTimeout(() => {
-          const element = document.getElementById(hash.substring(1));
-          if (element) {
-            element.scrollIntoView({ behavior: "smooth" });
-          }
-        }, 100);
+          document.body.style.opacity = "1";
+          setPageLoaded(true);
+        }, 50);
+      } 
+      // If coming back from project page, restore position
+      else {
+        const savedPosition = sessionStorage.getItem('scrollPosition');
+        if (savedPosition) {
+          // Make restoration instant to avoid jumps
+          window.scrollTo({
+            top: parseInt(savedPosition, 10),
+            behavior: 'instant'
+          });
+        }
+        setPageLoaded(true);
+        // Clear the navigation flag
+        sessionStorage.removeItem('wasOnProjectPage');
       }
+      
+      isFirstLoad.current = false;
+    }
+    
+    // Save scroll position before navigation to project page
+    const handleBeforeProjectNav = () => {
+      lastScrollPosition.current = window.scrollY;
+      sessionStorage.setItem('scrollPosition', lastScrollPosition.current);
+      sessionStorage.setItem('wasOnProjectPage', 'true');
     };
 
-    // Set up event listeners
-    window.addEventListener('DOMContentLoaded', handleHashChange);
-    window.addEventListener('load', () => {
-      handleHashChange();
-      // Force a refresh of layouts after everything is loaded
-      window.dispatchEvent(new Event('resize'));
+    // Add event listener to links to project pages
+    const projectLinks = document.querySelectorAll('.works-card');
+    projectLinks.forEach(link => {
+      link.addEventListener('click', handleBeforeProjectNav);
     });
-    window.addEventListener('hashchange', handleHashChange);
     
-    // Force resize after a short delay to ensure all elements are rendered
-    const resizeTimers = [
-      setTimeout(() => window.dispatchEvent(new Event('resize')), 100),
-      setTimeout(() => window.dispatchEvent(new Event('resize')), 500),
-      setTimeout(() => window.dispatchEvent(new Event('resize')), 1000)
-    ];
-    
+    // Remove forced body opacity when component unmounts
     return () => {
-      window.removeEventListener('DOMContentLoaded', handleHashChange);
-      window.removeEventListener('load', handleHashChange);
-      window.removeEventListener('hashchange', handleHashChange);
-      resizeTimers.forEach(timer => clearTimeout(timer));
+      document.body.style.opacity = "";
+      document.body.style.transition = "";
+      document.documentElement.style.scrollBehavior = "";
+      
+      // Clean up event listeners
+      projectLinks.forEach(link => {
+        link.removeEventListener('click', handleBeforeProjectNav);
+      });
     };
-  }, []);
+  }, [location]);
+
+  // Force resize event to refresh layout calculations 
+  // (particularly important for category arrows)
+  useEffect(() => {
+    if (pageLoaded) {
+      const resizeTimers = [
+        setTimeout(() => window.dispatchEvent(new Event('resize')), 100),
+        setTimeout(() => window.dispatchEvent(new Event('resize')), 500)
+      ];
+      
+      return () => resizeTimers.forEach(timer => clearTimeout(timer));
+    }
+  }, [pageLoaded]);
   
   return (
-    <div id="works" style={{ opacity: 1 }}> {/* Ensure visibility from the start */}
+    <div 
+      id="works" 
+      className={pageLoaded ? "works-page-loaded" : "works-page-loading"}
+    >
       <WorksHero id="works-hero" />
-      <WorksCategories isPageLoaded={pageLoaded} />
+      <WorksCategories 
+        isPageLoaded={pageLoaded} 
+        preserveState={isBackNavigation} 
+      />
     </div>
   );
 };

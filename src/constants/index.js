@@ -83,7 +83,7 @@ export const projects = {
       images: {
         main: "/images/projects/4/main.jpg",
         gallery: [
-          "/images/projects/4/gallery-1.jpeg",
+          "/images/projects/4/gallery-1.jpg",
           "/images/projects/4/gallery-2.jpeg",
           "/images/projects/4/gallery-3.jpeg",
           "/images/projects/4/gallery-4.jpg",
@@ -132,7 +132,10 @@ export const projects = {
           "/images/projects/6/gallery-3.jpeg",
           "/images/projects/6/gallery-4.jpg",
           "/images/projects/6/gallery-5.jpg",
-          "/images/projects/6/gallery-6.jpg",
+          "/images/projects/6/gallery-6.jpeg",
+          "/images/projects/6/gallery-7.jpeg",
+          "/images/projects/6/gallery-8.jpeg",
+          "/images/projects/6/gallery-9.jpeg",
         ],
       }
     },
@@ -186,9 +189,8 @@ export const projects = {
         main: "/images/projects/11/main.jpg",
         gallery: [
           "/images/projects/11/gallery-1.jpeg",
-          "/images/projects/11/gallery-2.jpg",
+          "/images/projects/11/gallery-2.jpeg",
           "/images/projects/11/gallery-3.jpg",
-          "/images/projects/11/gallery-4.jpeg",
         ],
       }
     },
@@ -221,15 +223,18 @@ export const projects = {
       images: {
         main: "/images/projects/13/main.jpg",
         gallery: [
-          "/images/projects/13/gallery-1.jpeg",
+          "/images/projects/13/gallery-1.jpg",
           "/images/projects/13/gallery-2.jpeg",
           "/images/projects/13/gallery-3.jpeg",
           "/images/projects/13/gallery-4.jpg",
           "/images/projects/13/gallery-5.jpg",
-          "/images/projects/13/gallery-7.jpg",
+          "/images/projects/13/gallery-6.jpg",
+          "/images/projects/13/gallery-7.jpeg",
           "/images/projects/13/gallery-8.jpg",
           "/images/projects/13/gallery-9.jpeg",
           "/images/projects/13/gallery-10.jpeg",
+          "/images/projects/13/gallery-11.jpg",
+          "/images/projects/13/gallery-12.jpg",
         ],
       }
     },
@@ -265,7 +270,7 @@ export const projects = {
         gallery: [
           "/images/projects/17/gallery-1.jpeg",
           "/images/projects/17/gallery-2.jpeg",
-          "/images/projects/17/gallery-3.jpg",
+          "/images/projects/17/gallery-3.jpeg",
           "/images/projects/17/gallery-4.jpg",
           "/images/projects/17/gallery-5.jpg",
           "/images/projects/17/gallery-6.jpg",
@@ -273,6 +278,7 @@ export const projects = {
           "/images/projects/17/gallery-8.jpg",
           "/images/projects/17/gallery-9.jpg",
           "/images/projects/17/gallery-10.jpg",
+          "/images/projects/17/gallery-11.jpg",
         ],
       }
     },
@@ -350,6 +356,7 @@ export const projects = {
           "/images/projects/22/gallery-4.png",
           "/images/projects/22/gallery-5.png",
           "/images/projects/22/gallery-6.png",
+          "/images/projects/22/gallery-7.png",
         ],
       }
     },
@@ -433,12 +440,12 @@ export const projects = {
       longDescription:
         "1131, a contemporary restobar in Bangalore, engaged us to craft an end-to-end identity. Naming, logo, menus, glassware, signage, and more coalesce into a cohesive guest experience that stands out in a competitive F&B scene.",
       images: {
-        main: "/images/projects/29/main.jpg",
+        main: "/images/projects/29/main.png",
         gallery: [
           "/images/projects/29/gallery-1.png",
           "/images/projects/29/gallery-2.png",
           "/images/projects/29/gallery-3.jpg",
-          "/images/projects/29/gallery-4.png",
+          "/images/projects/29/gallery-4.jpg",
         ]
       }
     },
@@ -460,6 +467,7 @@ export const projects = {
           "/images/projects/30/gallery-6.png",
           "/images/projects/30/gallery-7.jpg",
           "/images/projects/30/gallery-8.jpg",
+          "/images/projects/30/gallery-9.jpg",
         ]
       }
     },
@@ -519,7 +527,7 @@ export const projects = {
             "/images/projects/34/gallery-4.png",
             "/images/projects/34/gallery-5.png",
             "/images/projects/34/gallery-6.png",
-            "/images/projects/34/gallery-7.png",
+            "/images/projects/34/gallery-7.jpg",
           ]
         }
       },

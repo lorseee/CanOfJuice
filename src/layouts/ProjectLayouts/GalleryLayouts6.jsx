@@ -1,73 +1,139 @@
 import React from "react";
 
-const GalleryLayouts6 = ({ images = [], handleImageError }) => {
-  // Function to get appropriate alt text for each image
-  const getAltText = (index) => {
-    const altTexts = [
-      "Namma Nook reception area with red sofa and colorful signage",
-      "Glass door with 'LET'S CREATE' typography and geometric patterns",
-      "Yellow doors with geometric design elements and 'Authorised Personnel Only' sign",
-      "Wayfinding design showing 'After-School Classes' and program information",
-      "Exterior building signage for Namma Nook and Little Gym",
-      "Interior waiting area with cork board, sticky notes and chairs",
-      "View through glass doors to Namma Nook reception with red sofa"
-    ];
-    return altTexts[index] || `Namma Nook image ${index + 1}`;
-  };
+const GalleryLayout = ({ images, handleImageError }) => (
+  <div
+    className="
+      /* Container with consistent padding on all screen sizes */
+      px-4 mx-auto w-full max-w-screen-2xl
+      
+      /* Grid layout with consistent gaps */
+      grid-cols-1 gap-6
+      
+      /* Small screens and up: original grid layout */
+      sm:grid-cols-8 lg:grid-cols-12
+      sm:auto-rows-[10vw] lg:auto-rows-[8vw]
+      sm:gap-4
+    "
+  >
+    {/* 1 │ HERO – full-width banner */}
+    <div className="
 
-  return (
-    <div className="grid grid-cols-12 gap-4 auto-rows-[20vw] md:auto-rows-[15vw] lg:auto-rows-[12vw]">
-      {/* Image 0: Reception area - Feature as hero (portrait orientation) */}
-      <div className="col-span-full md:col-span-6 lg:col-span-6 row-span-3 md:row-span-4 lg:row-span-4">
-        <img
-          src={images[0]}
-          alt={getAltText(0)}
-          onError={handleImageError}
-          className="w-full h-full object-cover object-center rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
-        />
-      </div>
-
-      {/* Image 1: LET'S CREATE glass door - Prominent, nearly square */}
-      <div className="col-span-full md:col-span-6 lg:col-span-6 row-span-3 md:row-span-4 lg:row-span-4">
-        <img
-          src={images[1]}
-          alt={getAltText(1)}
-          onError={handleImageError}
-          className="w-full h-full object-cover object-center rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
-        />
-      </div>
-
-      {/* Image 2: Yellow doors - Horizontal rectangle */}
-      <div className="col-span-6 md:col-span-6 lg:col-span-4 row-span-2 md:row-span-2 lg:row-span-2">
-        <img
-          src={images[2]}
-          alt={getAltText(2)}
-          onError={handleImageError}
-          className="w-full h-full object-cover object-center rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
-        />
-      </div>
-
-      {/* Image 3: Wayfinding design - Vertical orientation */}
-      <div className="col-span-6 md:col-span-6 lg:col-span-4 row-span-2 md:row-span-2 lg:row-span-2">
-        <img
-          src={images[3]}
-          alt={getAltText(3)}
-          onError={handleImageError}
-          className="w-full h-full object-cover object-center rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
-        />
-      </div>
-
-      {/* Image 4: Exterior signage - Vertical rectangle */}
-      <div className="col-span-6 md:col-span-6 lg:col-span-4 row-span-2 md:row-span-2 lg:row-span-2">
-        <img
-          src={images[4]}
-          alt={getAltText(4)}
-          onError={handleImageError}
-          className="w-full h-full object-cover object-center rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
-        />
-      </div>
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+    ">
+      <img
+        src={images[6]}
+        alt="Gallery 1"
+        onError={handleImageError}
+        className="w-full h-full object-contain object-center"
+      />
     </div>
-  );
-};
 
-export default GalleryLayouts6;
+    {/* 2 │ WIDE LEFT */}
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+    ">
+      <img
+        src={images[7]}
+        alt="Gallery 2"
+        onError={handleImageError}
+        className="w-full h-full object-contain object-center"
+      />
+    </div>
+
+    {/* 3 │ PORTRAIT RIGHT */}
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-4
+    ">
+      <img
+        src={images[0]}
+        alt="Gallery 3"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
+    </div>
+
+    {/* 4 │ ULTRA-WIDE */}
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-4
+    ">
+      <img
+        src={images[1]}
+        alt="Gallery 4"
+        onError={handleImageError}
+        className="w-full h-full object-contain object-center"
+      />
+    </div>
+
+    {/* 5 │ LANDSCAPE */}
+    <div className="
+      /* Small screens and up: original layout */
+     sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-4
+    ">
+      <img
+        src={images[2]}
+        alt="Gallery 5"
+        onError={handleImageError}
+        className="w-full h-full object-contain object-center"
+      />
+    </div>
+
+    {/* 6 │ FOOTER STRIP */}
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+       sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-4
+    ">
+      <img
+        src={images[5]}
+        alt="Gallery 6"
+        onError={handleImageError}
+        className="w-full h-full object-contain object-center"
+      />
+    </div>
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+       sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-4
+    ">
+      <img
+        src={images[4]}
+        alt="Gallery 6"
+        onError={handleImageError}
+        className="w-full h-full object-contain object-center"
+      />
+    </div>
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+       sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-4
+    ">
+      <img
+        src={images[3]}
+        alt="Gallery 6"
+        onError={handleImageError}
+        className="w-full h-full object-contain object-center"
+      />
+    </div>
+  </div>
+);
+
+export default GalleryLayout;

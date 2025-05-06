@@ -15,9 +15,9 @@ const AboutUs = () => {
 
   const [ready, setReady] = useState(false);
 
-  // Delay mount by 300ms to allow hero scroll to complete first
+  // Increased delay for AboutUs animations to avoid interfering with initial scroll
   useEffect(() => {
-    const timer = setTimeout(() => setReady(true), 300);
+    const timer = setTimeout(() => setReady(true), 600);
     return () => clearTimeout(timer);
   }, []);
 
@@ -28,6 +28,13 @@ const AboutUs = () => {
     const text = textRef.current;
     const lag = lagRef.current;
     if (!section || !text || !lag) return;
+
+    // Clear any existing ScrollTrigger instances first
+    ScrollTrigger.getAll().forEach(st => {
+      if (st.vars.trigger === section || st.vars.trigger === lag) {
+        st.kill();
+      }
+    });
 
     entranceTL.current = gsap.timeline({
       scrollTrigger: {
@@ -50,7 +57,8 @@ const AboutUs = () => {
       pin: true,
       pinSpacing: false,
       anticipatePin: 1,
-      fastScrollEnd: true
+      fastScrollEnd: true,
+      id: "about-pin" // Add ID for easier debugging
     });
 
     lagTL.current = gsap.timeline({
@@ -59,19 +67,27 @@ const AboutUs = () => {
         start: "top bottom",
         end: "bottom top",
         scrub: 1,
-        ease: "none"
+        ease: "none",
+        id: "about-lag" // Add ID for easier debugging
       }
     }).fromTo(text, { opacity: 1 }, { opacity: 0.4 });
 
-    resizeObs.current = new ResizeObserver(() => ScrollTrigger.refresh(true));
+    // Use a debounced resize observer to prevent excessive refreshes
+    let resizeTimeout;
+    resizeObs.current = new ResizeObserver(() => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        ScrollTrigger.refresh(true);
+      }, 250);
+    });
     resizeObs.current.observe(section);
 
     return () => {
       entranceTL.current?.kill();
       lagTL.current?.kill();
       pinST.current?.kill();
-      ScrollTrigger.getAll().forEach(t => t.kill());
       resizeObs.current?.disconnect();
+      clearTimeout(resizeTimeout);
     };
   }, [ready]);
 

@@ -1,64 +1,104 @@
-// TorpedoesArenaGallery.jsx
 import React from "react";
 
-const GalleryLayouts16 = ({ images = [] }) => {
-  const onError = (e) => console.error("Couldn’t load:", e.target.src);
+const GalleryLayout = ({ images, handleImageError }) => (
+  <div
+    className="
+      /* Container with consistent padding on all screen sizes */
+      px-4 mx-auto w-full max-w-screen-2xl
+      
+      /* Grid layout with consistent gaps */
+      grid-cols-1 gap-6
+      
+      /* Small screens and up: original grid layout */
+      sm:grid-cols-8 lg:grid-cols-12
+      sm:auto-rows-[10vw] lg:auto-rows-[8vw]
+      sm:gap-4
+    "
+  >
+    {/* 1 │ HERO – full-width banner */}
+    <div className="
 
-  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div
-        className="
-          grid gap-4
-          grid-cols-1 sm:grid-cols-4 lg:grid-cols-12
-          auto-rows-auto
-        "
-      >
-        {/* 1 │ HERO court – full-width banner */}
-        <div className="col-span-full">
-          <img
-            src={images[0]}
-            onError={onError}
-            alt=""
-            className="w-full h-auto rounded-lg shadow"
-          />
-        </div>
-
-        {/* 2 │ Wide angle from opposite side */}
-        <div className="col-span-full">
-          <img
-            src={images[6] ?? images[1]}
-            onError={onError}
-            alt=""
-            className="w-full h-auto rounded-lg shadow"
-          />
-        </div>
-
-        {/* Grouped smaller images in a 3-column grid (desktop) */}
-        {[images[1], images[2], images[3]].map((src, i) => (
-          <div key={i} className="sm:col-span-2 lg:col-span-4">
-            <img
-              src={src}
-              onError={onError}
-              alt=""
-              className="w-full h-auto rounded-lg shadow"
-            />
-          </div>
-        ))}
-
-        {/* Bottom row – two wide images side by side */}
-        {[images[4], images[5]].map((src, i) => (
-          <div key={i} className="sm:col-span-2 lg:col-span-6">
-            <img
-              src={src}
-              onError={onError}
-              alt=""
-              className="w-full h-auto rounded-lg shadow"
-            />
-          </div>
-        ))}
-      </div>
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+    ">
+      <img
+        src={images[0]}
+        alt="Gallery 1"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
     </div>
-  );
-};
 
-export default GalleryLayouts16;
+    <div className="
+
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+    ">
+      <img
+        src={images[1]}
+        alt="Gallery 1"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
+    </div>
+
+    {/* 3 │ PORTRAIT RIGHT */}
+    <div className="
+
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+    ">
+      <img
+        src={images[2]}
+        alt="Gallery 1"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
+    </div>
+
+    {/* 4 │ ULTRA-WIDE */}
+    <div className="
+
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+    ">
+      <img
+        src={images[3]}
+        alt="Gallery 1"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
+    </div>
+
+    {/* 5 │ LANDSCAPE */}
+    <div className="
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-4
+    ">
+      <img
+        src={images[4]}
+        alt="Gallery 5"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
+    </div>
+
+    {/* 6 │ FOOTER STRIP */}
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-4
+    ">
+      <img
+        src={images[5]}
+        alt="Gallery 6"
+        onError={handleImageError}
+        className="w-full h-full object-cver object-center"
+      />
+    </div>
+  </div>
+);
+
+export default GalleryLayout;

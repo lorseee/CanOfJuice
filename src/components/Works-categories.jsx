@@ -6,15 +6,30 @@ import { projects } from "../constants";
 /* ↓  lower fraction  =  slower perceived scroll (was 0.60) */
 const SCROLL_STEP = 0.60;
 
-const WorksCategories = ({ isPageLoaded = true }) => {
-  const [selectedCategory, setSelectedCategory] = useState("all");
+// Save category state between navigations
+const getCachedState = () => {
+  try {
+    const saved = sessionStorage.getItem('worksCategoryState');
+    return saved ? JSON.parse(saved) : null;
+  } catch(e) {
+    return null;
+  }
+};
+
+const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
+  // Get cached state if navigating back
+  const cachedState = useMemo(() => preserveState ? getCachedState() : null, [preserveState]);
+  
+  const [selectedCategory, setSelectedCategory] = useState(cachedState?.category || "all");
   const [isLoading, setIsLoading] = useState(false);
   const [canLeft, setCanLeft] = useState(false);
   const [canRight, setCanRight] = useState(false);
   const [isComponentMounted, setIsComponentMounted] = useState(false);
+  const [contentReady, setContentReady] = useState(false);
 
   const barRef = useRef(null);
   const navigate = useNavigate();
+  const categoryTransitionActive = useRef(false);
   
   /* ---------------------------------------------------- */
   /* helper: check and update arrow enable/disable states */
@@ -37,17 +52,22 @@ const WorksCategories = ({ isPageLoaded = true }) => {
   useEffect(() => {
     setIsComponentMounted(true);
     
-    // Immediate refresh plus delayed refreshes to catch any layout changes
+    // Initial arrow refresh with progressive timing
     const refreshTimers = [
       setTimeout(refreshArrows, 0),
-      setTimeout(refreshArrows, 50),
       setTimeout(refreshArrows, 150),
-      setTimeout(refreshArrows, 500),
-      setTimeout(refreshArrows, 1000)
+      setTimeout(refreshArrows, 500)
     ];
     
+    // Restore scroll position of category bar if coming back
+    if (preserveState && cachedState?.scrollLeft && barRef.current) {
+      barRef.current.scrollLeft = cachedState.scrollLeft;
+    }
+    
+    setContentReady(true);
+    
     return () => refreshTimers.forEach(timer => clearTimeout(timer));
-  }, [refreshArrows]);
+  }, [refreshArrows, preserveState, cachedState]);
 
   /* ---------------------------------------------------- */
   /* Handle page loaded state */
@@ -100,6 +120,15 @@ const WorksCategories = ({ isPageLoaded = true }) => {
     /* respond to scroll events */
     const onScroll = () => {
       refreshArrows();
+      
+      // Cache scroll position for return navigation
+      if (isPageLoaded) {
+        const state = {
+          category: selectedCategory,
+          scrollLeft: el.scrollLeft
+        };
+        sessionStorage.setItem('worksCategoryState', JSON.stringify(state));
+      }
     };
     el.addEventListener("scroll", onScroll);
 
@@ -119,15 +148,11 @@ const WorksCategories = ({ isPageLoaded = true }) => {
     };
     document.addEventListener("visibilitychange", onVisibilityChange);
 
-    /* force a refresh on DOM content loaded */
-    const domLoadedHandler = () => {
-      refreshArrows();
-      setTimeout(refreshArrows, 200);
-    };
-    
     /* MutationObserver to detect DOM changes that might affect scrolling */
     const observer = new MutationObserver(() => {
-      refreshArrows();
+      if (!categoryTransitionActive.current) {
+        refreshArrows();
+      }
     });
     
     observer.observe(el, { 
@@ -137,8 +162,6 @@ const WorksCategories = ({ isPageLoaded = true }) => {
       attributeFilter: ['class', 'style']
     });
 
-    window.addEventListener("DOMContentLoaded", domLoadedHandler);
-
     return () => {
       el.removeEventListener("wheel", onWheel);
       el.removeEventListener("mousedown", onDown);
@@ -147,13 +170,12 @@ const WorksCategories = ({ isPageLoaded = true }) => {
       el.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", onVisibilityChange);
-      window.removeEventListener("DOMContentLoaded", domLoadedHandler);
       observer.disconnect();
     };
-  }, [refreshArrows]);
+  }, [refreshArrows, isPageLoaded, selectedCategory]);
 
   /* ---------------------------------------------------- */
-  /* data memoisation */
+  /* data memoization */
   const getImage = useMemo(() => {
     const map = {};
     projects.items.forEach(p => { 
@@ -176,18 +198,50 @@ const WorksCategories = ({ isPageLoaded = true }) => {
   /* event handlers */
   const changeCategory = useCallback(id => {
     if (id !== selectedCategory) {
-      setSelectedCategory(id);
-      // Reset scroll position on category change
+      // Set a flag to prevent flickering during category change
+      categoryTransitionActive.current = true;
+      
+      // Create temporary loading state
+      setIsLoading(true);
+      
+      // Short timeout to allow loading state to be visible
       setTimeout(() => {
+        // Change category
+        setSelectedCategory(id);
+        
+        // Reset scroll position on category change
         if (barRef.current) {
           barRef.current.scrollLeft = 0;
-          refreshArrows();
         }
-      }, 10);
+        
+        // Short delay to ensure DOM has updated
+        setTimeout(() => {
+          setIsLoading(false);
+          refreshArrows();
+          categoryTransitionActive.current = false;
+          
+          // Update cache
+          const state = {
+            category: id,
+            scrollLeft: 0
+          };
+          sessionStorage.setItem('worksCategoryState', JSON.stringify(state));
+        }, 150);
+      }, 100);
     }
   }, [selectedCategory, refreshArrows]);
   
-  const openProject = useCallback(id => navigate(`/project/${id}`), [navigate]);
+  const openProject = useCallback(id => {
+    // Save current category state before navigation
+    const state = {
+      category: selectedCategory,
+      scrollLeft: barRef.current?.scrollLeft || 0
+    };
+    sessionStorage.setItem('worksCategoryState', JSON.stringify(state));
+    
+    // Navigate to project
+    navigate(`/project/${id}`);
+  }, [navigate, selectedCategory]);
   
   const onImgError = useCallback(e => { 
     e.target.src = "/images/projects/default/main.jpg"; 
@@ -201,9 +255,9 @@ const WorksCategories = ({ isPageLoaded = true }) => {
   }, []);
 
   /* ---------------------------------------------------- */
-  /* render */
+  /* render with fade-in transition for initial appearance */
   return (
-    <div className="works-showcase-page">
+    <div className={`works-showcase-page ${contentReady ? 'content-ready' : ''}`}>
       <ScrollWrapper id="works-showcase" index={0} className="works-showcase">
 
         {/* ------------ category bar with arrows ------------ */}

@@ -1,35 +1,67 @@
 import React from "react";
 
-const GalleryLayouts11 = ({ images = [], handleImageError }) => (
-  /* 1 : 1 wrapper — no padding-top hack */
+const GalleryLayout = ({ images, handleImageError }) => (
   <div
     className="
-      relative w-full aspect-square     /* Tailwind ≥ v3.2 */
-      overflow-hidden
+      /* Container with consistent padding on all screen sizes */
+      px-4 mx-auto w-full max-w-screen-2xl
+      
+      /* Grid layout with consistent gaps */
+      grid-cols-1 gap-6
+      
+      /* Small screens and up: original grid layout */
+      sm:grid-cols-8 lg:grid-cols-12
+      sm:auto-rows-[10vw] lg:auto-rows-[8vw]
+      sm:gap-4
     "
-    /* ↓  If you don’t have the aspect-ratio plugin, uncomment:
-    style={{ aspectRatio: '1 / 1' }}
-    */
   >
-    {/* 2 × 2 grid that completely fills the square */}
-    <div
-      className="
-        absolute inset-0 grid
-        grid-cols-2 grid-rows-2 gap-1 sm:gap-2
-      "
-    >
-      {images.slice(0, 4).map((src, i) => (
-        <div key={i} className="w-full h-full overflow-hidden">
-          <img
-            src={src}
-            alt=""
-            onError={handleImageError}
-            className="w-full h-full object-cover object-center"
-          />
-        </div>
-      ))}
+    {/* 1 │ HERO – full-width banner */}
+    <div className="
+
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+    ">
+      <img
+        src={images[0]}
+        alt="Gallery 1"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
     </div>
+
+    {/* 2 │ WIDE LEFT */}
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+       sm:aspect-auto sm:col-span-6 lg:col-span-8 sm:row-span-4
+    ">
+      <img
+        src={images[1]}
+        alt="Gallery 2"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
+    </div>
+
+    {/* 3 │ PORTRAIT RIGHT */}
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+       sm:aspect-auto sm:col-span-2 lg:col-span-4 sm:row-span-4
+    ">
+      <img
+        src={images[2]}
+        alt="Gallery 3"
+        onError={handleImageError}
+        className="w-full h-full object-contain object-center"
+      />
+    </div>
+
   </div>
 );
 
-export default GalleryLayouts11;
+export default GalleryLayout;
