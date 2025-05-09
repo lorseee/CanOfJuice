@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage";
 import WorksPage from "../pages/WorksPage";     
 import ServicesPage from "../pages/ServicesPage";  
 import ProjectDetailPage from "../pages/ProjectDetailPage";
+import CaseStudies from "../pages/CaseStudies";
 import NotFound from "../pages/NotFound";
 
 const AppRoutes = () => {
@@ -13,6 +14,7 @@ const AppRoutes = () => {
       <Route path="/works" element={<WorksPage />} />
       <Route path="/services" element={<ServicesPage />} />   
       <Route path="/project/:id" element={<ProjectDetailPage />} />
+      <Route path="/case-studies" element={<CaseStudies />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

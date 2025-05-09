@@ -7,7 +7,7 @@
   position: relative;
   width: 100%;
   overflow-x: hidden;
-  background: #1e1e1e;
+  background: black;
   color: #fff;
   min-height: 100vh;
   z-index: 3;
@@ -58,6 +58,7 @@
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
+  padding: 0rem 3rem;
   gap: 0.75rem;
 }
 
@@ -156,9 +157,17 @@
   z-index: 20;
 }
 
+/* Adjust padding for different card sizes */
 @media (min-width: 1024px) {
   .project-content {
     padding: 2.5rem;
+  }
+  
+  /* Special styling for medium cards to prevent content overflow */
+  .project-card-medium .project-content,
+  .project-card-medium-alt .project-content {
+    padding: 1.5rem;
+    justify-content: flex-end;
   }
 }
 
@@ -196,16 +205,39 @@
   .project-title {
     font-size: 2.5rem;
   }
+  
+  /* Smaller font for medium cards */
+  .project-card-medium .project-title,
+  .project-card-medium-alt .project-title {
+    font-size: 1.75rem;
+    line-height: 1.1;
+  }
+  
+  /* Smaller category text for medium cards */
+  .project-card-medium .project-category,
+  .project-card-medium-alt .project-category {
+    font-size: 0.8rem;
+    margin-bottom: 0.1rem;
+  }
 }
 
 .project-divider {
-  width: 3rem;
+  width: clamp(4rem, 8vw, 7rem);
   height: 1px;
   background: rgba(255, 255, 255, 0.7);
   margin-top: 0.25rem;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.7s ease-out 0.1s;
+}
+
+/* Smaller divider for medium cards */
+@media (min-width: 1024px) {
+  .project-card-medium .project-divider,
+  .project-card-medium-alt .project-divider {
+    width: clamp(3rem, 5vw, 4rem);
+    margin-top: 0.15rem;
+  }
 }
 
 .project-card:hover .project-divider {
@@ -231,6 +263,13 @@
 @media (min-width: 1024px) {
   .project-view-btn {
     font-size: 1.1rem;
+  }
+  
+  /* Smaller button text for medium cards */
+  .project-card-medium .project-view-btn,
+  .project-card-medium-alt .project-view-btn {
+    font-size: 0.9rem;
+    margin-top: 0.4rem;
   }
 }
 
@@ -260,6 +299,15 @@
   height: 4rem;
   opacity: 0;
   transition: opacity 0.7s;
+}
+
+/* Smaller accent for medium cards */
+@media (min-width: 1024px) {
+  .project-card-medium .project-accent,
+  .project-card-medium-alt .project-accent {
+    width: 3rem;
+    height: 3rem;
+  }
 }
 
 .project-card:hover .project-accent {
@@ -292,12 +340,45 @@
   transform-origin: right;
 }
 
+/* Adjust accent positions for medium cards */
+@media (min-width: 1024px) {
+  .project-card-medium .project-accent-vertical,
+  .project-card-medium-alt .project-accent-vertical,
+  .project-card-medium .project-accent-horizontal,
+  .project-card-medium-alt .project-accent-horizontal {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+  
+  .project-card-medium .project-accent-vertical,
+  .project-card-medium-alt .project-accent-vertical {
+    height: 1.5rem;
+    width: 1px;
+  }
+  
+  .project-card-medium .project-accent-horizontal,
+  .project-card-medium-alt .project-accent-horizontal {
+    width: 1.5rem;
+    height: 1px;
+  }
+}
+
 .project-card:hover .project-accent-vertical {
   transform: scaleY(1);
 }
 
 .project-card:hover .project-accent-horizontal {
-  transform: scaleX(1);
+  transform: scaleX(3);
+}
+
+/* Adjust accent animation scale for medium cards */
+@media (min-width: 1024px) {
+  .project-card-medium:hover .project-accent-horizontal,
+  .project-card-medium-alt:hover .project-accent-horizontal {
+    transform: scaleX(2);
+  }
 }
 
 /* ---------- View-all button (unchanged) ---------- */

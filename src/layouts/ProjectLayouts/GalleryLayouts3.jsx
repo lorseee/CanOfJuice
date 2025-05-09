@@ -19,95 +19,113 @@ const GalleryLayout = ({ images, handleImageError }) => (
     <div className="
 
       /* Small screens and up: original layout */
-      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-3
     ">
       <img
         src={images[0]}
         alt="Gallery 1"
         onError={handleImageError}
-        className="w-full h-full object-contain object-center"
+        className="w-full h-full object-cover object-center"
       />
     </div>
 
-    {/* 2 │ WIDE LEFT */}
     <div className="
-      /* Mobile: square aspect ratio */
-      aspect-square w-full
-      
+
       /* Small screens and up: original layout */
-       sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-3
     ">
       <img
         src={images[1]}
-        alt="Gallery 2"
+        alt="Gallery 1"
         onError={handleImageError}
-        className="w-full h-full object-contain object-center"
+        className="w-full h-full object-cover object-center"
       />
     </div>
 
-    {/* 3 │ PORTRAIT RIGHT */}
     <div className="
-      /* Mobile: square aspect ratio */
-      aspect-square w-full
-      
+
       /* Small screens and up: original layout */
-       sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+      sm:aspect-auto sm:col-span-5 lg:col-span-8 sm:row-span-3
     ">
       <img
         src={images[2]}
-        alt="Gallery 3"
+        alt="Gallery 1"
         onError={handleImageError}
         className="w-full h-full object-cover object-center"
       />
     </div>
-        {/* 3 │ PORTRAIT RIGHT */}
-        <div className="
-      /* Mobile: square aspect ratio */
-      aspect-square w-full
-      
+    <div className="
+
       /* Small screens and up: original layout */
-       sm:aspect-auto sm:col-span-6 lg:col-span-8 sm:row-span-3
-    ">
+      sm:aspect-auto sm:col-span-3 lg:col-span-4 sm:row-span-3
+      ">
       <img
         src={images[3]}
-        alt="Gallery 3"
+        alt="Gallery 1"
         onError={handleImageError}
         className="w-full h-full object-cover object-center"
       />
-    </div>
-
-    {/* 3 │ PORTRAIT RIGHT */}
-    <div className="
-      /* Mobile: square aspect ratio */
-      aspect-square w-full
-      
+      </div>
+      <div className="
       /* Small screens and up: original layout */
-       sm:aspect-auto sm:col-span-2 lg:col-span-4 sm:row-span-3
-    ">
-      <img
-        src={images[4]}
-        alt="Gallery 3"
-        onError={handleImageError}
-        className="w-full h-full object-cover object-center"
-      />
-    </div>
-        {/* 3 │ PORTRAIT RIGHT */}
-        <div className="
-      /* Mobile: square aspect ratio */
-      aspect-square w-full
-      
-      /* Small screens and up: original layout */
-       sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
-    ">
+      sm:aspect-auto sm:col-span-2 lg:col-span-4 sm:row-span-3
+      ">
       <img
         src={images[5]}
-        alt="Gallery 3"
+        alt="Gallery 1"
         onError={handleImageError}
         className="w-full h-full object-cover object-center"
       />
-    </div>
+      </div>
+      <div className="
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-2 lg:col-span-4 sm:row-span-3
+      ">
+      <img
+        src={images[4]}
+        alt="Gallery 1"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
+      </div>
 
+      <div className="
 
+/* Small screens and up: original layout */
+sm:aspect-auto sm:col-span-2 lg:col-span-4 sm:row-span-3
+">
+<img
+  src={images[6]}
+  alt="Gallery 1"
+  onError={handleImageError}
+  className="w-full h-full object-cover object-center"
+/>
+</div>
+
+<div className="
+
+/* Small screens and up: original layout */
+sm:aspect-auto sm:col-span-3 lg:col-span-4 sm:row-span-3
+">
+<img
+  src={images[7]}
+  alt="Gallery 1"
+  onError={handleImageError}
+  className="w-full h-full object-cover object-center"
+/>
+</div>
+<div className="
+
+/* Small screens and up: original layout */
+sm:aspect-auto sm:col-span-5 lg:col-span-8 sm:row-span-3
+">
+<img
+  src={images[8]}
+  alt="Gallery 1"
+  onError={handleImageError}
+  className="w-full h-full object-cover object-center"
+/>
+</div>
 
   </div>
 );

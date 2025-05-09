@@ -19,13 +19,13 @@ const GalleryLayout = ({ images, handleImageError }) => (
     <div className="
 
       /* Small screens and up: original layout */
-      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-3
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-3
     ">
       <img
-        src={images[0]}
+        src={images[2]}
         alt="Gallery 1"
         onError={handleImageError}
-        className="w-full h-full object-contain object-center"
+        className="w-full h-full object-cover object-center"
       />
     </div>
 
@@ -35,7 +35,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
       aspect-square w-full
       
       /* Small screens and up: original layout */
-      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-4
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-3
     ">
       <img
         src={images[5]}
@@ -51,10 +51,10 @@ const GalleryLayout = ({ images, handleImageError }) => (
       aspect-square w-full
       
       /* Small screens and up: original layout */
-      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-4
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-3
     ">
       <img
-        src={images[2]}
+        src={images[1]}
         alt="Gallery 3"
         onError={handleImageError}
         className="w-full h-full object-cover object-center"
@@ -67,40 +67,35 @@ const GalleryLayout = ({ images, handleImageError }) => (
       aspect-square w-full
       
       /* Small screens and up: original layout */
-      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-3
     ">
       <img
-        src={images[3]}
+        src={images[6]}
         alt="Gallery 4"
         onError={handleImageError}
-        className="w-full h-full object-contain object-center"
+        className="w-full h-full object-cover object-center"
       />
     </div>
 
     {/* 5 │ LANDSCAPE */}
     <div className="
       /* Small screens and up: original layout */
-      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-3
+     sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-3
     ">
       <img
-        src={images[4]}
+        src={images[3]}
         alt="Gallery 5"
         onError={handleImageError}
         className="w-full h-full object-contain object-center"
       />
     </div>
-
-    {/* 6 │ FOOTER STRIP */}
     <div className="
-      /* Mobile: square aspect ratio */
-      aspect-square w-full
-      
       /* Small screens and up: original layout */
-      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+     sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-3
     ">
       <img
-        src={images[6]}
-        alt="Gallery 6"
+        src={images[4]}
+        alt="Gallery 5"
         onError={handleImageError}
         className="w-full h-full object-contain object-center"
       />

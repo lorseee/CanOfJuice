@@ -7,16 +7,16 @@ import { projects } from "../constants";
 gsap.registerPlugin(ScrollTrigger);
 
 const Projects = () => {
-  /* ──────────────────────────── refs & helpers ─────────────────────────── */
-  const navigate              = useNavigate();
-  const headingRef            = useRef(null);
-  const headingWrapperRef     = useRef(null);
-  const sectionRef            = useRef(null);
-  const projectRefs           = useRef([]);
-  const viewAllRef            = useRef(null);
-  const leftLineRef           = useRef(null);
-  const rightLineRef          = useRef(null);
-  const ctaRef                = useRef(null);
+  /* ───────────────── refs & helpers ───────────────── */
+  const navigate          = useNavigate();
+  const headingRef        = useRef(null);
+  const headingWrapperRef = useRef(null);
+  const sectionRef        = useRef(null);
+  const projectRefs       = useRef([]);
+  const viewAllRef        = useRef(null);
+  const leftLineRef       = useRef(null);
+  const rightLineRef      = useRef(null);
+  const ctaRef            = useRef(null);
 
   projectRefs.current = [];
   const addToRefs = (el) => {
@@ -25,11 +25,16 @@ const Projects = () => {
     }
   };
 
-  /* ──────────────────────────── project data ───────────────────────────── */
+  /* ───────────────── project data ─────────────────── */
   const featuredProjectIds = [16, 6, 18, 28, 19, 23, 13, 4];
 
   const featuredProjects = featuredProjectIds.map((id, index) => {
     const project = projects.items.find((p) => p.id === id);
+
+    /* NEW: resolve full category label from `projects.categories` */
+    const categoryLabel =
+      projects.categories.find((c) => c.id === project.category)?.label ||
+      project.category;
 
     const cardClasses = [
       "project-card-large",
@@ -43,26 +48,21 @@ const Projects = () => {
       cardClasses[index] || "project-card-standard"
     }`;
 
-    const displayCategory = project.category
-      .split("-")
-      .map((w) => w[0].toUpperCase() + w.slice(1))
-      .join(" ");
-
     return {
       ...project,
       image: project.images?.main || "/images/projects/default/main.jpg",
       name: project.title,
-      displayCategory,
+      displayCategory: categoryLabel,       // ← use full label
       className,
     };
   });
 
-  /* ──────────────────────────── navigation ─────────────────────────────── */
+  /* ───────────────── navigation helpers ───────────── */
   const goProject  = (id) => navigate(`/project/${id}`);
   const goAll      = ()   => navigate("/works");
   const goServices = ()   => navigate("/services");
 
-  /* ──────────────────────────── CTA copy loop ──────────────────────────── */
+  /* ───────────────── CTA copy loop ─────────────────── */
   const phrases = [
     "ENVIRONMENTAL GRAPHICS",
     "BRAND IDENTITY",
@@ -70,16 +70,15 @@ const Projects = () => {
     "COMMUNICATION DESIGN",
     "ART INSTALLATIONS",
   ];
-
   const [idx, setIdx]       = useState(0);
   const [showFinal, setFin] = useState(false);
 
-  /* ──────────────────────────── animations ─────────────────────────────── */
+  /* ───────────────── animations ────────────────────── */
   useEffect(() => {
     let intervalId;
 
     const ctx = gsap.context(() => {
-      /* Heading fade-in & marquee */
+      /* heading fade-in & marquee */
       if (headingRef.current && headingWrapperRef.current) {
         gsap.fromTo(
           headingRef.current,
@@ -105,7 +104,7 @@ const Projects = () => {
         });
       }
 
-      /* Card reveal */
+      /* card reveal */
       if (projectRefs.current.length) {
         gsap.set(projectRefs.current, { opacity: 0, y: 150 });
 
@@ -122,7 +121,7 @@ const Projects = () => {
         });
       }
 
-      /* "View all" button animation + hover */
+      /* “View all” button animation + hover */
       if (viewAllRef.current && leftLineRef.current && rightLineRef.current) {
         gsap.set(viewAllRef.current, { opacity: 0, y: 50, scale: 0.95 });
         gsap.set([leftLineRef.current, rightLineRef.current], {
@@ -209,11 +208,11 @@ const Projects = () => {
 
   const txtOpacity = showFinal ? 1 : 1 - idx / phrases.length;
 
-  /* ──────────────────────────── JSX ────────────────────────────────────── */
+  /* ───────────────── JSX ───────────────────────────── */
   return (
     <section ref={sectionRef} id="projects" className="projects-section">
       <div className="projects-container">
-        {/* ----- heading ----- */}
+        {/* heading */}
         <div ref={headingWrapperRef} className="heading-wrapper">
           <h2 ref={headingRef} className="projects-heading">
             OUR WORK — FEATURED PROJECTS — OUR WORK — FEATURED PROJECTS — OUR
@@ -221,7 +220,7 @@ const Projects = () => {
           </h2>
         </div>
 
-        {/* ----- grid ----- */}
+        {/* grid */}
         <div className="projects-grid">
           {featuredProjects.map((p) => (
             <div
@@ -241,7 +240,7 @@ const Projects = () => {
                   <div className="project-details">
                     <p className="project-category">{p.displayCategory}</p>
                     <h3 className="project-title">
-                      {p.name} <span className="project-arrow">→</span>
+                      {p.name}
                     </h3>
                     <div className="project-divider" />
                   </div>
@@ -256,16 +255,16 @@ const Projects = () => {
           ))}
         </div>
 
-        {/* ----- view-all button ----- */}
+        {/* view-all button */}
         <div className="view-all-wrapper">
           <div ref={viewAllRef} onClick={goAll} className="view-all-btn">
-            <div ref={leftLineRef} className="view-all-line left-line" />
-            <h3 className="view-all-text">VIEW ALL PROJECTS</h3>
+            <div ref={leftLineRef}  className="view-all-line left-line"  />
+            <h3  className="view-all-text">VIEW ALL PROJECTS</h3>
             <div ref={rightLineRef} className="view-all-line right-line" />
           </div>
         </div>
 
-        {/* ----- CTA banner ----- */}
+        {/* CTA banner */}
         <div className="cta-wrapper">
           <div ref={ctaRef} className="cta-button" onClick={goServices}>
             <h2 className="cta-text" style={{ opacity: txtOpacity }}>

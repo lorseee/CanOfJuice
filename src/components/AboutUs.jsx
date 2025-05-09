@@ -6,7 +6,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const AboutUs = () => {
   const sectionRef = useRef(null);
-  const textRef = useRef(null);
+  const headingRef = useRef(null);
+  const paragraphRefs = useRef([]);
   const lagRef = useRef(null);
   const entranceTL = useRef(null);
   const lagTL = useRef(null);
@@ -25,9 +26,11 @@ const AboutUs = () => {
     if (!ready) return;
 
     const section = sectionRef.current;
-    const text = textRef.current;
+    const heading = headingRef.current;
+    const paragraphs = paragraphRefs.current;
     const lag = lagRef.current;
-    if (!section || !text || !lag) return;
+    
+    if (!section || !heading || paragraphs.length === 0 || !lag) return;
 
     // Clear any existing ScrollTrigger instances first
     ScrollTrigger.getAll().forEach(st => {
@@ -36,31 +39,52 @@ const AboutUs = () => {
       }
     });
 
+    // Create a timeline for the entrance animations
     entranceTL.current = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: "top 90%",
-        end: "top 30%",
-        scrub: 2,
+        start: "top 80%",
+        end: "center 30%",
+        scrub: 1.5,
         invalidateOnRefresh: true
       }
-    }).fromTo(
-      text,
-      { y: 300, opacity: 0, scale: 0.7 },
-      { y: 0, opacity: 1, scale: 1, ease: "power2.out", duration: 3 }
+    });
+
+    // Animate the heading first with a more dramatic entrance from bottom
+    entranceTL.current.fromTo(
+      heading,
+      { y: 300, opacity: 0, scale: 0.9 },
+      { y: 0, opacity: 1, scale: 1, ease: "power3.out", duration: 1.2 }
     );
 
+    // Animate each paragraph with a more dramatic entrance from bottom
+    paragraphs.forEach((paragraph, index) => {
+      entranceTL.current.fromTo(
+        paragraph,
+        { y: 300, opacity: 0 },
+        { 
+          y: 0, 
+          opacity: 1, 
+          ease: "power3.out", 
+          duration: 1
+        },
+        "-=0.6" // Slight overlap for smoother sequence
+      );
+    });
+
+    // Set up the pin
     pinST.current = ScrollTrigger.create({
       trigger: section,
       start: "top top",
-      end: "+=200%",
+      end: "+=250%", // Increased to give more scroll space for animations
       pin: true,
       pinSpacing: false,
       anticipatePin: 1,
       fastScrollEnd: true,
-      id: "about-pin" // Add ID for easier debugging
+      id: "about-pin"
     });
 
+    // Fade out content as we scroll away
     lagTL.current = gsap.timeline({
       scrollTrigger: {
         trigger: lag,
@@ -68,9 +92,9 @@ const AboutUs = () => {
         end: "bottom top",
         scrub: 1,
         ease: "none",
-        id: "about-lag" // Add ID for easier debugging
+        id: "about-lag"
       }
-    }).fromTo(text, { opacity: 1 }, { opacity: 0.4 });
+    }).fromTo([heading, ...paragraphs], { opacity: 1 }, { opacity: 0.3, stagger: 0.1 });
 
     // Use a debounced resize observer to prevent excessive refreshes
     let resizeTimeout;
@@ -105,17 +129,28 @@ const AboutUs = () => {
         }}
       >
         <div
-          ref={textRef}
           className="content-overlay"
           style={{ willChange: "transform, opacity" }}
         >
-          <h1>
+          <h1 ref={headingRef} style={{ opacity: 0, transform: "translateY(100px)" }}>
             At Studio CANOFJUICE,<br />
             we keep it FRESH.
           </h1>
-          <p>
-            From concept to on-site execution, we create bold brand spaces and
-            visuals that stand out and stay memorable.
+          
+          <p ref={el => paragraphRefs.current[0] = el} style={{ opacity: 0, transform: "translateY(80px)" }}>
+            Full-service design + execution studio specializing in <br /> Wayfinding, Signage Systems, and Branding.
+          </p>
+          
+          <br />
+          
+          <p ref={el => paragraphRefs.current[1] = el} style={{ opacity: 0, transform: "translateY(80px)" }}>
+            We bring spaces to life — from design concept to on-site execution — creating environments that inspire, guide, and connect.
+          </p>
+          
+          <br />
+          
+          <p ref={el => paragraphRefs.current[2] = el} style={{ opacity: 0, transform: "translateY(80px)" }}>
+            For over 10 years, we've crafted iconic spaces for clients across industries, blending creativity with precision to deliver impactful experiences.
           </p>
         </div>
       </section>

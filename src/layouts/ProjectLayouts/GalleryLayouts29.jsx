@@ -35,25 +35,25 @@ const GalleryLayout = ({ images, handleImageError }) => (
       aspect-square w-full
       
       /* Small screens and up: original layout */
-      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-3
+      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
     ">
       <img
         src={images[2]}
         alt="Gallery 3"
         onError={handleImageError}
-        className="w-full h-full object-cover object-center"
+        className="w-full h-full object-contain object-center"
       />
     </div>
         {/* 5 │ LANDSCAPE */}
         <div className="
       /* Small screens and up: original layout */
-      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-3
+      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-3
     ">
       <img
         src={images[3]}
         alt="Gallery 3"
         onError={handleImageError}
-        className="w-full h-full object-cover object-center"
+        className="w-full h-full object-contain object-center"
       />
     </div>
 
@@ -63,7 +63,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
       aspect-square w-full
       
       /* Small screens and up: original layout */
-      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-3
     ">
       <img
         src={images[1]}

@@ -83,7 +83,7 @@ const Info = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#1e1e1e",
+          background: "black",
           willChange: "transform"
         }}
       >
