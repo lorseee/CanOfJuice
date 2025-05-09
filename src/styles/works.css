@@ -15,7 +15,7 @@
 .slide-in-from-bottom{animation:slideInFromBottom .8s ease forwards;}
 .animate-heading{animation:fadeInScale 1.2s ease-in-out forwards;}
 .works-container{position:relative;}
-.works-hero{background:black;color:#fff;height:100vh;display:flex;justify-content:center;align-items:center;z-index:60;}
+.works-hero{background:black;color:#fff;height:100vh;display:flex;justify-content:center;align-items:center;z-index:60; padding: 0.5rem 1rem;}
 .works-hero-image-container{width:80%;height:80%;margin:0 auto;overflow:hidden;border-radius:.5rem;box-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05);}
 .works-hero-image{width:100%;height:100%;object-fit:cover;}
 .works-hero-title{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;font-size:clamp(2rem,10vw,5rem);font-weight:900;color:#fff;text-align:center;animation:heroScaleIn 1.2s ease-out forwards;transform-origin:center;}

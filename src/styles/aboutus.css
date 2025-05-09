@@ -55,8 +55,8 @@
 
 /* Small mobile */
 @media (max-width: 480px) {
-  #about h1 { font-size: 2.25rem; }
-  #about p  { font-size: 1.25rem; }
+  #about h1 { font-size: 2rem; }
+  #about p  { font-size: 1rem; }
 }
 
 /* Landscape mobile */

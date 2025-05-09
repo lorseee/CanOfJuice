@@ -41,7 +41,7 @@
 }
 
 .projects-heading {
-  font-size: clamp(3.5rem, 8vw, 9rem);
+  font-size: clamp(3.4rem, 7vw, 8rem);
   font-weight: 800;
   width: 200%;
   white-space: nowrap;
@@ -93,9 +93,9 @@
   }
 
   /* fine-tune phone typography so nothing clips */
-  .project-category  { font-size: 0.7rem; }
-  .project-title     { font-size: 1.2rem; }
-  .project-view-btn  { font-size: 0.7rem; }
+  .project-category  { font-size: 0.2rem; }
+  .project-title     { font-size: 0.8rem; }
+  .project-view-btn  { font-size: 0.2rem; }
 }
 
 /* ---------- TABLET (768–1023 px)  →  single column ---------- */

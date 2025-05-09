@@ -9,6 +9,7 @@
     background-color: black !important;
     overflow: hidden !important;
     box-sizing: border-box !important;
+    padding: 0.5rem 1rem;
 }
 
 .hero-container {
