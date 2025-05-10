@@ -438,7 +438,7 @@ items: [
     {
     id: 27,
     title: "Bharat Glass Crockeries",
-    year: 2024-2025,
+    year: "2024-2025",
     services: "Brand Identity, Logo Design, Packaging",
     category: "design",
     longDescription:
