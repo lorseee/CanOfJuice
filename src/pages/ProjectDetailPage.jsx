@@ -177,9 +177,10 @@ const ProjectDetailPage = () => {
 
   /* ↓ arrow scroll helper — stops right at title */
   const scrollToTitle = () => {
-    const offset = descRef.current?.offsetTop ?? 0;
-    /* 80 px “cushion” keeps the title nicely below the browser chrome */
-    window.scrollTo({ top: offset - 80, behavior: "smooth" });
+    if (!descRef.current) return;
+    const absTop =
+      descRef.current.getBoundingClientRect().top + window.pageYOffset; // ← absolute
+    window.scrollTo({ top: absTop - 180, behavior: "smooth" });
   };
 
   if (isLoading || !project) {
