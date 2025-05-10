@@ -1,8 +1,7 @@
 /******************************************************************************
- * Works-categories.jsx – scrollable category bar and responsive project grid
- * (rev-K  •  7 May 2025)
- * Legal note: Author grants you an irrevocable, royalty-free, worldwide
- * licence to use, modify, and distribute this work in whole or in part.
+ * Works-categories.jsx – scrollable category bar & responsive grid
+ * rev-L • 10 May 2025  (multi-category support)
+ *  • A project’s `category` can now be "branding" 𝗼𝗿 ["branding","food"] …
  ******************************************************************************/
 
 import React, {
@@ -12,10 +11,12 @@ import { useNavigate } from "react-router-dom";
 import ScrollWrapper   from "../components/ScrollWrapper";
 import { projects }    from "../constants";
 
-/* A lower fraction = slower perceived scroll */
-const SCROLL_STEP = 0.60;
+const SCROLL_STEP = 0.60;               /* lower = slower perceived scroll */
 
-/* ---------- Restore cached bar state ------------------------------------ */
+/* ---------- helpers ---------------------------------------------------- */
+const toArray = (val) => (Array.isArray(val) ? val : [val]);               // ← NEW
+const normal   = (s) => String(s).trim().toLowerCase();                    // ← NEW
+
 const getCachedState = () => {
   try {
     const saved = sessionStorage.getItem("worksCategoryState");
@@ -26,7 +27,7 @@ const getCachedState = () => {
 };
 
 const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
-  /* -------------------- State ------------------------------------------- */
+  /* ---------------- state --------------------------------------------- */
   const cachedState = useMemo(
     () => (preserveState ? getCachedState() : null),
     [preserveState],
@@ -41,11 +42,11 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
   const [mounted,   setMounted]         = useState(false);
   const [contentReady, setContentReady] = useState(false);
 
-  const barRef   = useRef(null);
-  const nav      = useNavigate();
-  const inTransit = useRef(false);
+  const barRef     = useRef(null);
+  const nav        = useNavigate();
+  const inTransit  = useRef(false);
 
-  /* -------------------- Helpers ----------------------------------------- */
+  /* ---------------- arrow helpers ------------------------------------- */
   const refreshArrows = useCallback(() => {
     const el = barRef.current;
     if (!el || el.offsetWidth === 0) return;
@@ -60,10 +61,9 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
     if (active) active.scrollIntoView({ block: "nearest", inline: "nearest" });
   }, []);
 
-  /* -------------------- Mount-time -------------------------------------- */
+  /* ---------------- mount-time ---------------------------------------- */
   useEffect(() => {
     setMounted(true);
-
     const timers = [
       setTimeout(refreshArrows,   0),
       setTimeout(refreshArrows, 150),
@@ -79,19 +79,17 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
     return () => timers.forEach(clearTimeout);
   }, [refreshArrows, preserveState, cachedState, scrollActiveIntoView]);
 
-  /* Re-check arrows once page images/fonts settle */
   useEffect(() => {
     if (!isPageLoaded || !mounted) return;
     refreshArrows();
     requestAnimationFrame(refreshArrows);
   }, [isPageLoaded, mounted, refreshArrows]);
 
-  /* -------------------- Wheel / drag / resize listeners ---------------- */
+  /* ---------------- wheel / drag / resize ----------------------------- */
   useEffect(() => {
     const el = barRef.current;
     if (!el) return;
 
-    /* Wheel → horizontal scroll */
     const onWheel = (e) => {
       if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
         e.preventDefault();
@@ -101,18 +99,17 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
     };
     el.addEventListener("wheel", onWheel, { passive: false });
 
-    /* Click-drag */
+    /* click-drag */
     let down = false, startX = 0, startScroll = 0;
-    const onDown = (e) => { down = true;  startX = e.pageX; startScroll = el.scrollLeft; };
+    const onDown = (e) => { down = true; startX = e.pageX; startScroll = el.scrollLeft; };
     const onMove = (e) => { if (!down) return;
       e.preventDefault(); el.scrollLeft = startScroll - (e.pageX - startX); refreshArrows(); };
-    const onUp   = () => { down = false; };
+    const onUp = () => { down = false; };
 
     el.addEventListener("mousedown", onDown);
     el.addEventListener("mousemove", onMove);
     window.addEventListener("mouseup", onUp);
 
-    /* Native scroll  → persist bar pos                                      */
     const onScroll = () => {
       refreshArrows();
       if (isPageLoaded) {
@@ -124,7 +121,6 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
     };
     el.addEventListener("scroll", onScroll);
 
-    /* Resize / tab-visibility                                               */
     const onResize = () => { refreshArrows(); setTimeout(refreshArrows, 100); };
     const onVis    = () => { if (document.visibilityState === "visible")
                                setTimeout(refreshArrows, 100); };
@@ -132,7 +128,6 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
     window.addEventListener("resize", onResize);
     document.addEventListener("visibilitychange", onVis);
 
-    /* DOM mutations inside bar                                              */
     const mo = new MutationObserver(() => {
       if (!inTransit.current) refreshArrows();
     });
@@ -150,7 +145,7 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
     };
   }, [refreshArrows, isPageLoaded, selectedCategory]);
 
-  /* -------------------- Memoised helpers -------------------------------- */
+  /* ---------------- memo helpers -------------------------------------- */
   const getImage = useMemo(() => {
     const map = {};
     projects.items.forEach((p) => {
@@ -159,13 +154,16 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
     return (id) => map[id] || "/images/projects/default/main.jpg";
   }, []);
 
+  /* --- FILTER now accepts arrays -------------------------------------- */
+  const hasCategory = useCallback((project, catId) => {
+    if (catId === "all") return true;
+    const list = toArray(project.category).map(normal);
+    return list.includes(normal(catId));
+  }, []);
+
   const filteredProjects = useMemo(
-    () => (selectedCategory === "all"
-            ? projects.items
-            : projects.items.filter(
-                (p) => p.category.trim().toLowerCase()
-                       === selectedCategory.trim().toLowerCase())),
-    [selectedCategory],
+    () => projects.items.filter((p) => hasCategory(p, selectedCategory)),
+    [selectedCategory, hasCategory],
   );
 
   const activeCat = useMemo(
@@ -173,7 +171,7 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
     [selectedCategory],
   );
 
-  /* -------------------- Event handlers ---------------------------------- */
+  /* ---------------- handlers ------------------------------------------ */
   const changeCategory = useCallback((id) => {
     if (id === selectedCategory) return;
     inTransit.current = true;
@@ -195,19 +193,15 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
     }, 80);
   }, [selectedCategory, refreshArrows, scrollActiveIntoView]);
 
-  /* ------------------------------------------------------------------ */
   const openProject = useCallback((id) => {
-    /* Persist category-bar state as before */
     sessionStorage.setItem("worksCategoryState", JSON.stringify({
       category: selectedCategory,
       scrollLeft: barRef.current?.scrollLeft || 0,
     }));
-    /* NEW ► remember which project card we should return to */
     sessionStorage.setItem("returnToProjectId", id);
     nav(`/project/${id}`);
   }, [nav, selectedCategory]);
 
-  /* Fallback image */
   const onImgError = useCallback(
     (e) => { e.target.src = "/images/projects/default/main.jpg"; }, []);
 
@@ -216,7 +210,7 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
     el.scrollBy({ left: el.clientWidth * SCROLL_STEP * dir, behavior: "smooth" });
   }, []);
 
-  /* -------------------- Render ------------------------------------------ */
+  /* ---------------- render -------------------------------------------- */
   return (
     <div className={`works-showcase-page ${contentReady ? "content-ready" : ""}`}>
       <ScrollWrapper id="works-showcase" index={0} className="works-showcase">
@@ -267,7 +261,6 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
                 key={p.id}
                 id={`card-${p.id}`}
                 className="works-card"
-                data-card-id={`card-${p.id}`}
                 onClick={() => openProject(p.id)}
                 style={{ transitionDelay: `${Math.min(i * 0.03, 0.3)}s` }}
               >

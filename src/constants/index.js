@@ -192,7 +192,7 @@ items: [
     title: "Custom Displays",
     year: " ",
     services: "Spatial and Environment Design, Art Installations",
-    category: "work-spaces",
+    category: ["work-spaces","food-beverages"],
     longDescription:
       "For this display-fabrication start-up, we created a minimalist workspace that doubles as a live showroom. Modular walls, integrated product lighting, and clean sight-lines allow staff to work efficiently while showcasing capabilities to visiting clients.",
     images: {
@@ -303,7 +303,7 @@ items: [
     title: "Rapid Sports Fitness",
     year: 2025,
     services: "Spatial and Environment Design, Art Installations",
-    category: "sports-fitness",
+    category: ["sports-fitness","work-spcaes"],
     longDescription:
       "Rapid Sports Fitness embeds scientific training principles within a motivating environment. Zoning for varied modalities, intuitive equipment layouts, and energising visual cues support high-intensity functional training.",
     images: {
@@ -344,7 +344,7 @@ items: [
     title: "Tabana",
     year: 2022,
     services: "Brand Identity, Logo Design",
-    category: "lifestyle",
+    category: "design",
     longDescription:
       "For Tabana's soft-furnishings line, we built a soothing yet stylish identity. Naming, logo, and visual language emphasise comfort, aesthetics, and the intimate nature of home styling.",
     images: {
@@ -364,7 +364,7 @@ items: [
     title: "Tip Top",
     year: 2022,
     services: "Wayfinding Signage, Communication Design, Exhibition Design",
-    category: "transformation",
+    category: "design",
     longDescription:
       "A legacy name in laundry services, Tip Top sought modernisation without forsaking heritage. We refreshed their logo and visual system, preserving recognisable elements while injecting contemporary clarity.",
     images: {
@@ -386,7 +386,7 @@ items: [
     year: 2021,
     services:
       "Logo Design, Brand Identity, Packaging, Communication Design",
-    category: "branding",
+    category: ["design","food-beverages"],
     longDescription:
       "From naming and logo to packaging and social visuals, Farm Stories' identity uses earthy colours, hand-drawn illustrations, and documentary photography to communicate transparency and farm-to-table freshness.",
     images: {
@@ -406,7 +406,7 @@ items: [
     title: "Elemental",
     year: 2024,
     services: "Wayfinding Signage, Communication Design, Exhibition Design",
-    category: "retail",
+    category: ["retail","design"],
     longDescription:
       "For this retail-fitment brand, we designed an exhibition stall that doubled as a storytelling space. Material samples, interactive demos, and clear narrative flow showcased capabilities and engaged visitors.",
     images: {
@@ -423,7 +423,7 @@ items: [
     title: "Velvesto",
     year: 2024,
     services: "Brand Identity, Logo Design, Packaging",
-    category: "branding",
+    category: "design",
     longDescription:
       "A new entrant in car-care FMCG, Velvesto required instant shelf impact. Naming, logo, packaging, and collateral together create a sleek, masculine identity that conveys trust and innovation.",
     images: {
@@ -440,15 +440,21 @@ items: [
     title: "Bharat Glass Crockeries",
     year: 2024-2025,
     services: "Brand Identity, Logo Design, Packaging",
-    category: "branding",
+    category: "design",
     longDescription:
-      "A new entrant in car-care FMCG, Velvesto required instant shelf impact. Naming, logo, packaging, and collateral together create a sleek, masculine identity that conveys trust and innovation.",
+      "This legacy brand, established in 1955 and known for supplying glassware and crockery to the HORECA industry, came to us for a brand transformation. We redesigned their logo and visual identity to feel current while retaining their iconic brand colors and historical legacy. Beyond branding, we helped digitize their business by designing a custom-built website and inventory management system — moving a traditional business into the digital age with ease and elegance.",
     images: {
-      main: "/images/projects/26/main.png",
+      main: "/images/projects/27/main.jpg",
       gallery: [
-        "/images/projects/26/gallery-1.png",
-        "/images/projects/26/gallery-2.png",
-        "/images/projects/26/gallery-3.png",
+          "/images/projects/27/gallery-1.jpg",
+        "/images/projects/27/gallery-2.jpg",
+        "/images/projects/27/gallery-3.jpg",
+        "/images/projects/27/gallery-4.jpg",
+        "/images/projects/27/gallery-5.jpg",
+        "/images/projects/27/gallery-6.jpg",
+        "/images/projects/27/gallery-7.jpg",
+        "/images/projects/27/gallery-8.jpg",
+        "/images/projects/27/gallery-9.jpg",
       ],
     },
   },
@@ -457,7 +463,7 @@ items: [
     title: "RIO Developers",
     year: "2023 Onwards",
     services: "Real Estate & Built Spaces",
-    category: "real-estate",
+    category: "design",
     longDescription:
       "Based in Goa, RIO Developers required consistent, high-quality branding across villas, commercial buildings, and residential towers. Internal and external signage systems elevate user experience and reinforce brand presence at every touchpoint.",
     images: {
@@ -496,7 +502,7 @@ items: [
     year: 2021,
     services:
       "Communication Design, Brand Identity, Logo Design, Marketing Collaterals, Packaging",
-    category: "lifestyle",
+    category: "design",
     longDescription:
       "For this bold cocktail-mixer brand, we created a name, visual identity, and packaging system bursting with energy and playfulness. Vibrant labels and dynamic social creatives establish a unique, youthful voice.",
     images: {
@@ -519,7 +525,7 @@ items: [
     title: "Red Bridge International Academy",
     year: 2022,
     services: "Campaign & Communication Design",
-    category: "campaign",
+    category: ["food-beverages","design"],
     longDescription:
       "We conceived and executed the 2022-23 admissions campaign for this Bangalore international school. Strategic messaging, aspirational imagery, and multi-channel rollout increased awareness and enrolment.",
     images: {
@@ -538,7 +544,7 @@ items: [
     title: "Fine Art Printings",
     year: 2025,
     services: "Wayfinding Signage, Communication Design, Exhibition Design",
-    category: "culture",
+    category: "work-spaces",
     longDescription:
       "Fine Art Printings marries traditional craftsmanship with modern production. Branding and collateral communicate archival quality, colour fidelity, and a collaborative approach to working with artists and photographers.",
     images: {
@@ -560,7 +566,7 @@ items: [
     title: "Packaging Design",
     year: 2025,
     services: "Wayfinding Signage, Communication Design, Exhibition Design",
-    category: "branding",
+    category: "design",
     longDescription:
       "From structural dielines to shelf-ready mock-ups, this packaging-design case study shows how thoughtful form, tactile materials, and clear information hierarchy converge to delight consumers and streamline logistics.",
     images: {
