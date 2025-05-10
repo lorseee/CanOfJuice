@@ -22,7 +22,7 @@
 
 /* ---------- Static scroll arrow ---------- */
 .detail-scroll-arrow{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);background:none;border:none;cursor:pointer;z-index:20;}
-.detail-scroll-arrow-icon{font-size:2.5rem;color:#fff;transition:transform .3s;}
+.detail-scroll-arrow-icon.svg{font-size:3.5rem;color:#fff;transition:transform .3s;}
 .detail-scroll-arrow:hover .detail-scroll-arrow-icon{transform:translateY(4px) scale(1.1);}
 
 /* ---------- Content wrapper ---------- */
