@@ -137,21 +137,11 @@ const AboutUs = () => {
             we keep it FRESH.
           </h1>
           
-          <p ref={el => paragraphRefs.current[0] = el} style={{ opacity: 0, transform: "translateY(80px)" }}>
-            Full-service design + execution studio specializing in <br /> Wayfinding, Signage Systems, and Branding.
-          </p>
-          
-          <br />
-          
           <p ref={el => paragraphRefs.current[1] = el} style={{ opacity: 0, transform: "translateY(80px)" }}>
             We bring spaces to life — from design concept to on-site execution — creating environments that inspire, guide, and connect.
           </p>
           
           <br />
-          
-          <p ref={el => paragraphRefs.current[2] = el} style={{ opacity: 0, transform: "translateY(80px)" }}>
-            For over 10 years, we've crafted iconic spaces for clients across industries, blending creativity with precision to deliver impactful experiences.
-          </p>
         </div>
       </section>
 
