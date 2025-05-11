@@ -52,135 +52,56 @@
   color: #000;
 }
 
-/* ========== 1. CENTER THE FLOATING IMAGE COMPLETELY ========== */
-/* ── ONLY this selector needs updating ─────────────────────────────── */
-.floating-image-container {
-  position: fixed;
-  left: 50%;                    /* horizontal centre */
-  transform: translateX(-50%);  /* remove Y-translation */
-  top: 10px;                    /* resume original offsets */
-  bottom: 10px;
-  z-index: 50;
-  pointer-events: none;
-  border-radius: 1rem;
-  width: 80%;
-  max-width: min(500px, 80vw);
-  overflow: hidden;
-  opacity: 0;
-  visibility: hidden;
-  box-shadow: 0 25px 50px -12px rgba(0,0,0,.25);
+/* ------------------------------------------------------------------
+   SERVICES  – hover-expand lists
+   ------------------------------------------------------------------ */
+
+/* ── layout container ───────────────────────────────────────────── */
+.services-section{
+  max-width:80rem;margin:0 auto;padding:2rem 5rem;
+  display:flex;flex-direction:column;gap:1.75rem;
 }
 
-
-.floating-image-wrapper { position: relative; width: 100%; height: 100%; }
-
-.floating-image {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 1rem;
+/* ── each item row ──────────────────────────────────────────────── */
+.services-item{border-bottom:1px solid #fcfdff;cursor:pointer;overflow:hidden;}
+.services-item-inner{
+  display:flex;flex-direction:column;gap:2rem;
+  padding:2.5rem 0;transition:padding .35s ease;
+}
+@media(min-width:1024px){
+  .services-item-inner{flex-direction:row;align-items:center;gap:3rem;}
+  .services-item.active .services-item-inner{padding:3.5rem 0;}
 }
 
-.floating-image-back { display: none; }
-
-/* Main content container */
-.content-container { height: 400vh; }
-
-/* Section base styles */
-.section-base  { height: 100vh; position: sticky; top: 0; overflow: hidden; }
-
-/* Section specific backgrounds */
-.section-designs       { background:#fff !important; color:#4b5563 !important; z-index:10; }
-.section-spaces        { background:#20355f !important; color:#e5e7eb !important; z-index:20; }
-.section-installations { background:#000 !important; color:#fff !important; z-index:30; }
-
-/* Section inner layout
-   ========== 2. UNIFORM SIDE PADDING FOR ALL CONTENT ========== */
-.section-inner {
-  container-type: inline-size;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding-inline: 2rem;        /* added */
+/* ── heading (always full opacity) ─────────────────────────────── */
+.services-heading{
+  font-family:"Khand",system-ui,Helvetica,Arial,sans-serif;
+  font-weight:800;line-height:1;
+  font-size:clamp(2.25rem,10vw,8rem); /* big like reference */
+  color:#fff;transition:color .25s;
 }
-@media (min-width: 640px) {
-  .section-inner { flex-direction: row; }
+.services-item:hover .services-heading{color:#fff;}
+
+/* ── text + bullets block ──────────────────────────────────────── */
+.services-text{flex:1 1 0%;display:flex;flex-direction:column;gap:1rem;}
+.services-bullets{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.4rem;}
+.services-bullets li{
+  font-family:"Switzer",system-ui,Helvetica,Arial,sans-serif;
+  font-size:clamp(.85rem,1.2vw,1.15rem);color:#fff;
 }
 
-/* ========== 3. MATCH LEFT / RIGHT GUTTERS ========== */
-.section-heading-container { width:100%; margin-bottom:2rem; padding-left:2rem; }   /* added padding */
-@media (min-width: 640px) {
-  .section-heading-container { width:33.333333%; margin-bottom:0; }
-}
-
-.section-heading {
-  font-size: clamp(1.25rem, 4vw, 2rem) !important;
-  font-weight: 700;
-  font-family: 'Khand', system-ui, Helvetica, Arial, sans-serif !important;
-}
-
-/* Lists */
-.section-list-container { width:100%; text-align:left; padding-right:2rem; }        /* added padding */
-@media (min-width: 640px) {
-  .section-list-container { width:66.666667%; text-align:right; }
-}
-
-.section-list-item {
-  font-size: clamp(.75rem, 1.75vw, 1rem) !important;
-  margin-bottom: .25rem;
-  will-change: opacity, transform;
-  font-family: 'Switzer', system-ui, Helvetica, Arial, sans-serif !important;
-}
-
-/* Help section */
-.help-section {
-  height: 50vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#fff !important;
-  color: black  !important;
-  position:relative;
-  z-index:40;
-}
-
-.help-heading {
-  font-size: clamp(1.5rem, 6vw, 4rem) !important;
-  font-weight:700;
-  text-align:center;
-  padding:0 1rem;
-  font-family:'Khand', system-ui, Helvetica, Arial, sans-serif !important;
-}
-
-/* Mobile adjustments */
-@media (max-width: 639px) {
-  .floating-image-container {
-    max-width:95%;
-    height:40vh;
+/* ── image (desktop only) ──────────────────────────────────────── */
+.services-image{display:none;}
+@media(min-width:1024px){
+  .services-image{
+    display:block;flex:none;width:28rem;height:18rem;border-radius:1rem;
+    overflow:hidden;box-shadow:0 20px 40px -12px rgba(0,0,0,.25);
   }
-  .section-inner     { padding-inline:1.25rem; }   /* maintains equal gutters on phones */
-  .section-spaces,
-  .section-installations {
-    position:relative !important;
-    transform:none   !important;
-  }
-  .content-container { height:auto !important; }
-  .section-base      { position:relative !important; height:auto !important; min-height:100vh; }
+  .services-image img{width:100%;height:100%;object-fit:cover;}
 }
 
-/* Print styles */
-@media print {
-  .floating-image-container { display:none; }
-  .section-base             { position:relative; page-break-inside:avoid; height:auto; min-height:50vh; }
-  .content-container        { height:auto; }
-}
-
-/* Reduced-motion */
-@media (prefers-reduced-motion: reduce) {
-  .slide-in-from-bottom { animation:none; }
-}
-
-/* -------------------------------------------------------------------- */
+/* ------------------------------------------------------------------
+   TRANSITIONS / STATES
+   ------------------------------------------------------------------ */
+.services-item .services-bullets,
+.services-image{pointer-events:none;}   /* image clicks pass through */
