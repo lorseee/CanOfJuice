@@ -235,7 +235,9 @@ const ProjectDetailPage = () => {
                   <p className="detail-info-value">
                     {(project.services || project.displayCategory)
                       .split(",")
-                      .map((svc, idx) => <span key={idx} className="block">{svc.trim()}</span>)}
+                      .map(svc => svc.trim())
+                      .sort((a, b) => a.length - b.length)
+                      .map((svc, idx) => <span key={idx} className="block">{svc}</span>)}
                   </p>
                 </li>
                 {project.label && (
@@ -248,7 +250,7 @@ const ProjectDetailPage = () => {
             </div>
           </div>
 
-          {/* Gallery */}
+        {/* Gallery */}
           {project.additionalImages.length > 0 && (
             <div ref={imgsRef} className="detail-gallery-section">
               <div ref={galRef}>
@@ -256,13 +258,24 @@ const ProjectDetailPage = () => {
                   <div className="detail-gallery-grid">
                     {project.additionalImages.map((src, i) => (
                       <div key={i} className="detail-gallery-item">
-                        <img src={src} alt={`${project.title} – ${i + 1}`} onClick={() => openModal(i)} onError={errImg} />
+                        <img
+                          src={src}
+                          alt={`${project.title} – ${i + 1}`}
+                          onClick={() => openModal(i)}
+                          onError={errImg}
+                        />
+                        <div className="detail-gallery-overlay" />
                       </div>
                     ))}
                   </div>
                 ) : (
                   <Suspense fallback={<p>Loading gallery…</p>}>
-                    <GalleryWrapper Layout={Gallery} images={project.additionalImages} err={errImg} open={openModal} />
+                    <GalleryWrapper
+                      Layout={Gallery}
+                      images={project.additionalImages}
+                      err={errImg}
+                      open={openModal}
+                    />
                   </Suspense>
                 )}
               </div>
@@ -297,7 +310,6 @@ const ProjectDetailPage = () => {
       {/* MODAL */}
       {modalOpen && (
         <div className="image-modal-overlay" onClick={closeModal}>
-          <div className="modal-global-counter">{current + 1} / {project.additionalImages.length}</div>
           <button className="modal-edge-nav modal-prev-edge" onClick={e => { e.stopPropagation(); prev(); }}>&#10094;</button>
           <button className="modal-edge-nav modal-next-edge" onClick={e => { e.stopPropagation(); next(); }}>&#10095;</button>
           <div className="image-modal-content">

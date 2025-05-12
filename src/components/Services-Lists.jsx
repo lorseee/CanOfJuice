@@ -1,10 +1,20 @@
-// ServicesLists.jsx – scroll-stable accordion
-// -------------------------------------------
 import React, { useState, useRef, useLayoutEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 /* ---------- data ------------------------------------------------------- */
 const SECTIONS = [
+    {
+    id: "spaces",
+    title: "Space Design",
+    bullets: [
+      "Retail Display",
+      "Exhibition Design",
+      "Branded Environments",
+      "Environmental Graphics",
+      "Wayfinding and Signages",
+    ],
+    img: "/images/spaces.jpg",
+  },
   {
     id: "designs",
     title: "Visual Design",
@@ -16,18 +26,6 @@ const SECTIONS = [
       "Communication Design",
     ],
     img: "/images/designs.jpg",
-  },
-  {
-    id: "spaces",
-    title: "Space Design",
-    bullets: [
-      "Retail Display",
-      "Exhibition Design",
-      "Branded Environments",
-      "Environmental Graphics",
-      "Wayfinding and Signages",
-    ],
-    img: "/images/spaces.jpg",
   },
   {
     id: "installations",
@@ -64,7 +62,7 @@ const ServicesLists = () => {
   const [openId, setOpenId]       = useState(null);
   const itemRefs                  = useRef({});       // { id → DOMElement }
   const prevTopRef                = useRef(null);     // stores Y-position before update
-  const prevIdRef                 = useRef(null);     // which element’s top we stored?
+  const prevIdRef                 = useRef(null);     // which element's top we stored?
 
   /* ----- toggle helper (captures position BEFORE layout changes) ------ */
   const toggle = (id) => {
@@ -105,8 +103,8 @@ const ServicesLists = () => {
             ref={(el) => (itemRefs.current[id] = el)}
             layout
             onClick={() => toggle(id)}
-            onHoverStart={() => toggle(id)}
-            onHoverEnd={() => toggle(null)}
+            onHoverStart={() => toggle(id)} // Restore hover functionality
+            onHoverEnd={() => toggle(null)} // Close on hover out
             className={`services-item${active ? " active" : ""}`}
           >
             <div className="services-item-inner">
@@ -120,7 +118,7 @@ const ServicesLists = () => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.5 }}
+                      transition={{ duration: 0.3 }}
                     >
                       <BulletList bullets={bullets} />
                     </motion.div>
@@ -128,15 +126,15 @@ const ServicesLists = () => {
                 </AnimatePresence>
               </div>
 
-              {/* image (desktop only) */}
+              {/* image - shown on both mobile and desktop */}
               <AnimatePresence initial={false}>
                 {active && (
                   <motion.div
                     key="img"
-                    initial={{ opacity: 0, scale: 0.95 }}
+                    initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.5 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.3 }}
                     className="services-image"
                   >
                     <img

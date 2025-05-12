@@ -1,7 +1,3 @@
-/* =========================================================
-   PROJECTS SECTION — square cards on phones
-========================================================= */
-
 /* ---------- Section container ---------- */
 .projects-section {
   position: relative;
@@ -25,7 +21,6 @@
     padding: 0 3rem;
   }
 }
-
 /* ---------- Scrolling heading ---------- */
 .heading-wrapper {
   display: flex;
@@ -73,7 +68,6 @@
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  transform: translateZ(0);
   transition: transform 1s ease;
 }
 
@@ -312,73 +306,6 @@
 
 .project-card:hover .project-accent {
   opacity: 1;
-}
-
-.project-accent-vertical,
-.project-accent-horizontal {
-  background: rgba(255, 255, 255, 0.5);
-  transition: transform 0.7s 0.15s;
-}
-
-.project-accent-vertical {
-  position: absolute;
-  bottom: 2rem;
-  right: 2rem;
-  width: 1px;
-  height: 2rem;
-  transform: scaleY(0);
-  transform-origin: bottom;
-}
-
-.project-accent-horizontal {
-  position: absolute;
-  bottom: 2rem;
-  right: 2rem;
-  width: 2rem;
-  height: 1px;
-  transform: scaleX(0);
-  transform-origin: right;
-}
-
-/* Adjust accent positions for medium cards */
-@media (min-width: 1024px) {
-  .project-card-medium .project-accent-vertical,
-  .project-card-medium-alt .project-accent-vertical,
-  .project-card-medium .project-accent-horizontal,
-  .project-card-medium-alt .project-accent-horizontal {
-    bottom: 1.5rem;
-    right: 1.5rem;
-    height: 1.5rem;
-    width: 1.5rem;
-  }
-  
-  .project-card-medium .project-accent-vertical,
-  .project-card-medium-alt .project-accent-vertical {
-    height: 1.5rem;
-    width: 1px;
-  }
-  
-  .project-card-medium .project-accent-horizontal,
-  .project-card-medium-alt .project-accent-horizontal {
-    width: 1.5rem;
-    height: 1px;
-  }
-}
-
-.project-card:hover .project-accent-vertical {
-  transform: scaleY(1);
-}
-
-.project-card:hover .project-accent-horizontal {
-  transform: scaleX(3);
-}
-
-/* Adjust accent animation scale for medium cards */
-@media (min-width: 1024px) {
-  .project-card-medium:hover .project-accent-horizontal,
-  .project-card-medium-alt:hover .project-accent-horizontal {
-    transform: scaleX(2);
-  }
 }
 
 /* ---------- View-all button (unchanged) ---------- */

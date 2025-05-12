@@ -1,5 +1,2 @@
-/* invert logo colours on light background */
-.navbar-logo-inverted {
-    filter: invert(1) hue-rotate(180deg);
-  }
+
   

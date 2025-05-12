@@ -245,11 +245,6 @@ const Projects = () => {
                     <div className="project-divider" />
                   </div>
                 </div>
-
-                <div className="project-accent">
-                  <div className="project-accent-vertical" />
-                  <div className="project-accent-horizontal" />
-                </div>
               </div>
             </div>
           ))}

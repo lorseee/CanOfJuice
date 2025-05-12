@@ -81,7 +81,7 @@ items: [
     title: "Dasta",
     year: 2023,
     services:
-      "Art Installations, Spatial and Environment Design, Wayfinding Signage",
+      "Art Installations, Spatial and Environment Design, Wayfinding Signages",
     category: "work-spaces",
     longDescription:
       "For this modern office building, we designed and executed a comprehensive signage and environmental-branding system. From the building's facade to its reception area, wallpapers, directional signage, and meeting-room names, every touch-point was crafted for clarity, consistency, and character.",
@@ -336,6 +336,8 @@ items: [
         "/images/projects/19/gallery-5.jpg",
         "/images/projects/19/gallery-6.jpg",
         "/images/projects/19/gallery-7.jpeg",
+        "/images/projects/19/gallery-8.jpeg",
+        "/images/projects/19/gallery-9.jpeg",
       ],
     },
   },
@@ -363,7 +365,7 @@ items: [
     id: 22,
     title: "Tip Top",
     year: 2022,
-    services: "Wayfinding Signage, Communication Design, Exhibition Design",
+    services: "Wayfinding Signages, Communication Design, Exhibition Design",
     category: "design",
     longDescription:
       "A legacy name in laundry services, Tip Top sought modernisation without forsaking heritage. We refreshed their logo and visual system, preserving recognisable elements while injecting contemporary clarity.",
@@ -401,11 +403,31 @@ items: [
       ],
     },
   },
+    {
+    id: 24,
+    title: "Aravalli",
+    year: 2024,
+    services: "Wayfinding Signages",
+    category: "real-estate",
+    longDescription:
+      "Based in Goa, RIO Developers required consistent, high-quality branding across villas, commercial buildings, and residential towers. Internal and external signage systems elevate user experience and reinforce brand presence at every touchpoint.",
+    images: {
+      main: "/images/projects/24/main.jpg",
+      gallery: [
+        "/images/projects/24/gallery-1.jpeg",
+        "/images/projects/24/gallery-2.jpeg",
+        "/images/projects/24/gallery-3.jpeg",
+        "/images/projects/24/gallery-4.jpg",
+        "/images/projects/24/gallery-5.jpg",
+        "/images/projects/24/gallery-6.jpg",
+      ],
+    },
+  },
   {
     id: 25,
     title: "Elemental",
     year: 2024,
-    services: "Wayfinding Signage, Communication Design, Exhibition Design",
+    services: "Wayfinding Signages, Communication Design, Exhibition Design",
     category: ["retail","design"],
     longDescription:
       "For this retail-fitment brand, we designed an exhibition stall that doubled as a storytelling space. Material samples, interactive demos, and clear narrative flow showcased capabilities and engaged visitors.",
@@ -543,7 +565,7 @@ items: [
     id: 32,
     title: "Fine Art Printings",
     year: 2025,
-    services: "Wayfinding Signage, Communication Design, Exhibition Design",
+    services: "Wayfinding Signages, Communication Design, Exhibition Design",
     category: "work-spaces",
     longDescription:
       "Fine Art Printings marries traditional craftsmanship with modern production. Branding and collateral communicate archival quality, colour fidelity, and a collaborative approach to working with artists and photographers.",
@@ -565,7 +587,7 @@ items: [
     id: 34,
     title: "Packaging Design",
     year: 2025,
-    services: "Wayfinding Signage, Communication Design, Exhibition Design",
+    services: "Wayfinding Signages, Communication Design, Exhibition Design",
     category: "design",
     longDescription:
       "From structural dielines to shelf-ready mock-ups, this packaging-design case study shows how thoughtful form, tactile materials, and clear information hierarchy converge to delight consumers and streamline logistics.",

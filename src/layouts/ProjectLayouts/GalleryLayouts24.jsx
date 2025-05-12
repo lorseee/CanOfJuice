@@ -60,6 +60,50 @@ const GalleryLayout = ({ images, handleImageError }) => (
         className="w-full h-full object-cover object-center"
       />
     </div>
+        <div className="
+
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+    ">
+      <img
+        src={images[3]}
+        alt="Gallery 1"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
+    </div>
+
+    {/* 2 │ WIDE LEFT */}
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+       sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+    ">
+      <img
+        src={images[4]}
+        alt="Gallery 2"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
+    </div>
+
+    {/* 3 │ PORTRAIT RIGHT */}
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+       sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
+    ">
+      <img
+        src={images[5]}
+        alt="Gallery 3"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
+    </div>
 
   </div>
 );

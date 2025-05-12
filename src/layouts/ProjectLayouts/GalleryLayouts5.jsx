@@ -146,7 +146,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
       aspect-square w-full
       
       /* Small screens and up: original layout */
-      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-4
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-3
     ">
       <img
         src={images[6]}
@@ -161,7 +161,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
       aspect-square w-full
       
       /* Small screens and up: original layout */
-      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-4
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-3
     ">
       <img
         src={images[7]}

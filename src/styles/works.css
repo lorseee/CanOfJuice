@@ -11,22 +11,37 @@
 @keyframes spin            {from{transform:rotate(0);}to{transform:rotate(360deg);}}
 @keyframes heroScaleIn     {0%{transform:scale(1.8);opacity:0;}50%{opacity:1;}100%{transform:scale(1);opacity:1;}}
 
-/* ---------- Hero (unchanged) ---------- */
+/* ---------- Hero (updated) ---------- */
 .slide-in-from-bottom{animation:slideInFromBottom .8s ease forwards;}
 .animate-heading{animation:fadeInScale 1.2s ease-in-out forwards;}
 .works-container{position:relative;}
-.works-hero{background:black;color:#fff;height:100vh;display:flex;justify-content:center;align-items:center;z-index:60; padding: 0.5rem 1rem;}
+.works-hero{
+  background:black;
+  color:#fff;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:60; 
+  padding: 0.5rem 1rem;
+  margin: 0; /* Ensure no margin */
+}
 .works-hero-image-container{width:80%;height:80%;margin:0 auto;overflow:hidden;border-radius:.5rem;box-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05);}
 .works-hero-image{width:100%;height:100%;object-fit:cover;}
 .works-hero-title{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;font-size:clamp(2rem,10vw,5rem);font-weight:900;color:#fff;text-align:center;animation:heroScaleIn 1.2s ease-out forwards;transform-origin:center;}
 
-/* ---------- Showcase Wrapper (gap tightened) ---------- */
+/* ---------- Showcase Wrapper (updated) ---------- */
 .works-showcase{
-  max-width:1280px;margin:0 auto;background:black;
-padding-inline:1.5rem;padding-bottom:1.25rem;
+  max-width:1280px;
+  margin:0 auto; /* Ensure no top margin */
+  background:black;
+  padding-inline:1.5rem;
+  padding-bottom:1.25rem;
+  padding-top:0; /* Remove top padding to close gap */
 }
 @media(min-width:480px){  .works-showcase{padding-inline:2rem;} }
-@media(min-width:768px){  .works-showcase{padding-inline:3rem;} }@media(min-width:1024px){ .works-showcase{padding-top:1.5rem;padding-inline:4rem;} }
+@media(min-width:768px){  .works-showcase{padding-inline:3rem;} }
+@media(min-width:1024px){ .works-showcase{padding-top:0; padding-inline:4rem;} }
 @media(min-width:1280px){ .works-showcase{padding-inline:3rem;} }
 
 /* ---------- Fade-states (unchanged) ---------- */
@@ -46,7 +61,7 @@ padding-inline:1.5rem;padding-bottom:1.25rem;
 }
 @media(min-width:768px){.works-cat-wrapper{padding-inline:1.5rem;}}
 
-/* hide arrow nodes if they’re still rendered */
+/* hide arrow nodes if they're still rendered */
 .works-cat-arrow{display:none !important;}
 
 /* subtle side fades stay (optional aesthetic) */

@@ -1,5 +1,6 @@
-/* Works-categories.jsx – rev-M – 12 May 2025
+/* Works-categories.jsx – rev-M1 – 12 May 2025
    • Category filter supports single or multiple category arrays
+   • Updated to show primary service instead of generic “View project” text
 ------------------------------------------------------------------ */
 import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
@@ -57,8 +58,6 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
     scrollActiveIntoView();
   }, [refreshArrows, preserveState, cachedState, scrollActiveIntoView]);
 
-  /* wheel / drag / scroll observers omitted for brevity – keep yours */
-
   /* ---------- data helpers ---------- */
   const getImage = useMemo(() => {
     const map = {};
@@ -68,10 +67,15 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
     return (id) => map[id] || "/images/projects/default/main.jpg";
   }, []);
 
+  // helper to extract primary service
+  const getPrimaryService = useCallback((services) => {
+    if (!services) return "";
+    return String(services).split(',')[0].trim();
+  }, []);
+
   /* ---------- filter projects ---------- */
   const filteredProjects = useMemo(() => {
     if (selectedCategory === "all") return projects.items;
-
     return projects.items.filter(p => {
       const arr = Array.isArray(p.category) ? p.category : [p.category];
       return arr.some(cat =>
@@ -176,7 +180,7 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
                   <img src={getImage(p.id)} alt={p.title} className="works-card-image" loading="lazy" onError={onImgError} />
                   <div className="works-card-overlay">
                     <h3 className="works-card-title">{p.title}</h3>
-                    <p className="works-card-desc">{p.shortDescription || p.label || "View project"}</p>
+                    <p className="works-card-desc">{getPrimaryService(p.services)}</p>
                   </div>
                 </div>
               </div>
