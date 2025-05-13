@@ -1,24 +1,21 @@
-/* ProjectDetailPage.jsx – rev-L – 12 May 2025
-   • Handles projects that list one *or many* categories
-   • Sends the project’s own id to /case-studies/:id
------------------------------------------------------------------- */
 import React, { useEffect, useRef, useState, Suspense } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projects } from "../constants";
 
+
 gsap.registerPlugin(ScrollTrigger);
 
-/* dynamic gallery layouts */
+/* lazy gallery layouts */
 const layoutModules = import.meta.glob(
   "../layouts/ProjectLayouts/GalleryLayouts*.jsx"
 );
 
 const ProjectDetailPage = () => {
-  const { id } = useParams();
-  const projectId = Number(id);
-  const navigate  = useNavigate();
+  const { id }      = useParams();
+  const projectId   = Number(id);
+  const navigate    = useNavigate();
 
   const [project,  setProject]  = useState(null);
   const [isLoading,setLoading]  = useState(true);
@@ -36,22 +33,21 @@ const ProjectDetailPage = () => {
   const imgsRef = useRef(null);
   const galRef  = useRef(null);
   const relWrap = useRef(null);
-  const relItems = useRef([]); relItems.current = [];
-  const pushRel  = el =>
-    el && !relItems.current.includes(el) && relItems.current.push(el);
+  const relItms = useRef([]);
+  relItms.current = [];
+  const pushRel = (el) =>
+    el && !relItms.current.includes(el) && relItms.current.push(el);
 
-  /* ─── fetch data & gallery layout ─────────────────────────────── */
+  /* ───────── fetch data / layout ───────── */
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    const p = projects.items.find(x => x.id === projectId);
+    const p = projects.items.find((x) => x.id === projectId);
     if (!p) return navigate("/404");
 
-    /* normalise category to array */
     const catArr = Array.isArray(p.category) ? p.category : [p.category];
-
     const displayCategory =
-      projects.categories.find(c => c.id === catArr[0])?.label ?? catArr[0];
+      projects.categories.find((c) => c.id === catArr[0])?.label ?? catArr[0];
 
     setProject({
       ...p,
@@ -61,20 +57,20 @@ const ProjectDetailPage = () => {
       additionalImages: p.images.gallery || [],
     });
 
-    /* related = any overlap in categories */
+    /* related */
     setRelated(
       projects.items
-        .filter(x => {
+        .filter((x) => {
           const arr = Array.isArray(x.category) ? x.category : [x.category];
-          return x.id !== projectId && arr.some(cat => catArr.includes(cat));
+          return x.id !== projectId && arr.some((c) => catArr.includes(c));
         })
         .slice(0, 3)
-        .map(x => {
+        .map((x) => {
           const first = (Array.isArray(x.category) ? x.category : [x.category])[0];
           return {
             ...x,
             displayCategory:
-              projects.categories.find(c => c.id === first)?.label ?? first,
+              projects.categories.find((c) => c.id === first)?.label ?? first,
             image: x.images.main,
           };
         })
@@ -82,18 +78,20 @@ const ProjectDetailPage = () => {
 
     const path     = `../layouts/ProjectLayouts/GalleryLayouts${projectId}.jsx`;
     const fallback = "../layouts/ProjectLayouts/GalleryLayoutsDefault.jsx";
-    (layoutModules[path] ?? layoutModules[fallback])().then(mod => {
-      setGallery(() => mod.default);
-      setLoading(false);
-    });
+    (layoutModules[path] ?? layoutModules[fallback])()
+      .then((mod) => {
+        setGallery(() => mod.default);
+        setLoading(false);
+      });
   }, [projectId, navigate]);
 
-  /* GSAP entrances (unchanged) */
+  /* ───────── GSAP entrances ───────── */
   useEffect(() => {
     if (isLoading) return;
     const ctx = gsap.context(() => {
       gsap.fromTo(heroRef.current, { opacity: 0 }, { opacity: 1, duration: 1.5 });
-      [descRef, infoRef, imgsRef, galRef].forEach(r => {
+
+      [descRef, infoRef, imgsRef, galRef].forEach((r) => {
         if (!r.current) return;
         gsap.fromTo(
           r.current,
@@ -105,12 +103,13 @@ const ProjectDetailPage = () => {
             scrollTrigger: {
               trigger: r.current,
               start: "top 80%",
-              end: "top 50%",
+              end:   "top 50%",
               scrub: true,
             },
           }
         );
       });
+
       if (relWrap.current) {
         gsap.fromTo(
           relWrap.current.querySelector("h2"),
@@ -122,23 +121,23 @@ const ProjectDetailPage = () => {
             scrollTrigger: {
               trigger: relWrap.current,
               start: "top 80%",
-              end: "top 60%",
+              end:   "top 60%",
               scrub: true,
             },
           }
         );
         gsap.fromTo(
-          relItems.current,
+          relItms.current,
           { y: 100, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 1,
             stagger: 0.2,
+            duration: 1,
             scrollTrigger: {
               trigger: relWrap.current,
               start: "top 70%",
-              end: "center 60%",
+              end:   "center 60%",
               scrub: true,
             },
           }
@@ -148,27 +147,12 @@ const ProjectDetailPage = () => {
     return () => ctx.revert();
   }, [isLoading]);
 
-  /* modal helpers (unchanged) */
-  const openModal  = i => {
-    setCurrent(i);
-    setModal(true);
-    document.body.classList.add("modal-open");
-  };
-  const closeModal = () => {
-    setModal(false);
-    document.body.classList.remove("modal-open");
-  };
-  const next = () => setCurrent(i => (i + 1) % project.additionalImages.length);
-  const prev = () => setCurrent(i => (i - 1 + project.additionalImages.length) % project.additionalImages.length);
-
-  /* arrow scroll */
-  const scrollToTitle = () => {
-    if (!descRef.current) return;
-    const top = descRef.current.getBoundingClientRect().top + window.pageYOffset;
-    window.scrollTo({ top: top - 180, behavior: "smooth" });
-  };
-
-  const errImg = e => (e.currentTarget.src = "/images/placeholder.jpg");
+  /* ───────── modal helpers ───────── */
+  const openModal  = (i) => { setCurrent(i); setModal(true);  document.body.classList.add("modal-open"); };
+  const closeModal = (e) => { if (e){e.stopPropagation();} setModal(false); document.body.classList.remove("modal-open"); };
+  const next = () => setCurrent((i) => (i + 1) % project.additionalImages.length);
+  const prev = () => setCurrent((i) => (i - 1 + project.additionalImages.length) % project.additionalImages.length);
+  const errImg = (e) => (e.currentTarget.src = "/images/placeholder.jpg");
 
   if (isLoading || !project) {
     return (
@@ -181,39 +165,39 @@ const ProjectDetailPage = () => {
     );
   }
 
-  /* ─── render ──────────────────────────────────────────────────── */
+  /* =======================  RENDER  ======================= */
   return (
     <main className="detail-page-main">
-      {/* HERO */}
-      <div className="detail-hero-container">
-        <div ref={heroRef} className="detail-hero-inner">
-          <div className="detail-hero-image-container">
-            <img src={project.image} alt={project.title} className="detail-hero-image" onError={errImg} />
-          </div>
-        </div>
-        <button aria-label="Scroll down" className="detail-scroll-arrow" onClick={scrollToTitle}>
-          <svg width="50" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-        </button>
-      </div>
 
-      {/* BODY */}
-      <div className="detail-project-content">
+      {/* ── HERO (75 % black, 25 % white) ── */}
+      <header ref={heroRef} className="detail-hero-container">
+        <div className="detail-hero-bg-split" />
+        <div className="detail-hero-image-container">
+          <img
+            src={project.image}
+            alt={project.title}
+            className="detail-hero-image"
+            onError={errImg}
+          />
+        </div>
+      </header>
+
+      {/* ── BODY ─────────────────────────────────────────────── */}
+      <section className="detail-project-content">
         <div className="detail-content-inner">
-          {/* Description + Info */}
+
+          {/* description + info */}
           <div ref={descRef} className="detail-project-description-grid">
             <div className="detail-description-section">
               <h2>{project.title}</h2>
               <div className="detail-description-text">
                 <p>
                   {project.longDescription ||
-                    `For ${project.title}, we developed a comprehensive design strategy aligned with the client's brand vision.`}
+                   `For ${project.title}, we developed a comprehensive design strategy aligned with the client’s brand vision.`}
                 </p>
                 {project.additionalDescription && <p>{project.additionalDescription}</p>}
               </div>
 
-              {/* Show button only for these ids */}
               {[3, 17, 23, 29].includes(project.id) && (
                 <button
                   className="detail-case-study-btn"
@@ -228,16 +212,20 @@ const ProjectDetailPage = () => {
               <ul className="detail-info-list">
                 <li>
                   <p className="detail-info-label">Year</p>
-                  <p className="detail-info-value">{project.year || new Date().getFullYear()}</p>
+                  <p className="detail-info-value">
+                    {project.year || new Date().getFullYear()}
+                  </p>
                 </li>
                 <li>
                   <p className="detail-info-label">Services</p>
                   <p className="detail-info-value">
                     {(project.services || project.displayCategory)
                       .split(",")
-                      .map(svc => svc.trim())
+                      .map((svc) => svc.trim())
                       .sort((a, b) => a.length - b.length)
-                      .map((svc, idx) => <span key={idx} className="block">{svc}</span>)}
+                      .map((svc, idx) => (
+                        <span key={idx} className="block">{svc}</span>
+                      ))}
                   </p>
                 </li>
                 {project.label && (
@@ -250,7 +238,7 @@ const ProjectDetailPage = () => {
             </div>
           </div>
 
-        {/* Gallery */}
+          {/* gallery */}
           {project.additionalImages.length > 0 && (
             <div ref={imgsRef} className="detail-gallery-section">
               <div ref={galRef}>
@@ -282,42 +270,84 @@ const ProjectDetailPage = () => {
             </div>
           )}
 
-          {/* Related */}
+          {/* related */}
           {related.length > 0 && (
             <div ref={relWrap} className="detail-related-projects-section">
               <h2>Related&nbsp;Projects</h2>
               <div className="detail-related-projects-grid">
-                {related.map(r => (
-                  <div key={r.id} ref={pushRel} className="detail-related-project-item" onClick={() => navigate(`/project/${r.id}`)}>
+                {related.map((r) => (
+                  <article
+                    key={r.id}
+                    ref={pushRel}
+                    className="detail-related-project-item"
+                    onClick={() => navigate(`/project/${r.id}`)}
+                  >
                     <div className="detail-related-project-image-wrapper">
-                      <img src={r.image} alt={r.title} className="detail-related-project-image" onError={errImg} />
+                      <img
+                        src={r.image}
+                        alt={r.title}
+                        className="detail-related-project-image"
+                        onError={errImg}
+                      />
                       <div className="detail-related-project-overlay" />
                     </div>
                     <div className="detail-related-project-content">
                       <p className="detail-related-project-category">{r.displayCategory}</p>
                       <h3 className="detail-related-project-title">{r.title}</h3>
-                      {r.label && <p className="detail-related-project-label">{r.label}</p>}
-                      <div className="detail-related-project-divider" />
                     </div>
-                  </div>
+                  </article>
                 ))}
               </div>
             </div>
           )}
         </div>
-      </div>
+      </section>
 
-      {/* MODAL */}
+      {/* ── MODAL ─────────────────────────────────────────────── */}
       {modalOpen && (
         <div className="image-modal-overlay" onClick={closeModal}>
-          <button className="modal-edge-nav modal-prev-edge" onClick={e => { e.stopPropagation(); prev(); }}>&#10094;</button>
-          <button className="modal-edge-nav modal-next-edge" onClick={e => { e.stopPropagation(); next(); }}>&#10095;</button>
+          <button
+            className="modal-close-btn"
+            onClick={(e) => { e.stopPropagation(); closeModal(); }}
+            aria-label="Close modal"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24"
+                 fill="none" stroke="white" strokeWidth="2"
+                 strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+
+          <button
+            className="modal-edge-nav modal-prev-edge"
+            onClick={(e) => { e.stopPropagation(); prev(); }}
+          >&#10094;</button>
+
+          <button
+            className="modal-edge-nav modal-next-edge"
+            onClick={(e) => { e.stopPropagation(); next(); }}
+          >&#10095;</button>
+
           <div className="image-modal-content">
-            <img src={project.additionalImages[current]} alt="" className="modal-image" onError={errImg} />
+            <img
+              src={project.additionalImages[current]}
+              alt=""
+              className="modal-image"
+              onError={errImg}
+            />
           </div>
-          <div className="modal-thumb-strip" onClick={e => e.stopPropagation()}>
+
+          <div className="modal-thumb-strip" onClick={(e) => e.stopPropagation()}>
             {project.additionalImages.map((src, i) => (
-              <img key={i} src={src} alt="" className={`modal-thumb ${i === current ? "active" : ""}`} onClick={() => setCurrent(i)} onError={errImg} />
+              <img
+                key={i}
+                src={src}
+                alt=""
+                className={`modal-thumb ${i === current ? "active" : ""}`}
+                onClick={() => setCurrent(i)}
+                onError={errImg}
+              />
             ))}
           </div>
         </div>
@@ -326,18 +356,18 @@ const ProjectDetailPage = () => {
   );
 };
 
-/* wrapper so every dynamic layout is clickable */
+/* clickable wrapper */
 const GalleryWrapper = ({ Layout, images, err, open }) => {
   useEffect(() => {
     const imgs = document.querySelectorAll(".detail-gallery-section img");
-    imgs.forEach(img => {
+    imgs.forEach((img) => {
       const idx = images.indexOf(img.getAttribute("src"));
       const handler = () => open(idx);
       img.style.cursor = "pointer";
       img.removeEventListener("click", handler);
       img.addEventListener("click", handler);
     });
-    return () => imgs.forEach(img => img.removeEventListener("click", open));
+    return () => imgs.forEach((img) => img.removeEventListener("click", open));
   }, [images, open]);
 
   return <Layout images={images} handleImageError={err} />;

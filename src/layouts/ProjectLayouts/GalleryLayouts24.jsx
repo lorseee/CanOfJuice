@@ -22,7 +22,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
       sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
     ">
       <img
-        src={images[0]}
+        src={images[5]}
         alt="Gallery 1"
         onError={handleImageError}
         className="w-full h-full object-cover object-center"
@@ -38,7 +38,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
        sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
     ">
       <img
-        src={images[1]}
+        src={images[4]}
         alt="Gallery 2"
         onError={handleImageError}
         className="w-full h-full object-cover object-center"
@@ -82,7 +82,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
        sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
     ">
       <img
-        src={images[4]}
+        src={images[0]}
         alt="Gallery 2"
         onError={handleImageError}
         className="w-full h-full object-cover object-center"
@@ -98,7 +98,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
        sm:aspect-auto sm:col-span-8 lg:col-span-12 sm:row-span-4
     ">
       <img
-        src={images[5]}
+        src={images[1]}
         alt="Gallery 3"
         onError={handleImageError}
         className="w-full h-full object-cover object-center"

@@ -21,6 +21,7 @@
     padding: 0 3rem;
   }
 }
+
 /* ---------- Scrolling heading ---------- */
 .heading-wrapper {
   display: flex;
@@ -78,42 +79,38 @@
   overflow: hidden;
 }
 
-/* ---------- MOBILE (≤ 767 px)  →  square cards ---------- */
+/* MOBILE */
 @media (max-width: 767px) {
   .project-card {
     grid-column: span 12;
-    aspect-ratio: 1 / 1;     /* perfect square */
-    height: auto;            /* let aspect-ratio drive it */
+    aspect-ratio: 1 / 1;
   }
 
-  /* fine-tune phone typography so nothing clips */
   .project-category  { font-size: 0.2rem; }
   .project-title     { font-size: 0.8rem; }
   .project-view-btn  { font-size: 0.2rem; }
 }
 
-/* ---------- TABLET (768–1023 px)  →  single column ---------- */
+/* TABLET */
 @media (min-width: 768px) and (max-width: 1023px) {
   .project-card {
     grid-column: span 12;
-    height: 72vh;            /* tall enough for text */
+    height: 72vh;
     margin-bottom: 1.2rem;
   }
 }
 
-/* ---------- DESKTOP (≥ 1024 px)  →  multi-column grid ---------- */
+/* DESKTOP */
 @media (min-width: 1024px) {
-  /* Calculate the heights to account for the gap between medium cards */
-  /* For a 1.25rem gap and 85vh total height, each medium card should be (85vh - 1.25rem)/2 */
-  .project-card-large        { grid-column: 1 / span 8; grid-row: 1 / span 2; height: 85vh; }
-  .project-card-medium       { grid-column: 9 / span 4; grid-row: 1 / span 1; height: calc((85vh - 1.25rem) / 2); }
-  .project-card-medium-alt   { grid-column: 9 / span 4; grid-row: 2 / span 1; height: calc((85vh - 1.25rem) / 2); }
-  .project-card-medium-tall  { grid-column: 1 / span 4; grid-row: 3 / span 2; height: 80vh; }
-  .project-card-large-right  { grid-column: 5 / span 8; grid-row: 3 / span 2; height: 80vh; }
-  .project-card-standard     { grid-column: span 4;     grid-row: 5 / span 1; height: 65vh; }
+  .project-card-large        { grid-column: 1 / span 8;  grid-row: 1 / span 2; height: 85vh; }
+  .project-card-medium       { grid-column: 9 / span 4;  grid-row: 1 / span 1; height: calc((85vh - 1.25rem) / 2); }
+  .project-card-medium-alt   { grid-column: 9 / span 4;  grid-row: 2 / span 1; height: calc((85vh - 1.25rem) / 2); }
+  .project-card-medium-tall  { grid-column: 1 / span 4;  grid-row: 3 / span 2; height: 80vh; }
+  .project-card-large-right  { grid-column: 5 / span 8;  grid-row: 3 / span 2; height: 80vh; }
+  .project-card-standard     { grid-column: span 4;      grid-row: 5 / span 1; height: 65vh; }
 }
 
-/* ---------- Image & overlay ---------- */
+/* Image & overlay */
 .project-image-container {
   position: absolute;
   inset: 0;
@@ -140,7 +137,7 @@
   opacity: 0.6;
 }
 
-/* ---------- Content block ---------- */
+/* Content block */
 .project-content {
   position: absolute;
   inset: 0;
@@ -151,13 +148,8 @@
   z-index: 20;
 }
 
-/* Adjust padding for different card sizes */
 @media (min-width: 1024px) {
-  .project-content {
-    padding: 2.5rem;
-  }
-  
-  /* Special styling for medium cards to prevent content overflow */
+  .project-content { padding: 2.5rem; }
   .project-card-medium .project-content,
   .project-card-medium-alt .project-content {
     padding: 1.5rem;
@@ -176,7 +168,7 @@
   opacity: 1;
 }
 
-/* ---------- Category / Title / Divider ---------- */
+/* Category / Title / Divider */
 .project-category {
   color: #fff;
   font-size: 1rem;
@@ -196,18 +188,12 @@
 }
 
 @media (min-width: 1024px) {
-  .project-title {
-    font-size: 2.5rem;
-  }
-  
-  /* Smaller font for medium cards */
+  .project-title { font-size: 2.5rem; }
   .project-card-medium .project-title,
   .project-card-medium-alt .project-title {
     font-size: 1.75rem;
     line-height: 1.1;
   }
-  
-  /* Smaller category text for medium cards */
   .project-card-medium .project-category,
   .project-card-medium-alt .project-category {
     font-size: 0.8rem;
@@ -225,7 +211,6 @@
   transition: transform 0.7s ease-out 0.1s;
 }
 
-/* Smaller divider for medium cards */
 @media (min-width: 1024px) {
   .project-card-medium .project-divider,
   .project-card-medium-alt .project-divider {
@@ -238,77 +223,7 @@
   transform: scaleX(1);
 }
 
-/* ---------- View button ---------- */
-.project-view-btn {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1rem;
-  margin-top: 0.6rem;
-  font-weight: 300;
-  letter-spacing: 0.05em;
-  background: none;
-  border: none;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  opacity: 0;
-  transition: opacity 0.5s 0.2s, color 0.3s;
-}
-
-@media (min-width: 1024px) {
-  .project-view-btn {
-    font-size: 1.1rem;
-  }
-  
-  /* Smaller button text for medium cards */
-  .project-card-medium .project-view-btn,
-  .project-card-medium-alt .project-view-btn {
-    font-size: 0.9rem;
-    margin-top: 0.4rem;
-  }
-}
-
-.project-card:hover .project-view-btn {
-  opacity: 1;
-}
-
-.project-view-btn:hover {
-  color: #fff;
-}
-
-.project-arrow {
-  margin-left: 0.25rem;
-  transition: transform 0.3s;
-}
-
-.project-view-btn:hover .project-arrow {
-  transform: translateX(0.25rem);
-}
-
-/* ---------- Accent corner ---------- */
-.project-accent {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 4rem;
-  height: 4rem;
-  opacity: 0;
-  transition: opacity 0.7s;
-}
-
-/* Smaller accent for medium cards */
-@media (min-width: 1024px) {
-  .project-card-medium .project-accent,
-  .project-card-medium-alt .project-accent {
-    width: 3rem;
-    height: 3rem;
-  }
-}
-
-.project-card:hover .project-accent {
-  opacity: 1;
-}
-
-/* ---------- View-all button (unchanged) ---------- */
+/* View-all button */
 .view-all-wrapper {
   width: 100%;
   display: flex;
@@ -341,53 +256,30 @@
   white-space: nowrap;
 }
 
-/* ---------- CTA banner (unchanged) ---------- */
-.cta-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 3rem 0;
-  margin-bottom: 6rem;
-  min-height: 20vh;
-  overflow-x: hidden;
+/* ---------- Expertise section (NEW) ---------- */
+.expertise-section {
+  background: #fff;
+  color: #000;
+  overflow: hidden;
 }
 
-@media (max-width: 639px) {
-  .cta-wrapper {
-    padding: 1.5rem 0;
+.expertise-section .projects-heading {
+  color: #000;
+  text-shadow: none;
+}
+
+.expertise-text {
+  margin: 2rem 1.5rem 4rem;
+  color: #000;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-align: left;
+  line-height: 1.4;
+}
+
+@media (min-width: 1024px) {
+  .expertise-text {
+    margin: 2rem 3rem 2rem;
   }
-}
-
-.cta-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.2em;
-  cursor: pointer;
-  padding: 1rem 2rem;
-  transition: transform 0.3s ease-out;
-}
-
-.cta-arrow {
-  font-size: clamp(1.75rem, 7vw, 5rem);
-  transition: transform 0.3s;
-}
-
-.cta-text {
-  font-size: clamp(2rem, 7vw, 5rem);
-  font-weight: 800;
-  white-space: nowrap;
-  color: #fff;
-  margin: 0 1rem;
-  text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
-}
-
-.cta-button:hover .cta-arrow {
-  transform: translateX(0.5rem);
-}
-
-/* ---------- Touch fallbacks ---------- */
-@media (hover: none) {
-  .project-details { transform: translateY(0); opacity: 1; }
-  .project-divider { transform: scaleX(1);    }
-  .project-view-btn{ opacity: 1;              }
 }

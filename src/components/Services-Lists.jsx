@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 /* ---------- data ------------------------------------------------------- */
 const SECTIONS = [
-    {
+  {
     id: "spaces",
     title: "Space Design",
     bullets: [
@@ -42,10 +42,14 @@ const SECTIONS = [
   },
 ];
 
-/* ---------- tiny helpers ---------------------------------------------- */
+/* ---------- components ------------------------------------------------- */
 const Heading = ({ text }) => (
-  <motion.h2 layout="position" className="services-heading">
+  <motion.h2
+    layout="position"
+    className="services-heading group relative inline-block cursor-pointer"
+  >
     {text}
+    <span className="absolute left-0 -bottom-1 h-0.5 w-0 bg-black transition-all duration-300 group-hover:w-full"></span>
   </motion.h2>
 );
 
@@ -57,42 +61,40 @@ const BulletList = ({ bullets }) => (
   </ul>
 );
 
-/* ---------- main component -------------------------------------------- */
+/* ---------- main component --------------------------------------------- */
 const ServicesLists = () => {
-  const [openId, setOpenId]       = useState(null);
-  const itemRefs                  = useRef({});       // { id → DOMElement }
-  const prevTopRef                = useRef(null);     // stores Y-position before update
-  const prevIdRef                 = useRef(null);     // which element's top we stored?
+  const [openId, setOpenId] = useState(null);
+  const itemRefs = useRef({});
+  const prevTopRef = useRef(null);
+  const prevIdRef = useRef(null);
 
-  /* ----- toggle helper (captures position BEFORE layout changes) ------ */
+  // toggle item (click-only)
   const toggle = (id) => {
     const el = itemRefs.current[id];
     if (el) {
       prevTopRef.current = el.getBoundingClientRect().top;
-      prevIdRef.current  = id;
+      prevIdRef.current = id;
     }
     setOpenId((prev) => (prev === id ? null : id));
   };
 
-  /* ----- after React commits the new layout, correct the scroll ------- */
+  // preserve scroll position when layout shifts
   useLayoutEffect(() => {
     const storedTop = prevTopRef.current;
-    if (storedTop == null) return;           // nothing to correct
+    if (storedTop == null) return;
 
     const idToMeasure = prevIdRef.current;
-    const el          = itemRefs.current[idToMeasure];
+    const el = itemRefs.current[idToMeasure];
     if (el) {
       const newTop = el.getBoundingClientRect().top;
-      const diff   = newTop - storedTop;
-      // Shift the page by the delta so the element stays put
+      const diff = newTop - storedTop;
       window.scrollBy(0, diff);
     }
-    // reset refs
+
     prevTopRef.current = null;
-    prevIdRef.current  = null;
+    prevIdRef.current = null;
   }, [openId]);
 
-  /* ----- render ------------------------------------------------------- */
   return (
     <section className="services-section">
       {SECTIONS.map(({ id, title, bullets, img }) => {
@@ -103,9 +105,7 @@ const ServicesLists = () => {
             ref={(el) => (itemRefs.current[id] = el)}
             layout
             onClick={() => toggle(id)}
-            onHoverStart={() => toggle(id)} // Restore hover functionality
-            onHoverEnd={() => toggle(null)} // Close on hover out
-            className={`services-item${active ? " active" : ""}`}
+            className={`services-item cursor-pointer${active ? " active" : ""}`}
           >
             <div className="services-item-inner">
               {/* text */}
@@ -126,7 +126,7 @@ const ServicesLists = () => {
                 </AnimatePresence>
               </div>
 
-              {/* image - shown on both mobile and desktop */}
+              {/* image */}
               <AnimatePresence initial={false}>
                 {active && (
                   <motion.div

@@ -60,7 +60,7 @@
 .services-section{
   max-width:80rem;
   margin:0 auto;
-  padding:0 5rem; /* Removed vertical padding */
+  padding:0 6rem; /* Removed vertical padding */
   display:flex;
   flex-direction:column;
   gap:0; /* Remove gap between items */
@@ -94,61 +94,6 @@
   position: relative; /* Prevent layout shifts */
 }
 
-/* Help Section Styles */
-.services-help-section {
-  background-color: black;
-  color: white;
-  padding: 4rem 5rem;
-  text-align: center;
-}
-
-.services-help-content {
-  max-width: 600px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
-.services-help-heading {
-  font-family: "Khand", system-ui, Helvetica, Arial, sans-serif;
-  font-size: clamp(2rem, 8vw, 4rem);
-  font-weight: 800;
-  margin: 0;
-  color: white;
-}
-
-.services-help-text {
-  font-family: "Switzer", system-ui, Helvetica, Arial, sans-serif;
-  font-size: clamp(1rem, 3vw, 1.5rem);
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0;
-}
-
-.services-help-button {
-  margin-top: 1.5rem;
-  padding: 0.75rem 2rem;
-  background-color: white;
-  color: black;
-  border: none;
-  border-radius: 0.5rem;
-  font-family: "Switzer", system-ui, Helvetica, Arial, sans-serif;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.services-help-button:hover {
-  background-color: #f4f4f4;
-}
-
-.services-help-button:active {
-  background-color: #e0e0e0;
-}
-
-/* Rest of the CSS remains the same as in the previous version */
 
 /* Mobile layout: heading -> image -> bullets */
 .services-image {
@@ -196,16 +141,32 @@
 
 /* ── heading (always full opacity) ─────────────────────────── */
 .services-heading{
-  font-family:"Khand",system-ui,Helvetica,Arial,sans-serif;
-  font-weight:800;
-  line-height:1;
-  font-size:clamp(1.5rem,7vw,5rem); /* Reduced heading size */
-  color:#fff;
-  transition:color .25s;
-  margin:0; /* Remove all margins */
-  padding:0; /* Remove all padding */
+ font-family: "Khand", system-ui, Helvetica, Arial, sans-serif;
+  font-weight: 800;
+  line-height: 1;
+  font-size: clamp(1.5rem, 7vw, 5rem);
+  color: #fff;
+  margin: 0;
+  padding: 0.25rem;
+  transition: color 0.25s;
+  position: relative; /* required for underline */
+  display: inline-block; /* required for pseudo-element */
+  cursor: pointer;
 }
-.services-item:hover .services-heading{color:#fff;}
+.services-heading::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background-color: #fff;
+  transition: width 0.3s ease-in-out;
+}
+
+.services-item:hover .services-heading::after {
+  width: 100%;
+}
 
 /* ── text + bullets block ──────────────────────────────────────── */
 .services-text{
@@ -227,6 +188,7 @@
   margin:0;
   display:flex;
   flex-direction:column;
+  padding: 1rem;
   gap:0.8rem; /* Increased line spacing */
   order: 3; /* Bullets come last on mobile */
 }

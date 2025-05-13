@@ -138,7 +138,7 @@ const AboutUs = () => {
           </h1>
           
           <p ref={el => paragraphRefs.current[1] = el} style={{ opacity: 0, transform: "translateY(80px)" }}>
-            We bring spaces to life — from design concept to on-site execution — creating environments that inspire, guide, and connect.
+            From concept to on-site execution, we create bold brand spaces and visuals that stand out and stay memorable.
           </p>
           
           <br />

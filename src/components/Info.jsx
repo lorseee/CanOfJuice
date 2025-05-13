@@ -5,124 +5,226 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const Info = () => {
-  const sectionRef  = useRef(null);
-  const textRef     = useRef(null);
-  const lagRef      = useRef(null);
-  const entranceTL  = useRef(null);   // main text-entrance timeline
-  const lagTL       = useRef(null);   // opacity timeline
-  const pinST       = useRef(null);   // sticky ScrollTrigger
-  const resizeObs   = useRef(null);   // ResizeObserver
+  const sectionRef = useRef(null);
+  const textRef = useRef(null);
+  const countersRef = useRef(null);
+  const lagRef = useRef(null);
 
   useEffect(() => {
     const section = sectionRef.current;
-    const text    = textRef.current;
-    const lag     = lagRef.current;
-    if (!section || !text || !lag) return;
+    const text = textRef.current;
+    const countersContainer = countersRef.current;
+    const lag = lagRef.current;
+    if (!section || !text || !countersContainer || !lag) return;
 
-    /* ── 1. Text entrance (unchanged window) ───────────────── */
-    entranceTL.current = gsap.timeline({
+    // Text entrance
+    const entranceTL = gsap.timeline({
       scrollTrigger: {
         trigger: section,
         start: "top 90%",
         end: "top 30%",
-        scrub: 2,                 // smoother response
-        invalidateOnRefresh: true
-      }
-    })
-    .fromTo(
+        scrub: 2,
+        invalidateOnRefresh: true,
+      },
+    }).fromTo(
       text,
-      { y: 300, opacity: 0, scale: 0.7 },
-      { y: 0,   opacity: 1, scale: 1, ease: "power2.out", duration: 3 }
+      { y: 200, opacity: 0 },
+      { y: 0, opacity: 1, ease: "power2.out", duration: 2 }
     );
 
-    /* ── 2. Sticky pin (+200 % of viewport) ───────────────── */
-    pinST.current = ScrollTrigger.create({
+    // Pin the section
+    ScrollTrigger.create({
       trigger: section,
       start: "top top",
       end: "+=200%",
       pin: true,
       pinSpacing: false,
-      anticipatePin: 1,
-      fastScrollEnd: true
     });
 
-    /* ── 3. Lag-section linear opacity fade ───────────────── */
-    lagTL.current = gsap.timeline({
+    // Description fade-in
+    const lines = text.querySelectorAll(".desc-line");
+    gsap.set(lines, { opacity: 0.2 });
+    gsap.timeline({
       scrollTrigger: {
-        trigger: lag,
-        start: "top bottom",
+        trigger: section,
+        start: "top top+=100",
         end: "bottom top",
-        scrub: 1,
-        ease: "none"        // perfectly linear mapping
-      }
-    })
-    .fromTo(text, { opacity: 1 }, { opacity: 0.4 });
+        scrub: true,
+      },
+    }).to(lines, {
+      opacity: 1,
+      duration: 0.5,
+      stagger: { each: 0.3 },
+      ease: "power1.out",
+    });
 
-    /* ── 4. Keep ScrollTrigger fresh on resize ─────────────── */
-    resizeObs.current = new ResizeObserver(() => ScrollTrigger.refresh(true));
-    resizeObs.current.observe(section);
+    // Counter animation (delayed to proper scroll point)
+    const counters = countersContainer.querySelectorAll(".counter-value");
 
-    /* ── 5. Cleanup on unmount ─────────────────────────────── */
+    requestAnimationFrame(() => {
+      const counterTL = gsap.timeline({ paused: true });
+
+      counters.forEach((el) => {
+        const end = +el.dataset.target;
+        const plus = el.dataset.plus === "true";
+        const obj = { value: 0 };
+        counterTL.to(
+          obj,
+          {
+            value: end,
+            duration: 1.5,
+            ease: "power1.out",
+            onUpdate: () => {
+              el.innerText = Math.ceil(obj.value) + (plus ? "+" : "");
+            },
+          },
+          0
+        );
+      });
+
+      ScrollTrigger.create({
+        trigger: countersContainer,
+        start: "top 65%", // Fix: Starts when counters are closer to center
+        onEnter: () => counterTL.play(),
+        once: true,
+      });
+    });
+
     return () => {
-      entranceTL.current?.kill();
-      lagTL.current?.kill();
-      pinST.current?.kill();
-      ScrollTrigger.getAll().forEach(t => t.kill());
-      resizeObs.current?.disconnect();
+      ScrollTrigger.getAll().forEach((t) => t.kill());
     };
   }, []);
 
   return (
     <div style={{ position: "relative", overflow: "hidden" }}>
-      {/* Pinned hero section */}
       <section
         id="about"
         ref={sectionRef}
         style={{
-          height: "100vh",
+          minHeight: "100vh",
+          background: "#fff",
           display: "flex",
-          alignItems: "center",
           justifyContent: "center",
-          background: "black",
-          willChange: "transform"
+          alignItems: "center",
+          padding: "0 1.5rem",
         }}
       >
         <div
           ref={textRef}
-          className="content-overlay"
-          style={{ 
-            willChange: "transform, opacity",
-            textAlign: "center",
-            color: "#fff",
-            padding: "2rem"
+          style={{
+            maxWidth: "1200px",
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            gap: "2.5rem",
+            alignItems: "flex-start",
           }}
         >
-          <ul className="category-list" style={{ 
-            listStyle: "none", 
-            padding: 0,
-            fontSize: "1.5rem",
-            fontWeight: "300",
-            lineHeight: "2.5"
+          {/* LEFT: Static Heading */}
+          <div style={{
+            flex: "1 1 280px",
+            minWidth: "260px",
+            display: "flex",
+            alignItems: "flex-start",
           }}>
-            <li>identities</li>
-            <li>campaigns</li>
-            <li>websites</li>
-            <li>books & publications</li>
-            <li>signage & wayfinding</li>
-            <li>exhibitions</li>
-            <li>branded environments</li>
-          </ul>
+            <h1 style={{
+              fontSize: "clamp(2.8rem, 6vw, 5.5rem)",
+              fontWeight: 800,
+              lineHeight: 1.1,
+              margin: 0,
+              color: "#000"
+            }}>
+              ABOUT OUR <br /> AGENCY
+            </h1>
+          </div>
+
+          {/* RIGHT: Aligned Content */}
+            <div style={{
+              flex: "2 1 400px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1.75rem",
+              alignItems: "flex-start"    // ensure left-alignment
+            }}>
+              <div>
+                <h2 style={{
+                  margin: 0,
+                  marginBottom: "0.65rem",     // ← give the same spacing you had on <p>’s bottom
+                  fontSize: "1.4rem",
+                  fontWeight: 700,
+                  color: "#000"
+                }}>
+                  STUDIO CANOFJUICE
+                </h2>
+
+                          {[
+                "Full-service design + execution studio specializing in Wayfinding, Signage Systems, and Branding.",
+                "We bring spaces to life — from design concept to on-site execution — creating environments that inspire, guide, and connect.",
+                "For over 10 years, we’ve crafted iconic spaces for clients across industries, blending creativity with precision to deliver impactful experiences.",
+              ].map((line, i) => (
+                <p
+                  key={i}
+                  className="desc-line"
+                  style={{
+                    fontSize: "1.15rem",
+                    lineHeight: 1.7,
+                    margin: 0,                 // ← remove default top/bottom
+                    marginBottom: "0.65rem",   // ← keep your original bottom spacing
+                    color: "#111"
+                  }}
+                >
+                  {line}
+                </p>
+              ))}
+            </div>
+            {/* COUNTERS */}
+            <div
+              ref={countersRef}
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "2rem",
+                justifyContent: "flex-start",
+              }}
+            >
+              {[
+                { target: 50, label: "Happy Clients", plus: true },
+                { target: 7, label: "Awards", plus: false },
+                { target: 250, label: "Total Projects", plus: true },
+              ].map((c, idx) => (
+                <div key={idx} style={{
+                  flex: "1 1 100px",
+                  minWidth: "120px",
+                  textAlign: "left"
+                }}>
+                  <div
+                    className="counter-value"
+                    data-target={c.target}
+                    data-plus={c.plus}
+                    style={{
+                      fontSize: "2.4rem",
+                      fontWeight: 800,
+                      marginBottom: ".25rem",
+                      color: "#000",
+                    }}
+                  >
+                    0{c.plus ? "+" : ""}
+                  </div>
+                  <div style={{ fontSize: "0.95rem", color: "#666" }}>{c.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Transparent "lag" spacer */}
       <section
         ref={lagRef}
-        className="about-lag"
         style={{
           height: "100vh",
           background: "transparent",
-          pointerEvents: "none"
+          pointerEvents: "none",
         }}
       />
     </div>

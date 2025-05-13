@@ -189,7 +189,7 @@ items: [
   },
   {
     id: 11,
-    title: "Custom Displays",
+    title: "Custom Art Installations",
     year: " ",
     services: "Spatial and Environment Design, Art Installations",
     category: ["work-spaces","food-beverages"],
