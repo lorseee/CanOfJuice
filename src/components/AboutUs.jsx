@@ -125,7 +125,8 @@ const AboutUs = () => {
           backgroundImage: "url('/images/aboutus.JPG')",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          willChange: "transform"
+          backgroundColor: "#f0f0f0",
+          willChange: "transform",
         }}
       >
         <div
@@ -151,6 +152,7 @@ const AboutUs = () => {
         style={{
           height: "100vh",
           background: "transparent",
+        
           pointerEvents: "none"
         }}
       />

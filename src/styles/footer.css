@@ -1,4 +1,10 @@
 /* src/components/footer.css */
+@font-face {
+  font-family: 'InterH';
+  src: url('/public/fonts/Inter_18pt-Bold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 /* Base footer */
 .footer {
@@ -29,6 +35,13 @@
 .footer-logo img {
   height: 7rem;
   width: auto;
+}
+.footer-text{
+  text-align: right;
+  width: 100%;
+  right: 0;
+  font-family: 'InterH',sans-serif ;
+ 
 }
 
 /* Divider below logo */

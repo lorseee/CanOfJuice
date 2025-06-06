@@ -147,7 +147,7 @@ const Projects = () => {
       if (subtitleRef.current && subtitleWrapperRef.current) {
         gsap.fromTo(
           subtitleRef.current,
-          { opacity: 0, y: 40 },
+          { opacity: 0, y: -200 },
           {
             opacity: 1,
             y: 0,
@@ -155,7 +155,10 @@ const Projects = () => {
             ease: "power3.out",
             scrollTrigger: {
               trigger: subtitleWrapperRef.current,
-              start: "top 300%",
+              start: "top 80%",
+              end: "top 50%",
+              toggleActions:"restart none none none",
+               slideInLeft: 'slideInLeft 1s ease-out forwards',
             },
           }
         );

@@ -9,6 +9,9 @@ const Footer = () => {
         <div className="footer-logo">
           <img src="/images/logo.png" alt="Logo" />
         </div>
+        <div className="footer-text">
+          <p>Let's Collaborate !!</p>
+        </div>
 
         {/* Divider below logo */}
         <div className="footer-divider" />
