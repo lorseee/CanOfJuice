@@ -61,6 +61,20 @@ const GalleryLayout = ({ images, handleImageError }) => (
       />
     </div>
 
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-4
+    ">
+      <img
+        src={images[3]}
+        alt="Gallery 4"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center"
+      />
+    </div>
   </div>
 );
 

@@ -1,9 +1,11 @@
 /* src/components/footer.css */
+
 @font-face {
-  font-family: 'InterH';
-  src: url('/public/fonts/Inter_18pt-Bold.ttf') format('truetype');
+  font-family: 'Khand';
+  src: url('/fonts/Khand-Bold.ttf') format('truetype');
   font-weight: normal;
-  font-style: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 /* Base footer */
@@ -37,10 +39,18 @@
   width: auto;
 }
 .footer-text{
+  font-family:'Khand';
   text-align: right;
   width: 100%;
   right: 0;
-  font-family: 'InterH';
+  @font-face {
+  font-family: 'Khand';
+  src: url('/fonts/Khand-Bold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+  
  
 }
 
