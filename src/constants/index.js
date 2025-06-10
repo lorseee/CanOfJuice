@@ -36,7 +36,7 @@ items: [
     id: 2,
     title: "The Collective",
     year: "2018–2019",
-    services: "Art Installations",
+    services: "Retail Display",
     category: "retail",
     longDescription:
       "A luxury multi-brand fashion store needed window displays that spoke the language of opulence. We partnered with their visual-merchandising team to fabricate and install custom display units across all Indian outlets, elevating storefronts while aligning with seasonal collections and international style cues.",

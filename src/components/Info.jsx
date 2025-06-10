@@ -75,7 +75,11 @@ const Info = () => {
             duration: 1.5,
             ease: "power1.out",
             onUpdate: () => {
-              el.innerText = Math.ceil(obj.value) + (plus ? "+" : "");
+              const value = Math.ceil(obj.value);
+              const formatted = value === 750000 
+                ? `<span style="white-space: nowrap; font-size: 2.4rem; font-family: 'Poppins', sans-serif; font-weight: 800">${value.toLocaleString()} <span style="font-size: 1.2rem">sqft</span></span>`
+                : value + (plus ? "+" : "");
+              el.innerHTML = formatted;
             },
           },
           0
@@ -127,6 +131,7 @@ const Info = () => {
             minWidth: "260px",
             display: "flex",
             alignItems: "flex-start",
+            marginTop: "-0.5rem"
           }}>
             <h1 style={{
               fontSize: "clamp(2.8rem, 6vw, 5.5rem)",
@@ -159,7 +164,7 @@ const Info = () => {
                 </h2>
 
                           {[
-                "Full-service design + execution studio specializing in Wayfinding, Signage Systems, and Branding.",
+
                 "We bring spaces to life — from design concept to on-site execution — creating environments that inspire, guide, and connect.",
                 "For over 10 years, we’ve crafted iconic spaces for clients across industries, blending creativity with precision to deliver impactful experiences.",
               ].map((line, i) => (
@@ -189,9 +194,10 @@ const Info = () => {
               }}
             >
               {[
-                { target: 50, label: "Happy Clients", plus: true },
-                { target: 7, label: "Awards", plus: false },
-                { target: 250, label: "Total Projects", plus: true },
+                { target: 100, label: "Happy Clients", plus: true },
+                { target: 150, label: "Design Projects", plus: true },
+                { target: 750000, label: "Art Installations", plus: false },
+               
               ].map((c, idx) => (
                 <div key={idx} style={{
                   flex: "1 1 100px",

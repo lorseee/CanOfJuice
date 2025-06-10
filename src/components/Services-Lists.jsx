@@ -1,5 +1,6 @@
 import React, { useState, useRef, useLayoutEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 /* ---------- data ------------------------------------------------------- */
 const SECTIONS = [
@@ -41,7 +42,11 @@ const SECTIONS = [
     img: "/images/installations.jpg",
   },
 ];
-
+<div style="width: 50vw; background-color: black; color: white; padding: 1rem;">
+  <p style="font-size: 20px;">
+    Need a hand. We are happy to help.
+  </p>
+</div>
 /* ---------- components ------------------------------------------------- */
 const Heading = ({ text }) => (
   <motion.h2
@@ -53,13 +58,31 @@ const Heading = ({ text }) => (
   </motion.h2>
 );
 
-const BulletList = ({ bullets }) => (
-  <ul className="services-bullets">
-    {bullets.map((b, i) => (
-      <li key={i}>{b}</li>
-    ))}
-  </ul>
-);
+const BulletList = ({ bullets }) => {
+  const navigate = useNavigate();
+
+  const handleClick = (bullet, e) => {
+    e.stopPropagation(); // Prevent parent div's click event from firing
+    if (bullet === "Retail Display") {
+      navigate('/gallery-1');
+    }
+  };
+
+  return (
+    <ul className="services-bullets">
+      {bullets.map((b, i) => (
+        <li 
+          key={i} 
+          onClick={(e) => handleClick(b, e)}
+          className={`cursor-pointer hover:text-amber-400 transition-colors`}
+          data-clickable={b === "Retail Display"}
+        >
+          {b}
+        </li>
+      ))}
+    </ul>
+  );
+};
 
 /* ---------- main component --------------------------------------------- */
 const ServicesLists = () => {
@@ -149,6 +172,11 @@ const ServicesLists = () => {
           </motion.div>
         );
       })}
+
+      {/* Help text */}
+      <div className="bg-black p-6 mt-8 text-white text-center">
+        <p className="text-4xl" style={{ fontFamily: "'Khand', sans-serif" }}>Need a hand? We are happy to help.</p>
+      </div>
     </section>
   );
 };

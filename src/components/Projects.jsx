@@ -147,31 +147,23 @@ const Projects = () => {
       if (subtitleRef.current && subtitleWrapperRef.current) {
         gsap.fromTo(
           subtitleRef.current,
-          { opacity: 0, y: -200 },
+          { 
+            opacity: 0, 
+            x: '100%',
+          },
           {
             opacity: 1,
-            y: 0,
-            duration: 0.2,
-            ease: "power3.out",
+            x: '20%',
+            duration: 1.9,
+            ease: "power2.out",
             scrollTrigger: {
               trigger: subtitleWrapperRef.current,
               start: "top 80%",
-              end: "top 50%",
-              toggleActions:"restart none none none",
-               slideInLeft: 'slideInLeft 1s ease-out forwards',
+              end: "top 30%",
+              toggleActions: "restart none none reverse",
             },
           }
         );
-        gsap.to(subtitleRef.current, {
-          xPercent: -100,
-          ease: "none",
-          scrollTrigger: {
-            trigger: subtitleWrapperRef.current,
-            start: "top 25%",
-            end: "bottom top",
-            scrub: 0.5,
-          },
-        });
       }
     });
 

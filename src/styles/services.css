@@ -199,6 +199,20 @@
   line-height: 1.5; /* Improved readability */
 }
 
+/* Style for clickable bullet */
+.services-bullets li[data-clickable="true"] {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+}
+
+.services-bullets li[data-clickable="true"]:hover {
+  color: #ffd700; /* gold color on hover */
+  text-decoration: underline;
+  transform: translateX(5px);
+  transition: all 0.3s ease;
+}
+
 /* ------------------------------------------------------------------
    TRANSITIONS / STATES
    ------------------------------------------------------------------ */

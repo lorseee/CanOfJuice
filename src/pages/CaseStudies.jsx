@@ -3,12 +3,8 @@
    rev-K • 11 May 2025  (IDs 3/17/23/29 + scroll-to-top)
    ===================================================================== */
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 /* fast placeholder helper (dark bg) */
 const ph = (w, h) =>
@@ -22,10 +18,10 @@ export const CASE_STUDIES = [
     title: "Wework – Pan-India Branded Environments",
     client: "Wework India",
     serviceAreas: "Environmental Graphics, Signages, Installations",
-    heroImg: ph(1920, 1080),
+    heroImg: "/images/projects/3/main.png",
     metaImgs: [ph(1920, 1080), ph(1920, 1080)],
     challenge:
-      "Bring Wework’s global brand experience to India while localising for 26 vibrant, functional locations.",
+      "Bring Wework's global brand experience to India while localising for 26 vibrant, functional locations.",
     approach:
       "Built a scalable system of signage, wall graphics, LED installs and large-format art customised to each building.",
     execution: [
@@ -53,7 +49,7 @@ export const CASE_STUDIES = [
     challenge:
       "Craft an authentic small-batch organic identity without green-wash clichés.",
     approach:
-      "Name + earthy modern visuals inspired by farmer’s markets; packaging optimised for shelf & social.",
+      "Name + earthy modern visuals inspired by farmer's markets; packaging optimised for shelf & social.",
     execution: [
       "Hand-drawn illustrations",
       "Instagram-friendly labels",
@@ -76,9 +72,9 @@ export const CASE_STUDIES = [
     heroImg: ph(1920, 1080),
     metaImgs: [ph(1920, 1080), ph(1920, 1080)],
     challenge:
-      "Make a memorable first impression in Bangalore’s competitive dining scene with a premium yet local vibe.",
+      "Make a memorable first impression in Bangalore's competitive dining scene with a premium yet local vibe.",
     approach:
-      "Coined the cryptic name “1131”, designed typographic logo, playful menus and branding across every guest touch-point.",
+      'Coined the cryptic name "1131", designed typographic logo, playful menus and branding across every guest touch-point.',
     execution: [
       "Black-and-white palette with gold accents",
       "Glass printing & surface branding in-bar",
@@ -88,7 +84,7 @@ export const CASE_STUDIES = [
     impact: [
       "Elevated guest perception and recall",
       "Design consistency → seamless dining experience",
-      "Positioned venue as ‘not just another bar’",
+      "Positioned venue as 'not just another bar'",
     ],
     marquee: Array.from({ length: 6 }, () => ph(400, 250)),
   },
@@ -134,27 +130,37 @@ const FullImage = ({ src, alt = "", className = "" }) => (
   </div>
 );
 
-const BulletList = ({ items }) => (
-  <ul className="space-y-2 pl-6 max-w-4xl mx-auto">
-    {items.map((li, i) => (
-      <li key={i} className="relative text-base leading-relaxed">
-        <span className="absolute -left-4 top-2 w-1 h-1 bg-amber-400 rounded-full" />
-        {li}
-      </li>
-    ))}
-  </ul>
-);
+const BulletList = ({ items }) => {
+  const navigate = useNavigate();
+
+  const handleClick = (item) => {
+    if (item === "Retail Display") {
+      navigate('/gallery-1');
+    }
+  };
+
+  return (
+    <ul className="space-y-2 pl-6 max-w-4xl mx-auto">
+      {items.map((li, i) => (
+        <li 
+          key={i} 
+          className="relative text-base leading-relaxed cursor-pointer hover:text-amber-400 transition-colors"
+          onClick={() => handleClick(li)}
+        >
+          <span className="absolute -left-4 top-2 w-1 h-1 bg-amber-400 rounded-full" />
+          {li}
+        </li>
+      ))}
+    </ul>
+  );
+};
 
 const Marquee = ({ imgs }) => {
   const band = imgs.slice(0, 6);
-  const roll = band.concat(band);
   return (
     <div className="overflow-hidden py-10 bg-black">
-      <div
-        className="flex gap-8 animate-marquee whitespace-nowrap"
-        style={{ animationDuration: `${band.length * 4}s` }}
-      >
-        {roll.map((src, i) => (
+      <div className="flex gap-8 whitespace-nowrap">
+        {band.map((src, i) => (
           <img
             key={i}
             src={src}
@@ -165,10 +171,6 @@ const Marquee = ({ imgs }) => {
           />
         ))}
       </div>
-      <style>{`
-        @keyframes marqueeScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-        .animate-marquee{animation:marqueeScroll linear infinite}
-      `}</style>
     </div>
   );
 };
@@ -190,52 +192,26 @@ const CaseStudies = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const [heroReady, setHeroReady] = useState(false);
-
-  /* GSAP entrances */
-  useEffect(() => {
-    if (!heroReady) return;
-    const ctx = gsap.context(() => {
-      gsap.from(".cs-hero", { x: "100%", duration: 1.2, ease: "power3.out" });
-      gsap.utils.toArray(".sect").forEach((el, i) => {
-        gsap.fromTo(
-          el,
-          { x: i % 2 ? "120%" : "100%", opacity: 0 },
-          {
-            x: 0,
-            opacity: 1,
-            duration: 1,
-            ease: "power3.out",
-            scrollTrigger: { trigger: el, start: "top 85%" },
-          }
-        );
-      });
-    }, pageRef);
-    return () => ctx.revert();
-  }, [heroReady]);
-
   if (!study) return null;
 
   /* ---------------- render ---------------- */
   return (
     <div ref={pageRef} className="bg-black text-white">
       {/* HERO */}
-      <section className="relative min-h-screen w-full cs-hero">
+      <section className="relative min-h-screen w-full">
         <img
           src={study.heroImg || ph(1920, 1080)}
           alt={study.title}
           className="absolute inset-0 w-full h-full object-cover object-center"
-          onLoad={() => setHeroReady(true)}
           onError={(e) => {
             e.currentTarget.src = ph(1920, 1080);
-            setHeroReady(true);
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/70" />
       </section>
 
       {/* META & CHALLENGE */}
-      <section className="sect py-14 md:py-20 px-6 md:px-12 text-center space-y-6">
+      <section className="py-14 md:py-20 px-6 md:px-12 text-center space-y-6">
         <h1 className="text-4xl md:text-5xl font-light">{study.title}</h1>
         <p className="uppercase tracking-widest text-amber-400 text-sm">
           Client: {study.client}
@@ -253,12 +229,12 @@ const CaseStudies = () => {
 
       {/* Meta images */}
       {study.metaImgs.map((src, i) => (
-        <FullImage key={i} src={src} className="sect" />
+        <FullImage key={i} src={src} />
       ))}
 
       {/* Approach */}
       {study.approach && (
-        <section className="sect py-14 md:py-20 px-6 md:px-12 text-center">
+        <section className="py-14 md:py-20 px-6 md:px-12 text-center">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-lg font-light mb-2">Approach</h2>
             <p className="text-gray-300 leading-relaxed">{study.approach}</p>
@@ -268,16 +244,16 @@ const CaseStudies = () => {
 
       {/* Execution */}
       {study.execution?.length > 0 && (
-        <h2 className="sect text-center text-lg font-light py-8 md:py-12">
+        <h2 className="text-center text-lg font-light py-8 md:py-12">
           Execution Highlights
         </h2>
       )}
       {study.execution.map((txt, i) => (
         <React.Fragment key={i}>
           {study.execImgs?.[i] && (
-            <FullImage src={study.execImgs[i]} className="sect" />
+            <FullImage src={study.execImgs[i]} />
           )}
-          <section className="sect py-10 md:py-16 px-6 md:px-12 text-center">
+          <section className="py-10 md:py-16 px-6 md:px-12 text-center">
             <p className="max-w-3xl mx-auto text-gray-300 leading-relaxed">
               {txt}
             </p>
@@ -287,7 +263,7 @@ const CaseStudies = () => {
 
       {/* Impact */}
       {study.impact && (
-        <section className="sect py-14 md:py-20 px-6 md:px-12 text-center space-y-6">
+        <section className="py-14 md:py-20 px-6 md:px-12 text-center space-y-6">
           <h2 className="text-lg font-light">Impact</h2>
           <BulletList items={study.impact} />
         </section>
@@ -297,7 +273,7 @@ const CaseStudies = () => {
       <Marquee imgs={study.marquee} />
 
       {/* Back */}
-      <div className="sect py-16 text-center">
+      <div className="py-16 text-center">
         <button
           className="px-6 py-3 border border-amber-400 text-amber-400 rounded hover:bg-amber-400/10 transition"
           onClick={() => navigate(-1)}

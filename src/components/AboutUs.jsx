@@ -139,7 +139,7 @@ const AboutUs = () => {
           </h1>
           
           <p ref={el => paragraphRefs.current[1] = el} style={{ opacity: 0, transform: "translateY(80px)" }}>
-            From concept to on-site execution, we create bold brand spaces and visuals that stand out and stay memorable.
+          Full-service design + execution studio specializing in Wayfinding, Signage Systems, and Branding.
           </p>
           
           <br />

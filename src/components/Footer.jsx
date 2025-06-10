@@ -10,7 +10,7 @@ const Footer = () => {
           <img src="/images/logo.png" alt="Logo" />
         </div>
         <div className="footer-text">
-          <p>Let's Collaborate !!</p>
+          <p>Let's Collaborate </p>
         </div>
 
         {/* Divider below logo */}

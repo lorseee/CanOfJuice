@@ -66,7 +66,7 @@
 
 /* subtle side fades stay (optional aesthetic) */
 .works-cat-wrapper::before,
-.works-cat-wrapper::after{
+.works-cat-wrapper::after{ 
   content:"";pointer-events:none;position:absolute;top:0;bottom:0;width:1rem;
   background:linear-gradient(to right,transparent,black 80%);opacity:.12;
 }
