@@ -63,28 +63,25 @@ const Projects = () => {
       if (headingRef.current && headingWrapperRef.current) {
         gsap.fromTo(
           headingRef.current,
-          { opacity: 0, y: 40 },
+          { opacity: 0, y: '-100%' },
           {
             opacity: 1,
             y: 0,
-            duration: 0.2,
-            ease: "power3.out",
+            duration: 1.9,
+            ease: "power2.inout",
             scrollTrigger: {
               trigger: headingWrapperRef.current,
-              start: "top 300%",
+              start: "top 80%",
+              end: "top 10%",
+              scrub: 1,
+              toggleActions: "restart none none reverse",
             },
           }
         );
-        gsap.to(headingRef.current, {
-          xPercent: -100,
-          ease: "none",
-          scrollTrigger: {
-            trigger: headingWrapperRef.current,
-            start: "top 25%",
-            end: "bottom top",
-            scrub: 0.5,
-          },
-        });
+        
+           
+          
+        
       }
 
       // Cards reveal
@@ -153,13 +150,14 @@ const Projects = () => {
           },
           {
             opacity: 1,
-            x: '20%',
-            duration: 1.9,
-            ease: "power2.out",
+            x: '0%',
+            duration: 2,
+            ease: "power2.inOut",
             scrollTrigger: {
               trigger: subtitleWrapperRef.current,
               start: "top 80%",
-              end: "top 30%",
+              end: "top 10%",
+              scrub: 1,
               toggleActions: "restart none none reverse",
             },
           }
@@ -178,8 +176,8 @@ const Projects = () => {
           {/* Primary marquee */}
           <div ref={headingWrapperRef} className="heading-wrapper">
             <h2 ref={headingRef} className="projects-heading">
-              OUR WORK — FEATURED PROJECTS — OUR WORK — FEATURED PROJECTS — OUR
-              WORK — FEATURED PROJECTS
+              OUR WORK — FEATURED PROJECTS — 
+              
             </h2>
           </div>
 
@@ -226,7 +224,7 @@ const Projects = () => {
           {/* Secondary marquee */}
           <div ref={subtitleWrapperRef} className="heading-wrapper">
             <h2 ref={subtitleRef} className="projects-heading">
-              WE ARE EXPERTS IN CREATING STRATEGIC 
+              WE ARE EXPERTS IN CREATING STRATEGIC: 
             </h2>
           </div>
           {/* Static expertise text */}

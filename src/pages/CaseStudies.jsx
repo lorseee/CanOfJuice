@@ -1,51 +1,54 @@
-/* =====================================================================
-   CaseStudiesPage.jsx  –  fullscreen hero + R→L narrative
-   rev-K • 11 May 2025  (IDs 3/17/23/29 + scroll-to-top)
-   ===================================================================== */
-
 import React, { useLayoutEffect, useRef } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
-/* fast placeholder helper (dark bg) */
-const ph = (w, h) =>
-  `https://placehold.co/${w}x${h}/1E1E1E/FFFFFF?text=%20`;
+const fallback = (w, h) => `https://placehold.co/${w}x${h}/1E1E1E/FFFFFF?text=%20`;
 
-/* ------------------------------------------------------------------ */
-/*  CASE STUDIES (ids = 3,17,23,29)                                    */
 export const CASE_STUDIES = [
   {
-    id: 3, // Wework button sends 3
+    id: 3,
     title: "Wework – Pan-India Branded Environments",
     client: "Wework India",
     serviceAreas: "Environmental Graphics, Signages, Installations",
-    heroImg: "/images/projects/3/main.png",
-    metaImgs: [ph(1920, 1080), ph(1920, 1080)],
+    heroImg: "/images/projects/3/main.jpg",
+    metaImgs: ["/images/projects/3/gallery-5.jpg", "/images/projects/3/gallery-6.jpg"],
     challenge:
-      "Bring Wework's global brand experience to India while localising for 26 vibrant, functional locations.",
+      "Wework wanted to bring their global brand experience to India while localizing it for regional audiences. The brief was to make each location vibrant, functional, and aligned with Wework’s collaborative ethos.",
     approach:
-      "Built a scalable system of signage, wall graphics, LED installs and large-format art customised to each building.",
+       "We worked with Wework to create a scalable system of signage, wall graphics, LED installs and large-format art customised to each building. We also created a brand book and a set of brand guidelines to ensure consistency across all locations.",
     execution: [
-      "3D brand moments & art installations",
-      "High-visibility façade signs",
-      "Motivational quote walls",
-      "City-specific themes for select hubs",
+      "• Art installations and 3D brand moments",
+      "• Building facade signages with high visibility",
+      "• Motivational and quirky quote walls",
+      "• City-specific design themes for select locations",
     ],
-    execImgs: [ph(1920, 1080), ph(1920, 1080), ph(1920, 1080), ph(1920, 1080)],
+    execImgs: [
+      "/images/projects/3/gallery-1.jpg",
+      "/images/projects/3/gallery-2.jpg",
+      "/images/projects/3/gallery-3.jpg",
+      "/images/projects/3/gallery-4.jpg",
+    ],
     impact: [
-      "Immersive brand presence across 26 cities",
-      "Higher employee engagement via spatial storytelling",
-      "Consistent identity despite regional diversity",
+      "• Created immersive brand experiences across 26 cities",
+      "• Strengthened employee engagement through spatial storytelling",
+      "• Contributed to consistent brand presence despite regional diversity",
     ],
-    marquee: Array.from({ length: 6 }, () => ph(400, 250)),
+    marquee: [
+      "/images/projects/3/gallery-1.jpg",
+      "/images/projects/3/gallery-2.jpg",
+      "/images/projects/3/gallery-3.jpg",
+      "/images/projects/3/gallery-4.jpg",
+      "/images/projects/3/gallery-5.jpg",
+      "/images/projects/3/gallery-6.jpg",
+    ],
   },
 
   {
-    id: 23, // Farm Stories button sends 23
+    id: 23,
     title: "Farm Stories – Organic Brand from the Ground Up",
     client: "Farm Stories",
     serviceAreas: "Naming, Branding, Packaging, Social Media",
-    heroImg: ph(1920, 1080),
-    metaImgs: [ph(1920, 1080), ph(1920, 1080)],
+    heroImg: "/images/projects/23/main.png",
+    metaImgs: ["/images/projects/23/meta1.jpg", "/images/projects/23/meta2.jpg"],
     challenge:
       "Craft an authentic small-batch organic identity without green-wash clichés.",
     approach:
@@ -55,22 +58,33 @@ export const CASE_STUDIES = [
       "Instagram-friendly labels",
       "Delivery collaterals & social templates",
     ],
-    execImgs: [ph(1920, 1080), ph(1920, 1080), ph(1920, 1080)],
+    execImgs: [
+      "/images/projects/23/exec1.jpg",
+      "/images/projects/23/exec2.jpg",
+      "/images/projects/23/exec3.jpg",
+    ],
     impact: [
       "Higher trust in crowded organic sector",
       "Smooth shift from local retail to D2C",
       "Unified look across pack, digital & physical",
     ],
-    marquee: Array.from({ length: 6 }, () => ph(400, 250)),
+    marquee: [
+      "/images/projects/23/marquee1.jpg",
+      "/images/projects/23/marquee2.jpg",
+      "/images/projects/23/marquee3.jpg",
+      "/images/projects/23/marquee4.jpg",
+      "/images/projects/23/marquee5.jpg",
+      "/images/projects/23/marquee6.jpg",
+    ],
   },
 
   {
-    id: 29, // 1131 button sends 29
+    id: 29,
     title: "1131 – From Concept to Cocktails",
     client: "1131 Restobar",
     serviceAreas: "Naming, Logo, Identity, Environment Branding",
-    heroImg: ph(1920, 1080),
-    metaImgs: [ph(1920, 1080), ph(1920, 1080)],
+    heroImg: "/images/projects/29/main.png",
+    metaImgs: ["/images/projects/29/meta1.jpg", "/images/projects/29/meta2.jpg"],
     challenge:
       "Make a memorable first impression in Bangalore's competitive dining scene with a premium yet local vibe.",
     approach:
@@ -80,22 +94,33 @@ export const CASE_STUDIES = [
       "Glass printing & surface branding in-bar",
       "Wall murals and ambient signage for Instagram moments",
     ],
-    execImgs: [ph(1920, 1080), ph(1920, 1080), ph(1920, 1080)],
+    execImgs: [
+      "/images/projects/29/exec1.jpg",
+      "/images/projects/29/exec2.jpg",
+      "/images/projects/29/exec3.jpg",
+    ],
     impact: [
       "Elevated guest perception and recall",
       "Design consistency → seamless dining experience",
       "Positioned venue as 'not just another bar'",
     ],
-    marquee: Array.from({ length: 6 }, () => ph(400, 250)),
+    marquee: [
+      "/images/projects/29/marquee1.jpg",
+      "/images/projects/29/marquee2.jpg",
+      "/images/projects/29/marquee3.jpg",
+      "/images/projects/29/marquee4.jpg",
+      "/images/projects/29/marquee5.jpg",
+      "/images/projects/29/marquee6.jpg",
+    ],
   },
 
   {
-    id: 17, // Banana Sports button sends 17
+    id: 17,
     title: "Banana Sports – From the Ground Up",
     client: "Banana Sports",
     serviceAreas: "Brand Identity, Signage, Graphics, Merchandise",
-    heroImg: ph(1920, 1080),
-    metaImgs: [ph(1920, 1080), ph(1920, 1080)],
+    heroImg: "/images/projects/17/main.png",
+    metaImgs: ["/images/projects/17/meta1.jpg", "/images/projects/17/meta2.jpg"],
     challenge:
       "Build an energetic brand for a new Bangalore multi-sport facility unifying pickleball, football, and cricket.",
     approach:
@@ -106,181 +131,139 @@ export const CASE_STUDIES = [
       "Motivational quotes & sport cues on-ground",
       "Merch incl. tees, caps, water bottles",
     ],
-    execImgs: [ph(1920, 1080), ph(1920, 1080), ph(1920, 1080), ph(1920, 1080)],
+    execImgs: [
+      "/images/projects/17/exec1.jpg",
+      "/images/projects/17/exec2.jpg",
+      "/images/projects/17/exec3.jpg",
+      "/images/projects/17/exec4.jpg",
+    ],
     impact: [
       "Strong brand recall among players & visitors",
       "Established Banana Sports as a distinctive destination",
       "Seamless physical & visual flow throughout the facility",
     ],
-    marquee: Array.from({ length: 6 }, () => ph(400, 250)),
+    marquee: [
+      "/images/projects/17/marquee1.jpg",
+      "/images/projects/17/marquee2.jpg",
+      "/images/projects/17/marquee3.jpg",
+      "/images/projects/17/marquee4.jpg",
+      "/images/projects/17/marquee5.jpg",
+      "/images/projects/17/marquee6.jpg",
+    ],
   },
 ];
 
-/* ------------------------------------------------------------------ */
-/* helpers (unchanged)                                                */
-const FullImage = ({ src, alt = "", className = "" }) => (
-  <div className={`w-full h-screen overflow-hidden ${className}`}>
-    <img
-      src={src}
-      alt={alt}
-      className="absolute inset-0 w-full h-full object-cover object-center"
-      loading="lazy"
-      onError={(e) => (e.currentTarget.src = ph(1920, 1080))}
-    />
-  </div>
-);
 
-const BulletList = ({ items }) => {
-  const navigate = useNavigate();
-
-  const handleClick = (item) => {
-    if (item === "Retail Display") {
-      navigate('/gallery-1');
-    }
-  };
-
-  return (
-    <ul className="space-y-2 pl-6 max-w-4xl mx-auto">
-      {items.map((li, i) => (
-        <li 
-          key={i} 
-          className="relative text-base leading-relaxed cursor-pointer hover:text-amber-400 transition-colors"
-          onClick={() => handleClick(li)}
-        >
-          <span className="absolute -left-4 top-2 w-1 h-1 bg-amber-400 rounded-full" />
-          {li}
-        </li>
-      ))}
-    </ul>
-  );
-};
-
-const Marquee = ({ imgs }) => {
-  const band = imgs.slice(0, 6);
-  return (
-    <div className="overflow-hidden py-10 bg-black">
-      <div className="flex gap-8 whitespace-nowrap">
-        {band.map((src, i) => (
-          <img
-            key={i}
-            src={src}
-            alt=""
-            className="h-32 w-auto flex-none object-cover rounded-lg shadow-lg"
-            loading="lazy"
-            onError={(e) => (e.currentTarget.src = ph(400, 250))}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
-
-/* ------------------------------------------------------------------ */
 const CaseStudies = () => {
-  const pageRef  = useRef(null);
-  const { id }   = useParams();
-  const { state } = useLocation();
+  const { id } = useParams();
   const navigate = useNavigate();
+  const study = CASE_STUDIES.find(c => c.id === Number(id)) || CASE_STUDIES[0];
+  const pageRef = useRef();
+  
+  useLayoutEffect(() => window.scrollTo(0, 0), []);
 
-  const study =
-    CASE_STUDIES.find(
-      (cs) => cs.id === Number(id) || cs.id === state?.caseId
-    ) ?? CASE_STUDIES[0];
-
-  /* force start at top BEFORE first paint */
-  useLayoutEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  if (!study) return null;
-
-  /* ---------------- render ---------------- */
   return (
-    <div ref={pageRef} className="bg-black text-white">
-      {/* HERO */}
-      <section className="relative min-h-screen w-full">
+    <div ref={pageRef} className="bg-white text-gray-900">
+      {/* Hero */}
+      <section className="relative h-screen">
         <img
-          src={study.heroImg || ph(1920, 1080)}
+          src={study.heroImg}
           alt={study.title}
-          className="absolute inset-0 w-full h-full object-cover object-center"
-          onError={(e) => {
-            e.currentTarget.src = ph(1920, 1080);
-          }}
+          className="absolute inset-0 w-full h-full object-cover"
+          onError={e => (e.currentTarget.src = ph(1920, 1080))}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/70" />
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
+          <p className="bg-blue-600 text-white px-4 py-2 rounded text-sm uppercase">
+            {study.serviceAreas}
+          </p>
+          <h1 className="text-white text-5xl md:text-6xl font-bold my-4">
+            {study.title}
+          </h1>
+          <button
+            onClick={() => navigate(-1)}
+            className="mt-8 bg-white/10 text-white py-2 px-6 rounded hover:bg-opacity-20 transition"
+          >
+            ← Back to Projects
+          </button>
+        </div>
       </section>
 
-      {/* META & CHALLENGE */}
-      <section className="py-14 md:py-20 px-6 md:px-12 text-center space-y-6">
-        <h1 className="text-4xl md:text-5xl font-light">{study.title}</h1>
-        <p className="uppercase tracking-widest text-amber-400 text-sm">
-          Client: {study.client}
-        </p>
-        <p className="italic text-gray-400 text-sm">
-          Service Areas: {study.serviceAreas}
-        </p>
-        {study.challenge && (
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-lg font-light mb-2">Challenge</h2>
-            <p className="text-gray-300 leading-relaxed">{study.challenge}</p>
-          </div>
-        )}
-      </section>
+      {/* Details & Overview */}
+      <section className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 py-16 px-6">
+        {/* Left: Project Description */}
+        <div className="md:col-span-2 space-y-8">
+          <h2 className="text-xl font-semibold">Project Overview</h2>
+          <p className="leading-relaxed">{study.challenge}</p>
 
-      {/* Meta images */}
-      {study.metaImgs.map((src, i) => (
-        <FullImage key={i} src={src} />
-      ))}
+          <h2 className="text-xl font-semibold">Approach & Process</h2>
+          <p className="leading-relaxed">{study.approach}</p>
 
-      {/* Approach */}
-      {study.approach && (
-        <section className="py-14 md:py-20 px-6 md:px-12 text-center">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-lg font-light mb-2">Approach</h2>
-            <p className="text-gray-300 leading-relaxed">{study.approach}</p>
-          </div>
-        </section>
-      )}
-
-      {/* Execution */}
-      {study.execution?.length > 0 && (
-        <h2 className="text-center text-lg font-light py-8 md:py-12">
-          Execution Highlights
-        </h2>
-      )}
-      {study.execution.map((txt, i) => (
-        <React.Fragment key={i}>
-          {study.execImgs?.[i] && (
-            <FullImage src={study.execImgs[i]} />
+          {study.execution?.length > 0 && (
+            <>
+              <h2 className="text-xl font-semibold">Highlights</h2>
+              <ul className="list-disc list-inside space-y-2">
+                {study.execution.map((e, i) => (
+                  <li key={i}>{e}</li>
+                ))}
+              </ul>
+            </>
           )}
-          <section className="py-10 md:py-16 px-6 md:px-12 text-center">
-            <p className="max-w-3xl mx-auto text-gray-300 leading-relaxed">
-              {txt}
-            </p>
-          </section>
-        </React.Fragment>
-      ))}
+        </div>
+
+        {/* Right: Project Fact Box */}
+        <div className="space-y-4 text-gray-700 bg-gray-50 p-6 rounded-md">
+          <div>
+            <h3 className="text-sm uppercase font-medium">Client</h3>
+            <p>{study.client}</p>
+          </div>
+          <div>
+            <h3 className="text-sm uppercase font-medium">Services</h3>
+            <p>{study.serviceAreas}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery */}
+      <section className="bg-gray-100 py-12 px-6">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {study.metaImgs.concat(study.execImgs).map((src, i) => (
+            <img
+              key={i}
+              src={src}
+              alt=""
+              className="w-full h-64 object-cover rounded-lg shadow-md"
+              onError={e => (e.currentTarget.src = ph(600, 400))}
+            />
+          ))}
+        </div>
+      </section>
 
       {/* Impact */}
-      {study.impact && (
-        <section className="py-14 md:py-20 px-6 md:px-12 text-center space-y-6">
-          <h2 className="text-lg font-light">Impact</h2>
-          <BulletList items={study.impact} />
+      {study.impact?.length > 0 && (
+        <section className="max-w-6xl mx-auto px-6 py-16 text-center">
+          <h2 className="text-2xl font-semibold mb-6">Impact</h2>
+          <ul className="list-disc list-inside space-y-2 text-gray-700">
+            {study.impact.map((imp, i) => (
+              <li key={i}>{imp}</li>
+            ))}
+          </ul>
         </section>
       )}
 
-      {/* Marquee */}
-      <Marquee imgs={study.marquee} />
-
-      {/* Back */}
-      <div className="py-16 text-center">
-        <button
-          className="px-6 py-3 border border-amber-400 text-amber-400 rounded hover:bg-amber-400/10 transition"
-          onClick={() => navigate(-1)}
-        >
-          ← Back
-        </button>
-      </div>
+      {/* Contact / CTA */}
+      <section className="bg-blue-600 text-white py-12">
+        <div className="max-w-4xl mx-auto text-center space-y-4">
+          <h2 className="text-3xl font-semibold">Want to work together?</h2>
+          <p>Drop me a message or say hello! 📩</p>
+          <a
+            href="mailto:hello@yourdomain.com"
+            className="inline-block bg-white text-blue-600 px-6 py-2 rounded font-medium"
+          >
+            Send an Email
+          </a>
+        </div>
+      </section>
     </div>
   );
 };

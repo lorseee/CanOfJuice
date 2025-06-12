@@ -131,13 +131,15 @@ const Info = () => {
             minWidth: "260px",
             display: "flex",
             alignItems: "flex-start",
-            marginTop: "-0.5rem"
+            marginTop: "-0.5rem",
+            marginLeft: "2rem",
           }}>
             <h1 style={{
               fontSize: "clamp(2.8rem, 6vw, 5.5rem)",
               fontWeight: 800,
               lineHeight: 1.1,
-              margin: 0,
+      
+              
               color: "#000"
             }}>
               ABOUT OUR <br /> AGENCY

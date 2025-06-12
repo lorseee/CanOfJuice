@@ -1,8 +1,28 @@
 import React, { useState, useRef, useLayoutEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { projects } from "../constants";
 
-/* ---------- data ------------------------------------------------------- */
+// Maps each bullet point to a project ID
+const bulletToProjectId = {
+  "Retail Display": 2,
+  "Exhibition Design": 3,
+  "Branded Environments": 4,
+  "Environmental Graphics": 5,
+  "Wayfinding and Signages": 6,
+  "Web Design": 7,
+  "Logo Design": 8,
+  "Brand Identity": 9,
+  "Packaging Design": 10,
+  "Communication Design": 11,
+  "Wall Murals": 12,
+  "Fine Art Printing": 13,
+  "Custom Wallpapers": 14,
+  "Store Window Display": 15,
+  "Custom Art Installations": 16,
+  "Signages & Name Boards": 17,
+};
+
 const SECTIONS = [
   {
     id: "spaces",
@@ -42,12 +62,7 @@ const SECTIONS = [
     img: "/images/installations.jpg",
   },
 ];
-<div style="width: 50vw; background-color: black; color: white; padding: 1rem;">
-  <p style="font-size: 20px;">
-    Need a hand. We are happy to help.
-  </p>
-</div>
-/* ---------- components ------------------------------------------------- */
+
 const Heading = ({ text }) => (
   <motion.h2
     layout="position"
@@ -58,40 +73,18 @@ const Heading = ({ text }) => (
   </motion.h2>
 );
 
-const BulletList = ({ bullets }) => {
+const ServicesLists = () => {
   const navigate = useNavigate();
 
-  const handleClick = (bullet, e) => {
-    e.stopPropagation(); // Prevent parent div's click event from firing
-    if (bullet === "Retail Display") {
-      navigate('/gallery-1');
-    }
+  const openProject = (id) => {
+    navigate(`/project/${id}`);
   };
 
-  return (
-    <ul className="services-bullets">
-      {bullets.map((b, i) => (
-        <li 
-          key={i} 
-          onClick={(e) => handleClick(b, e)}
-          className={`cursor-pointer hover:text-amber-400 transition-colors`}
-          data-clickable={b === "Retail Display"}
-        >
-          {b}
-        </li>
-      ))}
-    </ul>
-  );
-};
-
-/* ---------- main component --------------------------------------------- */
-const ServicesLists = () => {
   const [openId, setOpenId] = useState(null);
   const itemRefs = useRef({});
   const prevTopRef = useRef(null);
   const prevIdRef = useRef(null);
 
-  // toggle item (click-only)
   const toggle = (id) => {
     const el = itemRefs.current[id];
     if (el) {
@@ -101,7 +94,6 @@ const ServicesLists = () => {
     setOpenId((prev) => (prev === id ? null : id));
   };
 
-  // preserve scroll position when layout shifts
   useLayoutEffect(() => {
     const storedTop = prevTopRef.current;
     if (storedTop == null) return;
@@ -109,9 +101,14 @@ const ServicesLists = () => {
     const idToMeasure = prevIdRef.current;
     const el = itemRefs.current[idToMeasure];
     if (el) {
-      const newTop = el.getBoundingClientRect().top;
-      const diff = newTop - storedTop;
-      window.scrollBy(0, diff);
+      requestAnimationFrame(() => {
+        const newTop = el.getBoundingClientRect().top;
+        const diff = newTop - storedTop;
+        window.scrollTo({
+          top: window.pageYOffset + diff,
+          behavior: 'smooth'
+        });
+      });
     }
 
     prevTopRef.current = null;
@@ -126,12 +123,19 @@ const ServicesLists = () => {
           <motion.div
             key={id}
             ref={(el) => (itemRefs.current[id] = el)}
-            layout
+            layout="true"
+            layoutTransition={{
+              duration: 0.3,
+              ease: "easeInOut"
+            }}
+            transition={{
+              layout: { duration: 0.3 },
+              default: { ease: "easeInOut" }
+            }}
             onClick={() => toggle(id)}
             className={`services-item cursor-pointer${active ? " active" : ""}`}
           >
             <div className="services-item-inner">
-              {/* text */}
               <div className="services-text">
                 <Heading text={title} />
                 <AnimatePresence initial={false}>
@@ -140,42 +144,66 @@ const ServicesLists = () => {
                       key="bullets"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.3 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ 
+                        duration: 0.2,
+                        ease: "easeOut"
+                      }}
                     >
-                      <BulletList bullets={bullets} />
+                      <ul className="list-disc pl-6">
+                        {bullets.map((bullet, i) => {
+                          const projectId = bulletToProjectId[bullet];
+                          const isLink = typeof projectId !== "undefined";
+
+                          return (
+                            <li key={i} className="mb-2 mt-3.5">
+                              {isLink ? (
+                                <span
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    openProject(projectId);
+                                  }}
+                                  className="text-white cursor-pointer hover:underline"
+                                >
+                                  {bullet}
+                                </span>
+                              ) : (
+                                bullet
+                              )}
+                            </li>
+                          );
+                        })}
+                      </ul>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
 
-              {/* image */}
-              <AnimatePresence initial={false}>
-                {active && (
-                  <motion.div
-                    key="img"
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.3 }}
-                    className="services-image"
-                  >
-                    <img
-                      src={img}
-                      alt={title}
-                      onError={(e) => (e.currentTarget.style.opacity = 0)}
-                    />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {active && (
+                <motion.div
+                  key="img"
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.3 }}
+                  className="services-image"
+                >
+                  <img
+                    src={img}
+                    alt={title}
+                    onError={(e) => (e.currentTarget.style.opacity = 0)}
+                  />
+                </motion.div>
+              )}
             </div>
           </motion.div>
         );
       })}
 
-      {/* Help text */}
       <div className="bg-black p-6 mt-8 text-white text-center">
-        <p className="text-4xl" style={{ fontFamily: "'Khand', sans-serif" }}>Need a hand? We are happy to help.</p>
+        <p className="text-4xl" style={{ fontFamily: "'Khand', sans-serif" }}>
+          Need a hand? We are happy to help.
+        </p>
       </div>
     </section>
   );
