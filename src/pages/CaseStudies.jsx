@@ -9,6 +9,7 @@ export const CASE_STUDIES = [
     title: "Wework – Pan-India Branded Environments",
     client: "Wework India",
     serviceAreas: "Environmental Graphics, Signages, Installations",
+    scope: "26 locations across India",
     heroImg: "/images/projects/3/main.jpg",
     metaImgs: ["/images/projects/3/gallery-5.jpg", "/images/projects/3/gallery-6.jpg"],
     challenge:
@@ -193,7 +194,7 @@ const CaseStudies = () => {
       <section className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 py-16 px-6">
         {/* Left: Project Description */}
         <div className="md:col-span-2 space-y-8">
-          <h2 className="text-xl font-semibold">Project Overview</h2>
+          <h2 className="text-xl font-semibold">Challenge</h2>
           <p className="leading-relaxed">{study.challenge}</p>
 
           <h2 className="text-xl font-semibold">Approach & Process</h2>
@@ -201,7 +202,7 @@ const CaseStudies = () => {
 
           {study.execution?.length > 0 && (
             <>
-              <h2 className="text-xl font-semibold">Highlights</h2>
+              <h2 className="text-xl font-semibold">ExecutionHighlights</h2>
               <ul className="list-disc list-inside space-y-2">
                 {study.execution.map((e, i) => (
                   <li key={i}>{e}</li>
@@ -217,9 +218,14 @@ const CaseStudies = () => {
             <h3 className="text-sm uppercase font-medium">Client</h3>
             <p>{study.client}</p>
           </div>
+  
           <div>
             <h3 className="text-sm uppercase font-medium">Services</h3>
             <p>{study.serviceAreas}</p>
+          </div>
+          <div>
+            <h3 className="text-sm uppercase font-medium">Scope</h3>
+            <p>{study.scope }</p>
           </div>
         </div>
       </section>
