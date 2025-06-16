@@ -173,7 +173,19 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
                 key={p.id}
                 id={`card-${p.id}`}
                 className="works-card"
-                onClick={() => openProject(p.id)}
+                onClick={() => {
+                  if (p.id === 2) {
+                    navigate("/case-studies/2"); // Wework
+                  } else if (p.id === 17) {
+                    navigate("/case-studies/17"); // Banana Sport
+                  } else if (p.id === 10) {
+                    navigate("/case-studies/10"); // Farm Stories
+                  } else if (p.id === 29) {
+                    navigate("/case-studies/29"); // 1131
+                  } else {
+                    openProject(p.id);
+                  }
+                }}
                 style={{ transitionDelay: `${Math.min(i * 0.03, 0.3)}s` }}
               >
                 <div className="works-card-image-container">

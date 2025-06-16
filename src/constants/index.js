@@ -13,7 +13,7 @@ export const projects = {
 // Projects data
 items: [
   {
-    id: 1,
+    id: 27,
     title: "Cowrks",
     year: "Ongoing 2018 Onwards",
     services: "Art Installations",
@@ -33,7 +33,7 @@ items: [
     },
   },
   {
-    id: 2,
+    id: 23,
     title: "The Collective",
     year: "2018–2019",
     services: "Retail Display",
@@ -53,7 +53,7 @@ items: [
     },
   },
   {
-    id: 3,
+    id: 2,
     title: "WeWork",
     year: "2018 Onwards",
     services: "Art Installations",
@@ -77,7 +77,7 @@ items: [
     },
   },
   {
-    id: 4,
+    id: 5,
     title: "Dasta",
     year: 2023,
     services:
@@ -98,10 +98,10 @@ items: [
     },
   },
   {
-    id: 5,
+    id: 527,
     title: "Digiclarity",
     year: 2022 & 2024,
-    services: "Art Installations, Spatial and Environment Design",
+    services: "Art Installations, Spatial and Eironment Design",
     category: "work-spaces",
     longDescription:
       "A Chennai-based software firm wanted a workspace that mirrored its startup energy. We installed branded wall graphics and motivational quotes, transforming a plain office into an inspiring, employee-centric environment perfectly aligned with the company's culture.",
@@ -124,7 +124,7 @@ items: [
     },
   },
   {
-    id: 6,
+    id: 3,
     title: "Namma Nook",
     year: 2023,
     services: "Art Installations",
@@ -146,7 +146,7 @@ items: [
     },
   },
   {
-    id: 7,
+    id: 8,
     title: "Prequate",
     year: 2022,
     services: "Art Installations, Spatial and Environment Design",
@@ -168,7 +168,7 @@ items: [
     },
   },
   {
-    id: 8,
+    id: 28,
     title: "Zoya",
     year: 2019,
     services: "Art Installations",
@@ -188,7 +188,7 @@ items: [
     },
   },
   {
-    id: 11,
+    id: 9,
     title: "Custom Art Installations",
     year: " ",
     services: "Spatial and Environment Design, Art Installations",
@@ -229,7 +229,7 @@ items: [
     },
   },
   {
-    id: 13,
+    id: 7,
     title: "Custom Wallpapers",
     year: 2025,
     services: "Art Installations",
@@ -253,7 +253,7 @@ items: [
     },
   },
   {
-    id: 16,
+    id: 1,
     title: "Bengaluru Torpedoes",
     year: 2024,
     services: "Spatial and Environment Design, Brand Identity",
@@ -319,7 +319,7 @@ items: [
     },
   },
   {
-    id: 19,
+    id: 4,
     title: "Padukone – Dravid Centre for Sports Excellence",
     year: 2024,
     services: "Sports & Fitness Spaces",
@@ -383,7 +383,7 @@ items: [
     },
   },
   {
-    id: 23,
+    id: 10,
     title: "Farm Stories",
     year: 2021,
     services:
@@ -461,7 +461,7 @@ items: [
     },
   },
     {
-    id: 27,
+    id: 6,
     title: "Bharat Glass Crockeries",
     year: "2024-2025",
     services: "Brand Identity, Logo Design, Packaging",
@@ -484,7 +484,7 @@ items: [
     },
   },
   {
-    id: 28,
+    id: 11,
     title: "RIO Developers",
     year: "2023 Onwards",
     services: "Real Estate & Built Spaces",
@@ -629,5 +629,5 @@ items: [
       ],
     },
   },
-],
+].sort((a, b) => a.id - b.id)
 }

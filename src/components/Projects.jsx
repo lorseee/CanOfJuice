@@ -29,7 +29,7 @@ const Projects = () => {
   };
 
   // Featured projects
-  const featuredProjectIds = [16, 6, 18, 28, 19, 23, 13, 4];
+  const featuredProjectIds = [1, 3, 18, 11, 4, 10, 7, 5];
   const featuredProjects = featuredProjectIds.map((id, i) => {
     const p = projects.items.find((x) => x.id === id);
     const catArr = Array.isArray(p.category) ? p.category : [p.category];

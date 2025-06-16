@@ -5,7 +5,7 @@ const fallback = (w, h) => `https://placehold.co/${w}x${h}/1E1E1E/FFFFFF?text=%2
 
 export const CASE_STUDIES = [
   {
-    id: 3,
+    id: 2,
     title: "Wework – Pan-India Branded Environments",
     client: "Wework India",
     serviceAreas: "Environmental Graphics, Signages, Installations",
@@ -13,25 +13,25 @@ export const CASE_STUDIES = [
     heroImg: "/images/projects/3/main.jpg",
     metaImgs: ["/images/projects/3/gallery-5.jpg", "/images/projects/3/gallery-6.jpg"],
     challenge:
-      "Wework wanted to bring their global brand experience to India while localizing it for regional audiences. The brief was to make each location vibrant, functional, and aligned with Wework’s collaborative ethos.",
+      "Wework wanted to bring their global brand experience to India while localizing it for regional audiences. The brief was to make each location vibrant, functional, and aligned with Wework's collaborative ethos.",
     approach:
        "We worked with Wework to create a scalable system of signage, wall graphics, LED installs and large-format art customised to each building. We also created a brand book and a set of brand guidelines to ensure consistency across all locations.",
     execution: [
-      "• Art installations and 3D brand moments",
-      "• Building facade signages with high visibility",
-      "• Motivational and quirky quote walls",
-      "• City-specific design themes for select locations",
+      "Art installations and 3D brand moments",
+      "Building facade signages with high visibility",
+      "Motivational and quirky quote walls",
+      "City-specific design themes for select locations",
     ],
     execImgs: [
-      "/images/projects/3/gallery-1.jpg",
+      "/images/projects/3/gallery-7.jpg",
       "/images/projects/3/gallery-2.jpg",
       "/images/projects/3/gallery-3.jpg",
       "/images/projects/3/gallery-4.jpg",
     ],
     impact: [
-      "• Created immersive brand experiences across 26 cities",
-      "• Strengthened employee engagement through spatial storytelling",
-      "• Contributed to consistent brand presence despite regional diversity",
+      "Created immersive brand experiences across 26 cities",
+      "Strengthened employee engagement through spatial storytelling",
+      "Contributed to consistent brand presence despite regional diversity",
     ],
     marquee: [
       "/images/projects/3/gallery-1.jpg",
@@ -44,30 +44,31 @@ export const CASE_STUDIES = [
   },
 
   {
-    id: 23,
+    id: 10,
     title: "Farm Stories – Organic Brand from the Ground Up",
     client: "Farm Stories",
     serviceAreas: "Naming, Branding, Packaging, Social Media",
-    heroImg: "/images/projects/23/main.png",
-    metaImgs: ["/images/projects/23/meta1.jpg", "/images/projects/23/meta2.jpg"],
+    heroImg: "/images/projects/23/main.jpg",
+    metaImgs: ["/images/projects/23/gallery-1.jpg", "/images/projects/23/gallery-2.png"],
     challenge:
-      "Craft an authentic small-batch organic identity without green-wash clichés.",
+      "Farm Stories needed a brand identity that captured its authenticity, freshness, and small-batch organic roots — without falling into generic 'green-washed' clichés.",
     approach:
-      "Name + earthy modern visuals inspired by farmer's markets; packaging optimised for shelf & social.",
+      "We started with a naming exercise, then built a visual identity inspired by nature, farmer’s markets, and clean food philosophy. The packaging design was earthy yet modern, with clear product info and friendly storytelling..",
     execution: [
-      "Hand-drawn illustrations",
-      "Instagram-friendly labels",
-      "Delivery collaterals & social templates",
+      "Hand-drawn elements to reflect handmade care",
+      "Labels optimized for both retail shelves and Instagram shots",
+      "Extended brand visuals to social media and delivery collaterals",
     ],
     execImgs: [
-      "/images/projects/23/exec1.jpg",
-      "/images/projects/23/exec2.jpg",
-      "/images/projects/23/exec3.jpg",
+      "/images/projects/23/gallery-3.jpg",
+      "/images/projects/23/gallery-4.jpg",
+      "/images/projects/23/gallery-5.jpg",
+      "/images/projects/23/main.jpg",
     ],
     impact: [
-      "Higher trust in crowded organic sector",
-      "Smooth shift from local retail to D2C",
-      "Unified look across pack, digital & physical",
+      "Increased visibility and trust in crowded organic space",
+      "Seamless transition from local to D2C distribution",
+      "Unified presence across packaging, digital, and physical touchpoints",
     ],
     marquee: [
       "/images/projects/23/marquee1.jpg",
@@ -84,21 +85,21 @@ export const CASE_STUDIES = [
     title: "1131 – From Concept to Cocktails",
     client: "1131 Restobar",
     serviceAreas: "Naming, Logo, Identity, Environment Branding",
-    heroImg: "/images/projects/29/main.png",
-    metaImgs: ["/images/projects/29/meta1.jpg", "/images/projects/29/meta2.jpg"],
+    heroImg: "/images/projects/29/gallery-4.jpg",
+    metaImgs: ["/images/projects/29/gallery-1.png", "/images/projects/29/gallery-2.png"],
     challenge:
-      "Make a memorable first impression in Bangalore's competitive dining scene with a premium yet local vibe.",
+      "1131 was a new restobar concept looking to make a memorable first impression in Bangalore’s competitive dining scene. They needed an identity that felt premium, young, and rooted in the local vibe.",
     approach:
-      'Coined the cryptic name "1131", designed typographic logo, playful menus and branding across every guest touch-point.',
+      "We developed the name “1131” as a mysterious, almost code-like brand. The design system included a typographic logo, playful menu design, and branding across all guest touchpoints — glassware, napkins, signage, and more.",
     execution: [
       "Black-and-white palette with gold accents",
       "Glass printing & surface branding in-bar",
       "Wall murals and ambient signage for Instagram moments",
     ],
     execImgs: [
-      "/images/projects/29/exec1.jpg",
-      "/images/projects/29/exec2.jpg",
-      "/images/projects/29/exec3.jpg",
+      "/images/projects/29/main.png",
+      "/images/projects/29/gallery-3.jpg",
+      "/images/projects/29/gallery-4.jpg",,
     ],
     impact: [
       "Elevated guest perception and recall",
@@ -120,23 +121,23 @@ export const CASE_STUDIES = [
     title: "Banana Sports – From the Ground Up",
     client: "Banana Sports",
     serviceAreas: "Brand Identity, Signage, Graphics, Merchandise",
-    heroImg: "/images/projects/17/main.png",
-    metaImgs: ["/images/projects/17/meta1.jpg", "/images/projects/17/meta2.jpg"],
+    heroImg: "/images/projects/17/gallery-2.jpeg",
+    metaImgs: ["/images/projects/17/gallery-10.jpg", "/images/projects/17/gallery-11.jpg"],
     challenge:
-      "Build an energetic brand for a new Bangalore multi-sport facility unifying pickleball, football, and cricket.",
+      " Banana Sports, a multi-sport facility in Bangalore, needed a fresh and energetic brand that appealed to a new generation of players and fans. The brief was to build a brand from scratch that could unify their diverse offerings — pickleball, football, and cricket — under one strong identity.",
     approach:
-      "Created a dynamic identity, extended into space graphics, way-finding and merchandise for on- and off-court visibility.",
+      "We created the name and visual identity to reflect energy and movement. This extended into space graphics, wayfinding signages, and sport-specific branding moments across the facility. Merchandise and collaterals were also designed to make the brand visible off the court.",
     execution: [
       "Youthful sporty logo system",
       "Bold typography across facility signage",
       "Motivational quotes & sport cues on-ground",
-      "Merch incl. tees, caps, water bottles",
+      "Merch including tees, caps, water bottles",
     ],
     execImgs: [
-      "/images/projects/17/exec1.jpg",
-      "/images/projects/17/exec2.jpg",
-      "/images/projects/17/exec3.jpg",
-      "/images/projects/17/exec4.jpg",
+      "/images/projects/17/gallery-1.jpeg",
+      "/images/projects/17/gallery-3.jpeg",
+      "/images/projects/17/gallery-5.jpg",
+      "/images/projects/17/gallery-4.jpg",
     ],
     impact: [
       "Strong brand recall among players & visitors",
@@ -144,12 +145,12 @@ export const CASE_STUDIES = [
       "Seamless physical & visual flow throughout the facility",
     ],
     marquee: [
-      "/images/projects/17/marquee1.jpg",
-      "/images/projects/17/marquee2.jpg",
-      "/images/projects/17/marquee3.jpg",
-      "/images/projects/17/marquee4.jpg",
-      "/images/projects/17/marquee5.jpg",
-      "/images/projects/17/marquee6.jpg",
+      "/images/projects/17/main.jpg",
+      "/images/projects/17/gallery-2.jpeg",
+      "/images/projects/17/gallery-3.jpeg",
+      "/images/projects/17/gallery-4.jpg",
+      "/images/projects/17/gallery-5.jpg",
+      "/images/projects/17/gallery-6.jpg",
     ],
   },
 ];
@@ -175,7 +176,7 @@ const CaseStudies = () => {
         />
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
-          <p className="bg-blue-600 text-white px-4 py-2 rounded text-sm uppercase">
+          <p className="bg-white/10 text-white px-4 py-2 rounded text-sm uppercase">
             {study.serviceAreas}
           </p>
           <h1 className="text-white text-5xl md:text-6xl font-bold my-4">
@@ -183,7 +184,7 @@ const CaseStudies = () => {
           </h1>
           <button
             onClick={() => navigate(-1)}
-            className="mt-8 bg-white/10 text-white py-2 px-6 rounded hover:bg-opacity-20 transition"
+            className="mt-8 bg-black/10 text-white py-2 px-6 rounded hover:bg-opacity-20 transition"
           >
             ← Back to Projects
           </button>
@@ -258,13 +259,13 @@ const CaseStudies = () => {
       )}
 
       {/* Contact / CTA */}
-      <section className="bg-blue-600 text-white py-12">
+      <section className=" text-black py-12">
         <div className="max-w-4xl mx-auto text-center space-y-4">
           <h2 className="text-3xl font-semibold">Want to work together?</h2>
           <p>Drop me a message or say hello! 📩</p>
           <a
             href="mailto:hello@yourdomain.com"
-            className="inline-block bg-white text-blue-600 px-6 py-2 rounded font-medium"
+            className="inline-block bg-black text-black-600 px-6 py-2 rounded font-medium"
           >
             Send an Email
           </a>

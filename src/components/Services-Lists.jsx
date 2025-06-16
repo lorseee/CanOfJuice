@@ -2,27 +2,49 @@ import React, { useState, useRef, useLayoutEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { projects } from "../constants";
+import { useEffect } from "react";
 
-// Maps each bullet point to a project ID
+// Map bullet point to project ID
 const bulletToProjectId = {
-  "Retail Display": 2,
-  "Exhibition Design": 3,
-  "Branded Environments": 4,
-  "Environmental Graphics": 5,
-  "Wayfinding and Signages": 6,
-  "Web Design": 7,
-  "Logo Design": 8,
-  "Brand Identity": 9,
-  "Packaging Design": 10,
-  "Communication Design": 11,
-  "Wall Murals": 12,
-  "Fine Art Printing": 13,
-  "Custom Wallpapers": 14,
-  "Store Window Display": 15,
-  "Custom Art Installations": 16,
-  "Signages & Name Boards": 17,
+  "Retail Display": 23,
+  "Exhibition Design": 25,
+  "Branded Environments": 8,
+  "Environmental Graphics": 12,
+  "Wayfinding and Signages": 5,
+  "Web Design": 33,
+  "Logo Design": 21,
+  "Brand Identity": 17,
+  "Packaging Design": 26,
+  "Communication Design": 30,
+  "Wall Murals": 527,
+  "Fine Art Printing": 9,
+  "Custom Wallpapers": 7,
+  "Store Window Display": 17,
+  "Custom Art Installations": 9,
+  "Signages & Name Boards": 24,
 };
 
+// Map bullet point to image path
+const bulletToImage = {
+  "Retail Display": "/images/projects/3/gallery-2.jpg",
+  "Exhibition Design": "/images/projects/25/main.jpg",
+  "Branded Environments": "/images/projects/7/main.jpg",
+  "Environmental Graphics": "/images/projects/12/main.jpg",
+  "Wayfinding and Signages": "/images/projects/4/main.jpg",
+  "Web Design": "/images/projects/33/gallery-3.png",
+  "Logo Design": "/images/projects/21/main.png",
+  "Brand Identity": "/images/projects/17/gallery-2.jpeg",
+  "Packaging Design": "/images/projects/26/main.png",
+  "Communication Design": "/images/projects/30/gallery-3.png",
+  "Wall Murals": "/images/projects/5/gallery-6.jpg",
+  "Fine Art Printing": "/images/projects/9/main.jpg",
+  "Custom Wallpapers": "/images/projects/13/gallery-10.jpeg",
+  "Store Window Display": "/images/projects/17/gallery-4.jpg",
+  "Custom Art Installations": "/images/projects/11/gallery-2.jpeg",
+  "Signages & Name Boards": "/images/projects/24/main.jpg",
+};
+
+// Sections with bullets and default images
 const SECTIONS = [
   {
     id: "spaces",
@@ -75,15 +97,15 @@ const Heading = ({ text }) => (
 
 const ServicesLists = () => {
   const navigate = useNavigate();
+  const [openId, setOpenId] = useState(null);
+  const [hoveredBullet, setHoveredBullet] = useState(null);
+  const itemRefs = useRef({});
+  const prevTopRef = useRef(null);
+  const prevIdRef = useRef(null);
 
   const openProject = (id) => {
     navigate(`/project/${id}`);
   };
-
-  const [openId, setOpenId] = useState(null);
-  const itemRefs = useRef({});
-  const prevTopRef = useRef(null);
-  const prevIdRef = useRef(null);
 
   const toggle = (id) => {
     const el = itemRefs.current[id];
@@ -106,7 +128,7 @@ const ServicesLists = () => {
         const diff = newTop - storedTop;
         window.scrollTo({
           top: window.pageYOffset + diff,
-          behavior: 'smooth'
+          behavior: "smooth",
         });
       });
     }
@@ -119,18 +141,17 @@ const ServicesLists = () => {
     <section className="services-section">
       {SECTIONS.map(({ id, title, bullets, img }) => {
         const active = openId === id;
+        const currentImage = bulletToImage[hoveredBullet] || img;
+
         return (
           <motion.div
             key={id}
             ref={(el) => (itemRefs.current[id] = el)}
             layout="true"
-            layoutTransition={{
-              duration: 0.3,
-              ease: "easeInOut"
-            }}
+            layoutTransition={{ duration: 0.3, ease: "easeInOut" }}
             transition={{
               layout: { duration: 0.3 },
-              default: { ease: "easeInOut" }
+              default: { ease: "easeInOut" },
             }}
             onClick={() => toggle(id)}
             className={`services-item cursor-pointer${active ? " active" : ""}`}
@@ -145,10 +166,7 @@ const ServicesLists = () => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      transition={{ 
-                        duration: 0.2,
-                        ease: "easeOut"
-                      }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
                     >
                       <ul className="list-disc pl-6">
                         {bullets.map((bullet, i) => {
@@ -163,12 +181,14 @@ const ServicesLists = () => {
                                     e.stopPropagation();
                                     openProject(projectId);
                                   }}
+                                  onMouseEnter={() => setHoveredBullet(bullet)}
+                                  onMouseLeave={() => setHoveredBullet(null)}
                                   className="text-white cursor-pointer hover:underline"
                                 >
                                   {bullet}
                                 </span>
                               ) : (
-                                bullet
+                                <span>{bullet}</span>
                               )}
                             </li>
                           );
@@ -189,8 +209,8 @@ const ServicesLists = () => {
                   className="services-image"
                 >
                   <img
-                    src={img}
-                    alt={title}
+                    src={currentImage}
+                    alt={hoveredBullet || title}
                     onError={(e) => (e.currentTarget.style.opacity = 0)}
                   />
                 </motion.div>
