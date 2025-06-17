@@ -1,17 +1,24 @@
+// WorksHero.jsx - fixed version
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import ScrollWrapper from "../components/ScrollWrapper";
 
-const WorksHero=() => {
+const WorksHero = () => {
   const heroRef = useRef(null);
 
   useEffect(() => {
     if (heroRef.current) {
       const heroHeading = heroRef.current.querySelector("h1");
-      gsap.fromTo(heroHeading, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 });
-     }
-    });
-    
+      
+        gsap.fromTo(
+          heroHeading, 
+          { opacity: 0, y: 30 }, 
+          { opacity: 1, y: 0, duration: 1 }
+        );
+      }
+    }
+  , []); // Added dependency array
+
   return (
     <ScrollWrapper
       ref={heroRef}

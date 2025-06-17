@@ -220,7 +220,7 @@ const ServicesLists = () => {
         );
       })}
 
-      <div className="bg-black p-6 mt-8 text-white text-center">
+      <div className="bg-black p-4 mt-16 text-white text-center flex justify-center items-center">
         <p className="text-4xl" style={{ fontFamily: "'Khand', sans-serif" }}>
           Need a hand? We are happy to help.
         </p>

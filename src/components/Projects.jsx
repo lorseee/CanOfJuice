@@ -29,7 +29,7 @@ const Projects = () => {
   };
 
   // Featured projects
-  const featuredProjectIds = [1, 3, 18, 11, 4, 10, 7, 5];
+  const featuredProjectIds = [1, 3, 18, 11, 4, 10, 7, 2];
   const featuredProjects = featuredProjectIds.map((id, i) => {
     const p = projects.items.find((x) => x.id === id);
     const catArr = Array.isArray(p.category) ? p.category : [p.category];
@@ -59,16 +59,19 @@ const Projects = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Primary marquee animation
+      // Primary marquee animation - now slides in from right like the expertise section
       if (headingRef.current && headingWrapperRef.current) {
         gsap.fromTo(
           headingRef.current,
-          { opacity: 0, y: '-100%' },
+          { 
+            opacity: 0, 
+            x: '100%',
+          },
           {
             opacity: 1,
-            y: 0,
-            duration: 1.9,
-            ease: "power2.inout",
+            x: '0%',
+            duration: 2,
+            ease: "power2.inOut",
             scrollTrigger: {
               trigger: headingWrapperRef.current,
               start: "top 80%",
@@ -78,10 +81,6 @@ const Projects = () => {
             },
           }
         );
-        
-           
-          
-        
       }
 
       // Cards reveal

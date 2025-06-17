@@ -77,7 +77,7 @@ const Info = () => {
             onUpdate: () => {
               const value = Math.ceil(obj.value);
               const formatted = value === 750000 
-                ? `<span style="white-space: nowrap; font-size: 2.4rem; font-family: 'Poppins', sans-serif; font-weight: 800">${value.toLocaleString()} <span style="font-size: 1.2rem">sqft</span></span>`
+                ? `<span style="white-space: nowrap; font-size: 2.4rem;font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;">${value.toLocaleString()} <span style="font-size: 1.2rem">sqft</span></span>`
                 : value + (plus ? "+" : "");
               el.innerHTML = formatted;
             },

@@ -81,7 +81,7 @@ items: [
     title: "Dasta",
     year: 2023,
     services:
-      "Art Installations, Spatial and Environment Design, Wayfinding Signages",
+      "Wayfinding Signages,Art Installations, Spatial and Environment Design ",
     category: "work-spaces",
     longDescription:
       "For this modern office building, we designed and executed a comprehensive signage and environmental-branding system. From the building's facade to its reception area, wallpapers, directional signage, and meeting-room names, every touch-point was crafted for clarity, consistency, and character.",
@@ -101,7 +101,7 @@ items: [
     id: 527,
     title: "Digiclarity",
     year: 2022 & 2024,
-    services: "Art Installations, Spatial and Eironment Design",
+    services: "Environmental Graphics, Art Installations, Spatial and Environment Design",
     category: "work-spaces",
     longDescription:
       "A Chennai-based software firm wanted a workspace that mirrored its startup energy. We installed branded wall graphics and motivational quotes, transforming a plain office into an inspiring, employee-centric environment perfectly aligned with the company's culture.",
@@ -127,7 +127,7 @@ items: [
     id: 3,
     title: "Namma Nook",
     year: 2023,
-    services: "Art Installations",
+    services: "Environmental Graphics, Art Installations",
     category: "work-spaces",
     longDescription:
       "This intimate community space required thoughtful, cheerful branding to complement its role as a hub for events and creative gatherings. We delivered internal graphics that subtly guided users while adding visual warmth to the multifunctional venue.",
@@ -171,7 +171,7 @@ items: [
     id: 28,
     title: "Zoya",
     year: 2019,
-    services: "Art Installations",
+    services: "Retail Display, Art Installations",
     category: "retail",
     longDescription:
       "Zoya's jewellery stores demanded bespoke visual-merchandising solutions that highlighted their product storytelling. We developed custom display units and in-store branding elements that elevated the luxury customer experience across multiple outlets.",
@@ -212,7 +212,7 @@ items: [
     id: 12,
     title: "Thirdwave Coffee Roasters",
     year: "2019 Onwards",
-    services: "F&B Spaces & Hospitality Branding",
+    services: "Environmental Graphics, F&B Spaces & Hospitality Branding",
     category: "food-beverages",
     longDescription:
       "When this specialty-coffee brand sought installations that pushed creative boundaries, we stepped in to deliver what others couldn't. Intricate wall-art prints, custom signage, and distinctive environmental graphics echoed their artisanal spirit and urban vibe.",
@@ -256,7 +256,7 @@ items: [
     id: 1,
     title: "Bengaluru Torpedoes",
     year: 2024,
-    services: "Spatial and Environment Design, Brand Identity",
+    services: "Environmental Graphics, Spatial and Environment Design, Brand Identity",
     category: "sports-fitness",
     longDescription:
       "For this state-of-the-art volleyball centre, we delivered end-to-end branding and signage. Bold graphics, motivational messaging, and precise wayfinding reflect the sport's energy and the academy's professionalism.",
@@ -277,7 +277,7 @@ items: [
     title: "Banana Sports",
     year: 2025,
     services:
-      "Spatial and Environment Design, Art Installations, Brand Identity, Logo Design",
+      "Brand Identity,Spatial and Environment Design, Art Installations, Logo Design",
     category: "sports-fitness",
     longDescription:
       "This Bangalore multi-sport facility needed a complete identity. From naming and logo to environmental graphics and merchandise, we created a playful yet professional visual language that unifies the space and energises its community.",
@@ -322,7 +322,7 @@ items: [
     id: 4,
     title: "Padukone – Dravid Centre for Sports Excellence",
     year: 2024,
-    services: "Sports & Fitness Spaces",
+    services: "Environmental Graphics, Sports & Fitness Spaces",
     category: "sports-fitness",
     longDescription:
       "This cricket academy offers comprehensive facilities for emerging players. Specialised batting and bowling zones, technology-enabled analysis suites, and athlete-support spaces create a holistic development environment.",
@@ -387,7 +387,7 @@ items: [
     title: "Farm Stories",
     year: 2021,
     services:
-      "Logo Design, Brand Identity, Packaging, Communication Design",
+      " Brand Identity, Packaging, Logo Design,Communication Design",
     category: ["design","food-beverages"],
     longDescription:
       "From naming and logo to packaging and social visuals, Farm Stories' identity uses earthy colours, hand-drawn illustrations, and documentary photography to communicate transparency and farm-to-table freshness.",
@@ -406,7 +406,7 @@ items: [
     id: 24,
     title: "Aravalli",
     year: 2024,
-    services: "Wayfinding Signages",
+    services: "Environmental Graphics, Wayfinding Signages",
     category: "real-estate",
     longDescription:
       "Based in Goa, RIO Developers required consistent, high-quality branding across villas, commercial buildings, and residential towers. Internal and external signage systems elevate user experience and reinforce brand presence at every touchpoint.",
@@ -426,7 +426,7 @@ items: [
     id: 25,
     title: "Elemental",
     year: 2024,
-    services: "Wayfinding Signages, Communication Design, Exhibition Design",
+    services: "Environmental Graphics, Wayfinding Signages, Communication Design, Exhibition Design",
     category: ["retail","design"],
     longDescription:
       "For this retail-fitment brand, we designed an exhibition stall that doubled as a storytelling space. Material samples, interactive demos, and clear narrative flow showcased capabilities and engaged visitors.",
@@ -507,7 +507,7 @@ items: [
     id: 29,
     title: "1131",
     year: 2021,
-    services: "F&B Spaces & Hospitality Branding",
+    services: "Brand Identity, F&B Spaces & Hospitality Branding",
     category: "food-beverages",
     longDescription:
       "1131, a contemporary restobar in Bangalore, engaged us to craft an end-to-end identity. Naming, logo, menus, glassware, signage, and more coalesce into a cohesive guest experience that stands out in a competitive F&B scene.",

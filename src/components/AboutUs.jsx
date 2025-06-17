@@ -139,7 +139,8 @@ const AboutUs = () => {
           </h1>
           
           <p ref={el => paragraphRefs.current[1] = el} style={{ opacity: 0, transform: "translateY(80px)" }}>
-          Full-service design + execution studio specializing in Wayfinding, Signage Systems, and Branding.
+          Full-service design + execution studio specializing in <br />
+          Wayfinding, Signage Systems, and Branding.
           </p>
           
           <br />
