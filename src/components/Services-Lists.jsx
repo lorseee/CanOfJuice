@@ -8,16 +8,16 @@ import { useEffect } from "react";
 const bulletToProjectId = {
   "Retail Display": 23,
   "Exhibition Design": 25,
-  "Branded Environments": 8,
+  "Branded Environments": 17,
   "Environmental Graphics": 12,
   "Wayfinding and Signages": 5,
   "Web Design": 33,
   "Logo Design": 21,
-  "Brand Identity": 17,
+  "Brand Identity": 10,
   "Packaging Design": 26,
-  "Communication Design": 30,
+  "Communication Design": 22,
   "Wall Murals": 527,
-  "Fine Art Printing": 9,
+  "Fine Art Printing": 32,
   "Custom Wallpapers": 7,
   "Store Window Display": 17,
   "Custom Art Installations": 9,
@@ -26,22 +26,22 @@ const bulletToProjectId = {
 
 // Map bullet point to image path
 const bulletToImage = {
-  "Retail Display": "/images/projects/3/gallery-2.jpg",
+  "Retail Display": "/images/projects/2/main.jpg",
   "Exhibition Design": "/images/projects/25/main.jpg",
-  "Branded Environments": "/images/projects/7/main.jpg",
+  "Branded Environments": "/images/projects/17/gallery-2.jpeg",
   "Environmental Graphics": "/images/projects/12/main.jpg",
   "Wayfinding and Signages": "/images/projects/4/main.jpg",
-  "Web Design": "/images/projects/33/gallery-3.png",
+  "Web Design": "/images/projects/33/main.png",
   "Logo Design": "/images/projects/21/main.png",
-  "Brand Identity": "/images/projects/17/gallery-2.jpeg",
+  "Brand Identity": "/images/projects/23/main.jpg",
   "Packaging Design": "/images/projects/26/main.png",
-  "Communication Design": "/images/projects/30/gallery-3.png",
+  "Communication Design": "/images/projects/22/main.png",
   "Wall Murals": "/images/projects/5/gallery-6.jpg",
-  "Fine Art Printing": "/images/projects/9/main.jpg",
-  "Custom Wallpapers": "/images/projects/13/gallery-10.jpeg",
+  "Fine Art Printing": "/images/projects/32/gallery-7.jpg",
+  "Custom Wallpapers": "/images/projects/13/gallery-1.jpg",
   "Store Window Display": "/images/projects/17/gallery-4.jpg",
   "Custom Art Installations": "/images/projects/11/gallery-2.jpeg",
-  "Signages & Name Boards": "/images/projects/24/main.jpg",
+  "Signages & Name Boards": "/images/projects/24/gallery-6.jpg",
 };
 
 // Sections with bullets and default images
@@ -221,7 +221,7 @@ const ServicesLists = () => {
       })}
 
       <div className="bg-black p-4 mt-16 text-white text-center flex justify-center items-center">
-        <p className="text-4xl" style={{ fontFamily: "'Khand', sans-serif" }}>
+        <p className="text-4xl" style={{ marginLeft: "5rem", fontSize: "clamp(3.2rem, 4vw, 2rem)", fontFamily: "'Khand', sans-serif" }}>
           Need a hand? We are happy to help.
         </p>
       </div>

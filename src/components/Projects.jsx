@@ -187,7 +187,19 @@ const Projects = () => {
                 key={p.id}
                 ref={addToRefs}
                 className={p.className}
-                onClick={() => goProject(p.id)}
+                onClick={() => {
+                  if (p.id === 2) {
+                    navigate("/case-studies/2");
+                  } else if (p.id === 17) {
+                    navigate("/case-studies/17");
+                  } else if (p.id === 10) {
+                    navigate("/case-studies/10");
+                  } else if (p.id === 29) {
+                    navigate("/case-studies/29");
+                  } else {
+                    goProject(p.id);
+                  }
+                }}
               >
                 <div className="project-inner">
                   <div className="project-image-container">
@@ -223,13 +235,13 @@ const Projects = () => {
           {/* Secondary marquee */}
           <div ref={subtitleWrapperRef} className="heading-wrapper">
             <h2 ref={subtitleRef} className="projects-heading">
-              WE ARE EXPERTS IN CREATING STRATEGIC: 
+              WE ARE EXPERTS IN CREATING 
             </h2>
           </div>
           {/* Static expertise text */}
           <p className="expertise-text">
-            identities / campaigns / websites / books &amp; <br /> publications /
-            signage &amp; wayfinding / exhibitions / <br /> branded environments
+            space designs / exhibitions / signage &amp; wayfinding <br /> branded identities /
+             brand collaterals / <br /> branded environments /packaging designs
           </p>
         </div>
       </section>

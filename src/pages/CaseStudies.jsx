@@ -1,5 +1,10 @@
 import React, { useLayoutEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { projects } from "../constants";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const fallback = (w, h) => `https://placehold.co/${w}x${h}/1E1E1E/FFFFFF?text=%20`;
 
@@ -53,7 +58,7 @@ export const CASE_STUDIES = [
     challenge:
       "Farm Stories needed a brand identity that captured its authenticity, freshness, and small-batch organic roots — without falling into generic 'green-washed' clichés.",
     approach:
-      "We started with a naming exercise, then built a visual identity inspired by nature, farmer’s markets, and clean food philosophy. The packaging design was earthy yet modern, with clear product info and friendly storytelling..",
+      "We started with a naming exercise, then built a visual identity inspired by nature, farmer's markets, and clean food philosophy. The packaging design was earthy yet modern, with clear product info and friendly storytelling..",
     execution: [
       "Hand-drawn elements to reflect handmade care",
       "Labels optimized for both retail shelves and Instagram shots",
@@ -88,9 +93,9 @@ export const CASE_STUDIES = [
     heroImg: "/images/projects/29/gallery-4.jpg",
     metaImgs: ["/images/projects/29/gallery-1.png", "/images/projects/29/gallery-2.png"],
     challenge:
-      "1131 was a new restobar concept looking to make a memorable first impression in Bangalore’s competitive dining scene. They needed an identity that felt premium, young, and rooted in the local vibe.",
+      "1131 was a new restobar concept looking to make a memorable first impression in Bangalore's competitive dining scene. They needed an identity that felt premium, young, and rooted in the local vibe.",
     approach:
-      "We developed the name “1131” as a mysterious, almost code-like brand. The design system included a typographic logo, playful menu design, and branding across all guest touchpoints — glassware, napkins, signage, and more.",
+      'We developed the name "1131" as a mysterious, almost code-like brand. The design system included a typographic logo, playful menu design, and branding across all guest touchpoints — glassware, napkins, signage, and more.',
     execution: [
       "Black-and-white palette with gold accents",
       "Glass printing & surface branding in-bar",
@@ -99,7 +104,7 @@ export const CASE_STUDIES = [
     execImgs: [
       "/images/projects/29/main.png",
       "/images/projects/29/gallery-3.jpg",
-      "/images/projects/29/gallery-4.jpg",,
+      "/images/projects/29/gallery-4.jpg"
     ],
     impact: [
       "Elevated guest perception and recall",
@@ -157,10 +162,38 @@ export const CASE_STUDIES = [
 
 
 const CaseStudies = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const study = CASE_STUDIES.find(c => c.id === Number(id)) || CASE_STUDIES[0];
+  const { id }      = useParams();
+  const navigate    = useNavigate();
+  const study       = CASE_STUDIES.find(c => c.id === Number(id)) || CASE_STUDIES[0];
+  const project     = projects.items.find(p => p.id === Number(id)) || projects.items[0];
+
   const pageRef = useRef();
+  const descRef = useRef(null);
+  const infoRef = useRef(null);
+  
+  // Add state for modal management
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+  
+  
+  const openModal = (index) => {
+    setCurrentImageIndex(index);
+    setModalOpen(true);
+  };
+  
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  
+  const next = () => {
+    const images = study.metaImgs.concat(study.execImgs);
+    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+  };
+  
+  const prev = () => {
+    const images = study.metaImgs.concat(study.execImgs);
+    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
   
   useLayoutEffect(() => window.scrollTo(0, 0), []);
 
@@ -176,7 +209,7 @@ const CaseStudies = () => {
         />
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
-          <p className="bg-white/10 text-white px-4 py-2 rounded text-sm uppercase">
+          <p className=" text-white px-4 py-2 rounded text-sm uppercase">
             {study.serviceAreas}
           </p>
           <h1 className="text-white text-5xl md:text-6xl font-bold my-4">
@@ -184,87 +217,171 @@ const CaseStudies = () => {
           </h1>
           <button
             onClick={() => navigate(-1)}
-            className="mt-8 bg-black/10 text-white py-2 px-6 rounded hover:bg-opacity-20 transition"
+            className="mt-3 font-bold font-family: 'Khand', system-ui, Helvetica, Arial, sans-serif text-white py:12 px-4  align-middle hover:opacity-20 transition"
           >
-            ← Back to Projects
+            CASE STUDY
           </button>
+        </div>
+      </section>
+      <section className="detail-project-content w-full pb-0 mb-0 ">
+      <div className="detail-content-inner pb-0 mb-0 max-h-[80vh] overflow-auto">
+          {/* description + info */}
+          <div ref={descRef} className="detail-project-description-grid flex flex-col pb-0 mb-0">
+            <div className="detail-description-section">
+              <h2>{project.title}</h2>
+              <div className="detail-description-text">
+                <p>
+                  {project.longDescription ||
+                   `For ${project.title}, we developed a comprehensive design strategy aligned with the client's brand vision.`}
+                </p>
+                {project.additionalDescription && <p>{project.additionalDescription}</p>}
+              </div>
+            </div>
+
+            <div ref={infoRef} className="detail-info-section">
+              <ul className="detail-info-list">
+                <li>
+                  <p className="detail-info-label">Year</p>
+                  <p className="detail-info-value">
+                    {project.year || new Date().getFullYear()}
+                  </p>
+                </li>
+                <li>
+                  <p className="detail-info-label">Services</p>
+                  <p className="detail-info-value">
+                    {(project.services || project.displayCategory)
+                      .split(",")
+                      .map((svc) => svc.trim())
+                      .sort((a, b) => a.length - b.length)
+                      .map((svc, idx) => (
+                        <span key={idx} className="block">{svc}</span>
+                      ))}
+                  </p>
+                </li>
+                {project.label && (
+                  <li>
+                    <p className="detail-info-label">Label</p>
+                    <p className="detail-info-value">{project.label}</p>
+                  </li>
+                )}
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Details & Overview */}
-      <section className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 py-16 px-6">
+      <section className="max-w-6xl mx-auto grid md:grid-cols-3 gap-4 py-1 px-4">
         {/* Left: Project Description */}
-        <div className="md:col-span-2 space-y-8">
-          <h2 className="text-xl font-semibold">Challenge</h2>
-          <p className="leading-relaxed">{study.challenge}</p>
+        <div className="md:col-span-2 space-y-4 md:ml-16 -mt-2">
+          <h2 className="text-3xl font-semibold">Challenge</h2>
+          <p className="text-base text-[#555] font-light">{study.challenge}</p>
 
-          <h2 className="text-xl font-semibold">Approach & Process</h2>
-          <p className="leading-relaxed">{study.approach}</p>
+          <h2 className="text-3xl font-semibold">Approach & Process</h2>
+          <p className="text-base text-[#555] font-light">{study.approach}</p>
 
           {study.execution?.length > 0 && (
             <>
-              <h2 className="text-xl font-semibold">ExecutionHighlights</h2>
-              <ul className="list-disc list-inside space-y-2">
+              <h2 className="text-3xl font-semibold">Execution Highlights</h2>
+              <ul className="list-disc list-inside space-y-1 text-base text-[#555]">
                 {study.execution.map((e, i) => (
                   <li key={i}>{e}</li>
                 ))}
               </ul>
             </>
           )}
+          {/* Impact */}
+      {study.impact?.length > 0 && (
+        <>
+          <h2 className="text-3xl font-semibold mb-6">Impact</h2>
+          <ul className="list-disc list-inside space-y-1 text-base text-[#555]">
+            {study.impact.map((imp, i) => (
+              <li key={i}>{imp}</li>
+            ))}
+          </ul>
+        </>
+      )}
+          
         </div>
 
         {/* Right: Project Fact Box */}
-        <div className="space-y-4 text-gray-700 bg-gray-50 p-6 rounded-md">
-          <div>
-            <h3 className="text-sm uppercase font-medium">Client</h3>
-            <p>{study.client}</p>
-          </div>
-  
-          <div>
-            <h3 className="text-sm uppercase font-medium">Services</h3>
-            <p>{study.serviceAreas}</p>
-          </div>
-          <div>
-            <h3 className="text-sm uppercase font-medium">Scope</h3>
-            <p>{study.scope }</p>
-          </div>
-        </div>
+        
       </section>
 
       {/* Gallery */}
-      <section className="bg-gray-100 py-12 px-6">
+      <section className=" py-8 px-4">
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {study.metaImgs.concat(study.execImgs).map((src, i) => (
             <img
               key={i}
               src={src}
               alt=""
-              className="w-full h-64 object-cover rounded-lg shadow-md"
+              onClick={() => openModal(i)}
               onError={e => (e.currentTarget.src = ph(600, 400))}
+              className="w-full h-full object-cover object-center cursor-pointer hover:opacity-70 transition-opacity duration-300"
             />
           ))}
         </div>
       </section>
+      
+      {modalOpen && (
+        <div className="image-modal-overlay" onClick={closeModal}>
+          <button
+            className="modal-close-btn"
+            onClick={(e) => { e.stopPropagation(); closeModal(); }}
+            aria-label="Close modal"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24"
+                 fill="none" stroke="white" strokeWidth="2"
+                 strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
 
-      {/* Impact */}
-      {study.impact?.length > 0 && (
-        <section className="max-w-6xl mx-auto px-6 py-16 text-center">
-          <h2 className="text-2xl font-semibold mb-6">Impact</h2>
-          <ul className="list-disc list-inside space-y-2 text-gray-700">
-            {study.impact.map((imp, i) => (
-              <li key={i}>{imp}</li>
+          <button
+            className="modal-edge-nav modal-prev-edge"
+            onClick={(e) => { e.stopPropagation(); prev(); }}
+          >&#10094;</button>
+
+          <button
+            className="modal-edge-nav modal-next-edge"
+            onClick={(e) => { e.stopPropagation(); next(); }}
+          >&#10095;</button>
+
+          <div className="image-modal-content">
+            <img
+              src={study.metaImgs[currentImageIndex] || study.execImgs[currentImageIndex]}
+              alt=""
+              className="modal-image"
+              onError={e => (e.currentTarget.src = ph(600, 400))}
+            />
+          </div>
+
+          <div className="modal-thumb-strip" onClick={(e) => e.stopPropagation()}>
+            {study.metaImgs.concat(study.execImgs).map((src, i) => (
+              <img
+                key={i}
+                src={src}
+                alt=""
+                className={`modal-thumb ${i === currentImageIndex ? "active" : ""}`}
+                onClick={() => openModal(i)}
+                onError={e => (e.currentTarget.src = ph(600, 400))}
+              />
             ))}
-          </ul>
-        </section>
+          </div>
+        </div>
       )}
+
+      
 
       {/* Contact / CTA */}
       <section className=" text-black py-12">
-        <div className="max-w-4xl mx-auto text-center space-y-4">
-          <h2 className="text-3xl font-semibold">Want to work together?</h2>
-          <p>Drop me a message or say hello! 📩</p>
+        <div className="max-w-3xl mx-auto text-center space-y-4">
+          <h2 className="text-5xl font-semibold">Want to work together?</h2>
+          <p>Drop us a message or say hello! 📩</p>
           <a
-            href="mailto:hello@yourdomain.com"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=scoj@canofjuice.com"
             className="inline-block bg-black text-black-600 px-6 py-2 rounded font-medium"
           >
             Send an Email
@@ -274,5 +391,6 @@ const CaseStudies = () => {
     </div>
   );
 };
+
 
 export default CaseStudies;

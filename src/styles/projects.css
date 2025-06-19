@@ -281,7 +281,7 @@
 .expertise-text {
   margin: 0rem 0 3rem 0;
   color: #000;
-  font-size: clamp(1.2rem, 2vw, 1.2rem);
+  font-size: clamp(1.7rem, 2vw, 1.2rem);
   font-weight: 500;
   letter-spacing: 0.1em;
   margin-top: -4rem;

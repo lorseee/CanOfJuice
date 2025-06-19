@@ -251,6 +251,8 @@ const ProjectDetailPage = () => {
                           alt={`${project.title} – ${i + 1}`}
                           onClick={() => openModal(i)}
                           onError={errImg}
+                         className="w-full h-64 object-cover rounded-lg shadow-md transition-opacity duration-300 hover:opacity-85 cursor-pointer"
+
                         />
                         <div className="detail-gallery-overlay" />
                       </div>

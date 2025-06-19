@@ -299,11 +299,11 @@ items: [
     },
   },
   {
-    id: 18,
+    id: 6,
     title: "Rapid Sports Fitness",
     year: 2025,
     services: "Spatial and Environment Design, Art Installations",
-    category: ["sports-fitness","work-spcaes"],
+    category: ["sports-fitness","work-spaces"],
     longDescription:
       "Rapid Sports Fitness embeds scientific training principles within a motivating environment. Zoning for varied modalities, intuitive equipment layouts, and energising visual cues support high-intensity functional training.",
     images: {
@@ -322,7 +322,7 @@ items: [
     id: 4,
     title: "Padukone – Dravid Centre for Sports Excellence",
     year: 2024,
-    services: "Environmental Graphics, Sports & Fitness Spaces",
+    services: "Environmental Graphics, Sports & Fitness ",
     category: "sports-fitness",
     longDescription:
       "This cricket academy offers comprehensive facilities for emerging players. Specialised batting and bowling zones, technology-enabled analysis suites, and athlete-support spaces create a holistic development environment.",
@@ -365,7 +365,7 @@ items: [
     id: 22,
     title: "Tip Top",
     year: 2022,
-    services: "Wayfinding Signages, Communication Design, Exhibition Design",
+    services: "Communication Design",
     category: "design",
     longDescription:
       "A legacy name in laundry services, Tip Top sought modernisation without forsaking heritage. We refreshed their logo and visual system, preserving recognisable elements while injecting contemporary clarity.",
@@ -461,7 +461,7 @@ items: [
     },
   },
     {
-    id: 6,
+    id: 18,
     title: "Bharat Glass Crockeries",
     year: "2024-2025",
     services: "Brand Identity, Logo Design, Packaging",
