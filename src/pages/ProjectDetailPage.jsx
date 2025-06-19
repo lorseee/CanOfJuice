@@ -198,14 +198,7 @@ const ProjectDetailPage = () => {
                 {project.additionalDescription && <p>{project.additionalDescription}</p>}
               </div>
 
-              {[3, 17, 23, 29].includes(project.id) && (
-                <button
-                  className="detail-case-study-btn"
-                  onClick={() => navigate(`/case-studies/${project.id}`)}
-                >
-                  View&nbsp;the&nbsp;Case&nbsp;Study
-                </button>
-              )}
+            
             </div>
 
             <div ref={infoRef} className="detail-info-section">
@@ -282,7 +275,17 @@ const ProjectDetailPage = () => {
                     key={r.id}
                     ref={pushRel}
                     className="detail-related-project-item"
-                    onClick={() => navigate(`/project/${r.id}`)}
+                    onClick={() => {
+                      if (r.id === 2) {
+                        navigate("/case-studies/2"); // Wework
+                      } else if (r.id === 17) {
+                        navigate("/case-studies/17"); // Banana Sport
+                      } else if (r.id === 10) {
+                        navigate("/case-studies/10"); // Farm Stories
+                      } else {
+                        navigate(`/project/${r.id}`);
+                      }
+                    }}
                   >
                     <div className="detail-related-project-image-wrapper">
                       <img

@@ -56,7 +56,7 @@ const SECTIONS = [
       "Environmental Graphics",
       "Wayfinding and Signages",
     ],
-    img: "/images/spaces.jpg",
+    
   },
   {
     id: "designs",
@@ -68,7 +68,7 @@ const SECTIONS = [
       "Packaging Design",
       "Communication Design",
     ],
-    img: "/images/designs.jpg",
+    
   },
   {
     id: "installations",
@@ -81,7 +81,7 @@ const SECTIONS = [
       "Custom Art Installations",
       "Signages & Name Boards",
     ],
-    img: "/images/installations.jpg",
+    
   },
 ];
 
@@ -104,7 +104,18 @@ const ServicesLists = () => {
   const prevIdRef = useRef(null);
 
   const openProject = (id) => {
-    navigate(`/project/${id}`);
+    // Check if the project has a case study route
+    if (id === 2) {
+      navigate("/case-studies/2"); // Wework
+    } else if (id === 17) {
+      navigate("/case-studies/17"); // Banana Sport
+    } else if (id === 10) {
+      navigate("/case-studies/10"); // Farm Stories
+    } else if (id === 29) {
+      navigate("/case-studies/29"); // 1131
+    } else {
+      navigate(`/project/${id}`);
+    }
   };
 
   const toggle = (id) => {
@@ -141,14 +152,14 @@ const ServicesLists = () => {
     <section className="services-section">
       {SECTIONS.map(({ id, title, bullets, img }) => {
         const active = openId === id;
-        const currentImage = bulletToImage[hoveredBullet] || img;
+        const currentImage = bulletToImage[hoveredBullet] ;
 
         return (
           <motion.div
             key={id}
             ref={(el) => (itemRefs.current[id] = el)}
             layout="true"
-            layoutTransition={{ duration: 0.3, ease: "easeInOut" }}
+            layoutTransition={{ duration: 0.3 }}
             transition={{
               layout: { duration: 0.3 },
               default: { ease: "easeInOut" },
@@ -166,7 +177,7 @@ const ServicesLists = () => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.2, ease: "easeOut" }}
+                      transition={{ duration: 0.2 }}
                     >
                       <ul className="list-disc pl-6">
                         {bullets.map((bullet, i) => {
@@ -199,13 +210,13 @@ const ServicesLists = () => {
                 </AnimatePresence>
               </div>
 
-              {active && (
+              {active && currentImage && (
                 <motion.div
                   key="img"
                   initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.2 }}
                   className="services-image"
                 >
                   <img
@@ -221,7 +232,7 @@ const ServicesLists = () => {
       })}
 
       <div className="bg-black p-4 mt-16 text-white text-center flex justify-center items-center">
-        <p className="text-4xl" style={{ marginLeft: "5rem", fontSize: "clamp(3.2rem, 4vw, 2rem)", fontFamily: "'Khand', sans-serif" }}>
+        <p className="text-4xl" style={{ marginLeft: "2rem", fontSize: "clamp(3.2rem, 4vw, 2rem)", fontFamily: "'Khand', sans-serif" }}>
           Need a hand? We are happy to help.
         </p>
       </div>

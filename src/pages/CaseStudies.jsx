@@ -90,7 +90,7 @@ export const CASE_STUDIES = [
     title: "1131 – From Concept to Cocktails",
     client: "1131 Restobar",
     serviceAreas: "Naming, Logo, Identity, Environment Branding",
-    heroImg: "/images/projects/29/gallery-4.jpg",
+    heroImg: "/images/projects/29/main.png",
     metaImgs: ["/images/projects/29/gallery-1.png", "/images/projects/29/gallery-2.png"],
     challenge:
       "1131 was a new restobar concept looking to make a memorable first impression in Bangalore's competitive dining scene. They needed an identity that felt premium, young, and rooted in the local vibe.",
@@ -127,7 +127,7 @@ export const CASE_STUDIES = [
     client: "Banana Sports",
     serviceAreas: "Brand Identity, Signage, Graphics, Merchandise",
     heroImg: "/images/projects/17/gallery-2.jpeg",
-    metaImgs: ["/images/projects/17/gallery-10.jpg", "/images/projects/17/gallery-11.jpg"],
+    metaImgs: ["/images/projects/17/gallery-1.jpeg", "/images/projects/17/gallery-11.jpg"],
     challenge:
       " Banana Sports, a multi-sport facility in Bangalore, needed a fresh and energetic brand that appealed to a new generation of players and fans. The brief was to build a brand from scratch that could unify their diverse offerings — pickleball, football, and cricket — under one strong identity.",
     approach:
@@ -139,24 +139,20 @@ export const CASE_STUDIES = [
       "Merch including tees, caps, water bottles",
     ],
     execImgs: [
-      "/images/projects/17/gallery-1.jpeg",
+      "/images/projects/17/main.jpg",
       "/images/projects/17/gallery-3.jpeg",
-      "/images/projects/17/gallery-5.jpg",
       "/images/projects/17/gallery-4.jpg",
+      "/images/projects/17/gallery-9.jpg",
+      "/images/projects/17/gallery-8.jpg",
+      "/images/projects/17/gallery-10.jpg",
+      "/images/projects/17/gallery-7.jpg",
     ],
     impact: [
       "Strong brand recall among players & visitors",
       "Established Banana Sports as a distinctive destination",
       "Seamless physical & visual flow throughout the facility",
     ],
-    marquee: [
-      "/images/projects/17/main.jpg",
-      "/images/projects/17/gallery-2.jpeg",
-      "/images/projects/17/gallery-3.jpeg",
-      "/images/projects/17/gallery-4.jpg",
-      "/images/projects/17/gallery-5.jpg",
-      "/images/projects/17/gallery-6.jpg",
-    ],
+    
   },
 ];
 
@@ -205,7 +201,7 @@ const CaseStudies = () => {
           src={study.heroImg}
           alt={study.title}
           className="absolute inset-0 w-full h-full object-cover"
-          onError={e => (e.currentTarget.src = ph(1920, 1080))}
+          onError={e => (e.currentTarget.src = fallback(1920, 1080))}
         />
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
@@ -223,10 +219,14 @@ const CaseStudies = () => {
           </button>
         </div>
       </section>
-      <section className="detail-project-content w-full pb-0 mb-0 ">
-      <div className="detail-content-inner pb-0 mb-0 max-h-[80vh] overflow-auto">
+
+      {/* Challenge Section - Moved up */}
+  
+
+      <section className="detail-project-content w-full pb-0 mb-0  ">
+      <div className="detail-content-inner pb-0 mb-0 max-h-[75vh] overflow-auto">
           {/* description + info */}
-          <div ref={descRef} className="detail-project-description-grid flex flex-col pb-0 mb-0">
+          <div ref={descRef} className="detail-project-description-grid flex flex-col pb-0 mb-0 ">
             <div className="detail-description-section">
               <h2>{project.title}</h2>
               <div className="detail-description-text">
@@ -270,13 +270,18 @@ const CaseStudies = () => {
         </div>
       </section>
 
-      {/* Details & Overview */}
+      {/* Challenge Section - Moved closer to description grid */}
+      <section className="max-w-6xl mx-auto py-4 px-4">
+        <div className="md:ml-16">
+          <h2 className="text-4xl font-semibold mb-4">Challenge</h2>
+          <p className="text-lg text-[#555] font-light leading-relaxed">{study.challenge}</p>
+        </div>
+      </section>
+
+      {/* Details & Overview - Remaining sections */}
       <section className="max-w-6xl mx-auto grid md:grid-cols-3 gap-4 py-1 px-4">
         {/* Left: Project Description */}
         <div className="md:col-span-2 space-y-4 md:ml-16 -mt-2">
-          <h2 className="text-3xl font-semibold">Challenge</h2>
-          <p className="text-base text-[#555] font-light">{study.challenge}</p>
-
           <h2 className="text-3xl font-semibold">Approach & Process</h2>
           <p className="text-base text-[#555] font-light">{study.approach}</p>
 
@@ -309,16 +314,16 @@ const CaseStudies = () => {
       </section>
 
       {/* Gallery */}
-      <section className=" py-8 px-4">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <section className=" py-3 px-2">
+        <div className="max-w-5xl mx-auto grid grid-cols-4 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {study.metaImgs.concat(study.execImgs).map((src, i) => (
             <img
               key={i}
               src={src}
               alt=""
               onClick={() => openModal(i)}
-              onError={e => (e.currentTarget.src = ph(600, 400))}
-              className="w-full h-full object-cover object-center cursor-pointer hover:opacity-70 transition-opacity duration-300"
+              onError={e => (e.currentTarget.src = fallback(600, 400))}
+              className="w-full h-full object-cover object-center cursor-pointer hover:opacity-85 transition-opacity duration-300"
             />
           ))}
         </div>
@@ -354,7 +359,7 @@ const CaseStudies = () => {
               src={study.metaImgs[currentImageIndex] || study.execImgs[currentImageIndex]}
               alt=""
               className="modal-image"
-              onError={e => (e.currentTarget.src = ph(600, 400))}
+              onError={e => (e.currentTarget.src = fallback(600, 400))}
             />
           </div>
 
@@ -366,7 +371,7 @@ const CaseStudies = () => {
                 alt=""
                 className={`modal-thumb ${i === currentImageIndex ? "active" : ""}`}
                 onClick={() => openModal(i)}
-                onError={e => (e.currentTarget.src = ph(600, 400))}
+                onError={e => (e.currentTarget.src = fallback(600, 400))}
               />
             ))}
           </div>

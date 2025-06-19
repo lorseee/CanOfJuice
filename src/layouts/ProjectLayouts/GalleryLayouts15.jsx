@@ -25,7 +25,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
         src={images[0]}
         alt="Gallery 1"
         onError={handleImageError}
-        className="w-full h-full object-cover object-center cursor-pointer hover:opacity-70 transition-opacity duration-300"
+        className="w-full h-full object-cover object-center cursor-pointer hover:opacity-85 transition-opacity duration-300"
       />
     </div>
 
@@ -38,7 +38,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
         src={images[1]}
         alt="Gallery 1"
         onError={handleImageError}
-        className="w-full h-full object-cover object-center cursor-pointer hover:opacity-70 transition-opacity duration-300"
+        className="w-full h-full object-cover object-center cursor-pointer hover:opacity-85 transition-opacity duration-300"
       />
     </div>
 
@@ -52,7 +52,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
         src={images[2]}
         alt="Gallery 1"
         onError={handleImageError}
-        className="w-full h-full object-cover object-center cursor-pointer hover:opacity-70 transition-opacity duration-300"
+        className="w-full h-full object-cover object-center cursor-pointer hover:opacity-85 transition-opacity duration-300"
       />
     </div>
 
@@ -66,7 +66,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
         src={images[3]}
         alt="Gallery 1"
         onError={handleImageError}
-        className="w-full h-full object-cover object-center cursor-pointer hover:opacity-70 transition-opacity duration-300"
+        className="w-full h-full object-cover object-center cursor-pointer hover:opacity-85 transition-opacity duration-300"
       />
     </div>
 
@@ -79,7 +79,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
         src={images[4]}
         alt="Gallery 5"
         onError={handleImageError}
-        className="w-full h-full object-cover object-center cursor-pointer hover:opacity-70 transition-opacity duration-300"
+        className="w-full h-full object-cover object-center cursor-pointer hover:opacity-85 transition-opacity duration-300"
       />
     </div>
 
@@ -89,13 +89,13 @@ const GalleryLayout = ({ images, handleImageError }) => (
       aspect-square w-full
       
       /* Small screens and up: original layout */
-      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-4
+      sm:aspect-auto sm:col-span-4 lg:col-span-7 sm:row-span-4
     ">
       <img
         src={images[5]}
         alt="Gallery 6"
         onError={handleImageError}
-        className="w-full h-full object-cver object-center cursor-pointer hover:opacity-70 transition-opacity duration-300"
+        className="w-full h-full object-cover object-center cursor-pointer hover:opacity-85 transition-opacity duration-300"
       />
     </div>
   </div>

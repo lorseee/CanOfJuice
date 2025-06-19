@@ -409,7 +409,7 @@ items: [
     services: "Environmental Graphics, Wayfinding Signages",
     category: "real-estate",
     longDescription:
-      "Based in Goa, RIO Developers required consistent, high-quality branding across villas, commercial buildings, and residential towers. Internal and external signage systems elevate user experience and reinforce brand presence at every touchpoint.",
+      "",
     images: {
       main: "/images/projects/24/main.jpg",
       gallery: [
