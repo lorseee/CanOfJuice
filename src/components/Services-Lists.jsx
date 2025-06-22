@@ -11,7 +11,6 @@ const bulletToProjectId = {
   "Branded Environments": 17,
   "Environmental Graphics": 12,
   "Wayfinding and Signages": 5,
-  "Web Design": 33,
   "Logo Design": 21,
   "Brand Identity": 10,
   "Packaging Design": 26,
@@ -31,7 +30,6 @@ const bulletToImage = {
   "Branded Environments": "/images/projects/17/gallery-2.jpeg",
   "Environmental Graphics": "/images/projects/12/main.jpg",
   "Wayfinding and Signages": "/images/projects/4/main.jpg",
-  "Web Design": "/images/projects/33/main.png",
   "Logo Design": "/images/projects/21/main.png",
   "Brand Identity": "/images/projects/23/main.jpg",
   "Packaging Design": "/images/projects/26/main.png",
@@ -62,7 +60,6 @@ const SECTIONS = [
     id: "designs",
     title: "Visual Design",
     bullets: [
-      "Web Design",
       "Logo Design",
       "Brand Identity",
       "Packaging Design",

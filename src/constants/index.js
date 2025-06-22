@@ -14,7 +14,7 @@ export const projects = {
 items: [
   {
     id: 27,
-    title: "Cowrks",
+    title: "COWRKS",
     year: "Ongoing 2018 Onwards",
     services: "Art Installations",
     category: "work-spaces",
@@ -34,7 +34,7 @@ items: [
   },
   {
     id: 23,
-    title: "The Collective",
+    title: "THE COLLECTIVE",
     year: "2018–2019",
     services: "Retail Display",
     category: "retail",
@@ -54,7 +54,7 @@ items: [
   },
   {
     id: 2,
-    title: "WeWork",
+    title: "WEWORK",
     year: "2018 Onwards",
     services: "Art Installations",
     category: "work-spaces",
@@ -78,7 +78,7 @@ items: [
   },
   {
     id: 5,
-    title: "Dasta",
+    title: "DASTA",
     year: 2023,
     services:
       "Wayfinding Signages,Art Installations, Spatial and Environment Design ",
@@ -99,7 +99,7 @@ items: [
   },
   {
     id: 527,
-    title: "Digiclarity",
+    title: "DIGICLARITY",
     year: 2022 & 2024,
     services: "Environmental Graphics, Art Installations, Spatial and Environment Design",
     category: "work-spaces",
@@ -125,7 +125,7 @@ items: [
   },
   {
     id: 3,
-    title: "Namma Nook",
+    title: "NAMMA NOOK",
     year: 2023,
     services: "Environmental Graphics, Art Installations",
     category: "work-spaces",
@@ -147,7 +147,7 @@ items: [
   },
   {
     id: 8,
-    title: "Prequate",
+    title: "PREQUATE",
     year: 2022,
     services: "Art Installations, Spatial and Environment Design",
     category: "work-spaces",
@@ -169,7 +169,7 @@ items: [
   },
   {
     id: 28,
-    title: "Zoya",
+    title: "ZOYA",
     year: 2019,
     services: "Retail Display, Art Installations",
     category: "retail",
@@ -189,7 +189,7 @@ items: [
   },
   {
     id: 9,
-    title: "Custom Art Installations",
+    title: "CUSTOM ART INSTALLATIONS",
     year: " ",
     services: "Spatial and Environment Design, Art Installations",
     category: ["work-spaces","food-beverages"],
@@ -210,7 +210,7 @@ items: [
   },
   {
     id: 12,
-    title: "Thirdwave Coffee Roasters",
+    title: "THIRDWAVE COFFEE ROASTERS",
     year: "2019 Onwards",
     services: "Environmental Graphics, F&B Spaces & Hospitality Branding",
     category: "food-beverages",
@@ -230,12 +230,12 @@ items: [
   },
   {
     id: 7,
-    title: "Custom Wallpapers",
+    title: "CUSTOM WALLPAPERS",
     year: 2025,
     services: "Art Installations",
     category: "food-beverages",
     longDescription:
-      "Our work with Anand Sweets transformed a beloved heritage brand into a modern retail-and-dining destination. Contemporary interiors honour tradition while showcasing products and encouraging customers to linger.",
+      "Project bio - CUSTOM WALLPAPERS\ -We installed custom wallpapers for diverse food & beverage establishments across the country, creating unique brand experiences for Mirosh, Khmer Kitchen, Badmaash, and Anand Sweets. Each design was tailored to reflect the restaurant's culture transforming dining spaces into immersive environments that enhance the customer experience.",
     images: {
       main: "/images/projects/13/main.jpg",
       gallery: [
@@ -254,7 +254,7 @@ items: [
   },
   {
     id: 1,
-    title: "Bengaluru Torpedoes",
+    title: "BENGALURU TORPEDOES",
     year: 2024,
     services: "Environmental Graphics, Spatial and Environment Design, Brand Identity",
     category: "sports-fitness",
@@ -274,7 +274,7 @@ items: [
   },
   {
     id: 17,
-    title: "Banana Sports",
+    title: "BANANA SPORTS",
     year: 2025,
     services:
       "Brand Identity,Spatial and Environment Design, Art Installations, Logo Design",
@@ -300,7 +300,7 @@ items: [
   },
   {
     id: 6,
-    title: "Rapid Sports Fitness",
+    title: "RAPID SPORTS FITNESS",
     year: 2025,
     services: "Spatial and Environment Design, Art Installations",
     category: ["sports-fitness","work-spaces"],
@@ -320,12 +320,12 @@ items: [
   },
   {
     id: 4,
-    title: "Padukone – Dravid Centre for Sports Excellence",
+    title: "VESOMA FITNESS",
     year: 2024,
     services: "Environmental Graphics, Sports & Fitness ",
     category: "sports-fitness",
     longDescription:
-      "This cricket academy offers comprehensive facilities for emerging players. Specialised batting and bowling zones, technology-enabled analysis suites, and athlete-support spaces create a holistic development environment.",
+      "VESOMA is a premier sports medicine facility with highly qualified professionals serving athletes of all levels, featuring a fully-equipped international standard 2,500 sqft gymnasium. We created exciting environmental graphics that transformed their training space into a more motivational environment for fitness enthusiasts.",
     images: {
       main: "/images/projects/19/main.jpg",
       gallery: [
@@ -343,7 +343,7 @@ items: [
   },
   {
     id: 21,
-    title: "Tabana",
+    title: "TABANA",
     year: 2022,
     services: "Brand Identity, Logo Design",
     category: "design",
@@ -363,7 +363,7 @@ items: [
   },
   {
     id: 22,
-    title: "Tip Top",
+    title: "TIP TOP",
     year: 2022,
     services: "Communication Design",
     category: "design",
@@ -384,7 +384,7 @@ items: [
   },
   {
     id: 10,
-    title: "Farm Stories",
+    title: "FARM STORIES",
     year: 2021,
     services:
       " Brand Identity, Packaging, Logo Design,Communication Design",
@@ -404,12 +404,12 @@ items: [
   },
     {
     id: 24,
-    title: "Aravalli",
+    title: "ARAVALLI",
     year: 2024,
     services: "Environmental Graphics, Wayfinding Signages",
     category: "real-estate",
     longDescription:
-      "",
+      "High end luxury project based in Ahmedabad ",
     images: {
       main: "/images/projects/24/main.jpg",
       gallery: [
@@ -424,7 +424,7 @@ items: [
   },
   {
     id: 25,
-    title: "Elemental",
+    title: "ELEMENTAL",
     year: 2024,
     services: "Environmental Graphics, Wayfinding Signages, Communication Design, Exhibition Design",
     category: ["retail","design"],
@@ -441,7 +441,7 @@ items: [
   },
   {
     id: 26,
-    title: "Velvesto",
+    title: "VELVESTO",
     year: 2024,
     services: "Brand Identity, Logo Design, Packaging",
     category: "design",
@@ -462,7 +462,7 @@ items: [
   },
     {
     id: 18,
-    title: "Bharat Glass Crockeries",
+    title: "BHARAT GLASS CROCKERIES",
     year: "2024-2025",
     services: "Brand Identity, Logo Design, Packaging",
     category: "design",
@@ -485,10 +485,10 @@ items: [
   },
   {
     id: 11,
-    title: "RIO Developers",
+    title: "RIO DEVELOPERS",
     year: "2023 Onwards",
     services: "Real Estate & Built Spaces",
-    category: "design",
+    category: "Signage design",
     longDescription:
       "Based in Goa, RIO Developers required consistent, high-quality branding across villas, commercial buildings, and residential towers. Internal and external signage systems elevate user experience and reinforce brand presence at every touchpoint.",
     images: {
@@ -523,10 +523,10 @@ items: [
   },
   {
     id: 30,
-    title: "Ek Aur",
+    title: "EK AUR",
     year: 2021,
     services:
-      "Communication Design, Brand Identity, Logo Design, Marketing Collaterals, Packaging",
+      "Communication Design, Brand Identity,Marketing Collaterals, Logo Design , Packaging",
     category: "design",
     longDescription:
       "For this bold cocktail-mixer brand, we created a name, visual identity, and packaging system bursting with energy and playfulness. Vibrant labels and dynamic social creatives establish a unique, youthful voice.",
@@ -547,7 +547,7 @@ items: [
   },
   {
     id: 31,
-    title: "Red Bridge International Academy",
+    title: "RED BRIDGE INTERNATIONAL ACADEMY",
     year: 2022,
     services: "Campaign & Communication Design",
     category: ["food-beverages","design"],
@@ -566,7 +566,7 @@ items: [
   },
   {
     id: 32,
-    title: "Fine Art Printings",
+    title: "FINE ART PRINTINGS",
     year: 2025,
     services: "Wayfinding Signages, Communication Design, Exhibition Design",
     category: "work-spaces",
@@ -588,7 +588,7 @@ items: [
   },
   {
     id: 33,
-    title: "Website Design",
+    title: "WEBSITE DESIGN",
     year: 2025,
     services: "Communication Design, Exhibition Design",
     category: "design",
@@ -610,7 +610,7 @@ items: [
   },
   {
     id: 34,
-    title: "Packaging Design",
+    title: "PACKAGING DESIGN",
     year: 2025,
     services: "Wayfinding Signages, Communication Design, Exhibition Design",
     category: "design",

@@ -142,7 +142,7 @@ const Info = () => {
               
               color: "#000"
             }}>
-              ABOUT OUR <br /> AGENCY
+              ABOUT OUR <br /> STUDIO
             </h1>
           </div>
 
@@ -166,9 +166,9 @@ const Info = () => {
                 </h2>
 
                           {[
-
-                "We bring spaces to life — from design concept to on-site execution — creating environments that inspire, guide, and connect.",
-                "For over 10 years, we’ve crafted iconic spaces for clients across industries, blending creativity with precision to deliver impactful experiences.",
+                "We bring spaces to life — from concept, design to on-site execution —",
+                "creating environments that inspire, guide, and connect.",
+                "For over 10 years, we've crafted iconic spaces for clients across industries, blending creativity with precision to deliver impactful experiences.",
               ].map((line, i) => (
                 <p
                   key={i}
@@ -176,12 +176,16 @@ const Info = () => {
                   style={{
                     fontSize: "1.15rem",
                     lineHeight: 1.7,
-                    margin: 0,                 // ← remove default top/bottom
-                    marginBottom: "0.65rem",   // ← keep your original bottom spacing
+                    margin: 0,
+                    marginBottom: "0.65rem",
                     color: "#111"
                   }}
                 >
-                  {line}
+                  {i === 0 ? (
+                    <>
+                      {line}<br />
+                    </>
+                  ) : line}
                 </p>
               ))}
             </div>
@@ -198,7 +202,7 @@ const Info = () => {
               {[
                 { target: 100, label: "Happy Clients", plus: true },
                 { target: 150, label: "Design Projects", plus: true },
-                { target: 750000, label: "Art Installations", plus: false },
+                { target: 750000, label: <span>Branded&nbsp;Environments</span>, plus: false },
                
               ].map((c, idx) => (
                 <div key={idx} style={{

@@ -1,6 +1,6 @@
 /* Works-categories.jsx – rev-M1 – 12 May 2025
    • Category filter supports single or multiple category arrays
-   • Updated to show primary service instead of generic “View project” text
+   • Updated to show primary service instead of generic "View project" text
 ------------------------------------------------------------------ */
 import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
@@ -160,7 +160,7 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
 
         {/* Grid */}
         {isLoading ? (
-          <div className="works-loading"><div className="works-spinner" /></div>
+          <div className="works-loading">Loading...</div>
         ) : filteredProjects.length === 0 ? (
           <div className="works-no-projects">
             <h3 className="works-no-projects-title">No projects found in this category</h3>

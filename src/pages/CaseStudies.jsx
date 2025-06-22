@@ -163,9 +163,34 @@ const CaseStudies = () => {
   const study       = CASE_STUDIES.find(c => c.id === Number(id)) || CASE_STUDIES[0];
   const project     = projects.items.find(p => p.id === Number(id)) || projects.items[0];
 
+  // Define related projects based on category
+  const related = projects.items
+    .filter(p => p.id !== Number(id))
+    .filter(p => {
+      const projectCategories = Array.isArray(p.category) ? p.category : [p.category];
+      const currentCategories = Array.isArray(project.category) ? project.category : [project.category];
+      return projectCategories.some(cat => currentCategories.includes(cat));
+    })
+    .slice(0, 3)
+    .map(p => ({
+      id: p.id,
+      title: p.title,
+      image: p.images?.main || "/images/projects/default/main.jpg",
+      displayCategory: p.category || "Project"
+    }));
+
   const pageRef = useRef();
   const descRef = useRef(null);
   const infoRef = useRef(null);
+  const relWrap = useRef(null);
+  const relItms = useRef([]);
+  relItms.current = [];
+  const pushRel = (el) =>
+    el && !relItms.current.includes(el) && relItms.current.push(el);
+  
+  const errImg = (e) => {
+    e.currentTarget.src = fallback(400, 300);
+  };
   
   // Add state for modal management
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -329,6 +354,47 @@ const CaseStudies = () => {
         </div>
       </section>
       
+      {/* Related Projects */}
+      {related.length > 0 && (
+        <div ref={relWrap} className="detail-related-projects-section">
+          <h2>Related&nbsp;Projects</h2>
+          <div className="detail-related-projects-grid">
+            {related.map((r) => (
+              <article
+                key={r.id}
+                ref={pushRel}
+                className="detail-related-project-item"
+                onClick={() => {
+                  if (r.id === 2) {
+                    navigate("/case-studies/2"); // Wework
+                  } else if (r.id === 17) {
+                    navigate("/case-studies/17"); // Banana Sport
+                  } else if (r.id === 10) {
+                    navigate("/case-studies/10"); // Farm Stories
+                  } else {
+                    navigate(`/project/${r.id}`);
+                  }
+                }}
+              >
+                <div className="detail-related-project-image-wrapper">
+                  <img
+                    src={r.image}
+                    alt={r.title}
+                    className="detail-related-project-image"
+                    onError={errImg}
+                  />
+                  <div className="detail-related-project-overlay" />
+                </div>
+                <div className="detail-related-project-content">
+                  <p className="detail-related-project-category">{r.displayCategory}</p>
+                  <h3 className="detail-related-project-title">{r.title}</h3>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      )}
+      
       {modalOpen && (
         <div className="image-modal-overlay" onClick={closeModal}>
           <button
@@ -377,8 +443,6 @@ const CaseStudies = () => {
           </div>
         </div>
       )}
-
-      
 
       {/* Contact / CTA */}
       <section className=" text-black py-12">

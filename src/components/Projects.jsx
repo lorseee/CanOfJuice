@@ -175,7 +175,7 @@ const Projects = () => {
           {/* Primary marquee */}
           <div ref={headingWrapperRef} className="heading-wrapper">
             <h2 ref={headingRef} className="projects-heading">
-              OUR WORK — FEATURED PROJECTS — 
+              OUR WORK — FEATURED PROJECTS
               
             </h2>
           </div>

@@ -25,7 +25,7 @@ const GalleryLayout = ({ images, handleImageError }) => (
         src={images[0]}
         alt="Gallery 1"
         onError={handleImageError}
-        className="w-full h-full object-cover object-center cursor-pointer hover:opacity-85 transition-opacity duration-300"
+        className="w-full h-full object-contain object-center cursor-pointer hover:opacity-85 transition-opacity duration-300"
       />
     </div>
 
