@@ -62,9 +62,9 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
   const getImage = useMemo(() => {
     const map = {};
     projects.items.forEach((p) => {
-      map[p.id] = p.images?.main || "/images/projects/default/main.jpg";
+      map[p.id] = p.images?.cover || "/images/projects/default/cover.jpg";
     });
-    return (id) => map[id] || "/images/projects/default/main.jpg";
+    return (id) => map[id] || "/images/projects/default/cover.jpg";
   }, []);
 
   // helper to extract primary service
@@ -121,7 +121,7 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
   }, [navigate, selectedCategory]);
 
   const onImgError = useCallback((e) => {
-    e.currentTarget.src = "/images/projects/default/main.jpg";
+    e.currentTarget.src = "/images/projects/default/gallery-1.jpg";
   }, []);
 
   const scrollByStep = useCallback((dir) => {

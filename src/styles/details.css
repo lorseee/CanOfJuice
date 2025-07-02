@@ -21,7 +21,7 @@
 /* ================= HERO ================= */
 .detail-hero-container{
   position:relative;
-  height:80vh;               /* 75 % black + 5 % white visible */
+  height:90vh;               /* 75 % black + 5 % white visible */
   margin-bottom:20vh;        /* remaining 20 % white lives below fold */
   display:flex;justify-content:center;align-items:center;
   overflow:visible;z-index:0;
@@ -38,7 +38,7 @@
   top:var(--hero-gap);
   left:50%;transform:translateX(-50%);
   width:calc(100% - 10rem);   /* 5 rem padding on each side */
-  height:100vh;
+  height:80vh;
   display:flex;justify-content:center;align-items:flex-start;
   pointer-events:none;
   box-sizing:border-box;

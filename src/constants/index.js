@@ -21,6 +21,7 @@ items: [
     longDescription:
       "For this leading coworking space, we brought the brand to life through immersive environmental graphics. From concept to on-site execution, we designed and installed wallpaper art and branding elements across multiple locations, enhancing user experience, fostering belonging, and reinforcing the dynamic energy of the spaces.",
     images: {
+      cover: "/images/projects/1/main.jpeg",
       main: "/images/projects/1/main.jpeg",
       gallery: [
         "/images/projects/1/gallery-1.jpg",
@@ -41,6 +42,7 @@ items: [
     longDescription:
       "A luxury multi-brand fashion store needed window displays that spoke the language of opulence. We partnered with their visual-merchandising team to fabricate and install custom display units across all Indian outlets, elevating storefronts while aligning with seasonal collections and international style cues.",
     images: {
+      cover: "/images/projects/2/main.jpg",
       main: "/images/projects/2/main.jpg",
       gallery: [
         "/images/projects/2/gallery-1.jpeg",
@@ -61,6 +63,7 @@ items: [
     longDescription:
       "Across 26 locations in India, we executed a wide range of branding and art installations that turned generic office spaces into curated brand environments. From building facades to internal signage, custom LED art to statement murals — each intervention reflected WeWork's global identity while embracing local flavour.",
     images: {
+      cover:"/images/projects/3/main.jpg",
       main: "/images/projects/3/main.jpg",
       gallery: [
         "/images/projects/3/gallery-1.jpeg",
@@ -86,6 +89,7 @@ items: [
     longDescription:
       "For this modern office building, we designed and executed a comprehensive signage and environmental-branding system. From the building's facade to its reception area, wallpapers, directional signage, and meeting-room names, every touch-point was crafted for clarity, consistency, and character.",
     images: {
+      cover: "/images/projects/4/main.jpg",
       main: "/images/projects/4/main.jpg",
       gallery: [
         "/images/projects/4/gallery-1.jpg",
@@ -106,6 +110,7 @@ items: [
     longDescription:
       "A Chennai-based software firm wanted a workspace that mirrored its startup energy. We installed branded wall graphics and motivational quotes, transforming a plain office into an inspiring, employee-centric environment perfectly aligned with the company's culture.",
     images: {
+      cover: "/images/projects/5/main.jpg",
       main: "/images/projects/5/main.jpg",
       gallery: [
         "/images/projects/5/gallery-1.jpeg",
@@ -128,10 +133,11 @@ items: [
     title: "NAMMA NOOK",
     year: 2023,
     services: "Environmental Graphics, Art Installations",
-    category: "work-spaces",
+    category: "community-spaces",
     longDescription:
       "This intimate community space required thoughtful, cheerful branding to complement its role as a hub for events and creative gatherings. We delivered internal graphics that subtly guided users while adding visual warmth to the multifunctional venue.",
     images: {
+      cover: "/images/projects/6/main.jpg",
       main: "/images/projects/6/main.jpg",
       gallery: [
         "/images/projects/6/gallery-1.jpeg",
@@ -154,6 +160,7 @@ items: [
     longDescription:
       "For this financial-advisory firm in Bangalore, we crafted a minimalist yet engaging graphic language. Custom art pieces, brand-centric installations, and refined wallpaper graphics echoed their professional, forward-thinking identity and underscored trust, clarity, and sophistication.",
     images: {
+      cover: "/images/projects/7/main.jpg",
       main: "/images/projects/7/main.jpg",
       gallery: [
         "/images/projects/7/gallery-1.jpg",
@@ -176,6 +183,7 @@ items: [
     longDescription:
       "Zoya's jewellery stores demanded bespoke visual-merchandising solutions that highlighted their product storytelling. We developed custom display units and in-store branding elements that elevated the luxury customer experience across multiple outlets.",
     images: {
+      cover: "/images/projects/8/main.jpg",
       main: "/images/projects/8/main.jpg",
       gallery: [
         "/images/projects/8/gallery-1.jpeg",
@@ -196,6 +204,7 @@ items: [
     longDescription:
       "For this display-fabrication start-up, we created a minimalist workspace that doubles as a live showroom. Modular walls, integrated product lighting, and clean sight-lines allow staff to work efficiently while showcasing capabilities to visiting clients.",
     images: {
+      cover: "/images/projects/9/main.jpg",
       main: "/images/projects/11/main.jpg",
       gallery: [
         "/images/projects/11/gallery-1.jpeg",
@@ -211,12 +220,13 @@ items: [
   {
     id: 12,
     title: "THIRDWAVE COFFEE ROASTERS",
-    year: "2019 Onwards",
+    year: "2019",
     services: "Environmental Graphics, F&B Spaces & Hospitality Branding",
     category: "food-beverages",
     longDescription:
       "When this specialty-coffee brand sought installations that pushed creative boundaries, we stepped in to deliver what others couldn't. Intricate wall-art prints, custom signage, and distinctive environmental graphics echoed their artisanal spirit and urban vibe.",
     images: {
+      cover: "/images/projects/12/main.jpg",
       main: "/images/projects/12/main.jpg",
       gallery: [
         "/images/projects/12/gallery-1.jpeg",
@@ -235,8 +245,9 @@ items: [
     services: "Art Installations",
     category: "food-beverages",
     longDescription:
-      "Project bio - CUSTOM WALLPAPERS\ -We installed custom wallpapers for diverse food & beverage establishments across the country, creating unique brand experiences for Mirosh, Khmer Kitchen, Badmaash, and Anand Sweets. Each design was tailored to reflect the restaurant's culture transforming dining spaces into immersive environments that enhance the customer experience.",
+      "We installed custom wallpapers for diverse food & beverage establishments across the country, creating unique brand experiences for Mirosh, Khmer Kitchen, Badmaash, and Anand Sweets. Each design was tailored to reflect the restaurant's culture transforming dining spaces into immersive environments that enhance the customer experience.",
     images: {
+      cover: "/images/projects/13/main.jpg",
       main: "/images/projects/13/main.jpg",
       gallery: [
         "/images/projects/13/gallery-1.jpg",
@@ -261,6 +272,7 @@ items: [
     longDescription:
       "For this state-of-the-art volleyball centre, we delivered end-to-end branding and signage. Bold graphics, motivational messaging, and precise wayfinding reflect the sport's energy and the academy's professionalism.",
     images: {
+      cover: "/images/projects/16/main.jpg",
       main: "/images/projects/16/main.jpg",
       gallery: [
         "/images/projects/16/gallery-1.jpeg",
@@ -282,6 +294,7 @@ items: [
     longDescription:
       "This Bangalore multi-sport facility needed a complete identity. From naming and logo to environmental graphics and merchandise, we created a playful yet professional visual language that unifies the space and energises its community.",
     images: {
+      cover: "/images/projects/17/main.jpg",
       main: "/images/projects/17/main.jpg",
       gallery: [
         "/images/projects/17/gallery-1.jpeg",
@@ -307,6 +320,7 @@ items: [
     longDescription:
       "Rapid Sports Fitness embeds scientific training principles within a motivating environment. Zoning for varied modalities, intuitive equipment layouts, and energising visual cues support high-intensity functional training.",
     images: {
+      cover: "/images/projects/18/main.jpg",
       main: "/images/projects/18/main.jpg",
       gallery: [
         "/images/projects/18/gallery-1.jpg",
@@ -325,8 +339,9 @@ items: [
     services: "Environmental Graphics, Sports & Fitness ",
     category: "sports-fitness",
     longDescription:
-      "VESOMA is a premier sports medicine facility with highly qualified professionals serving athletes of all levels, featuring a fully-equipped international standard 2,500 sqft gymnasium. We created exciting environmental graphics that transformed their training space into a more motivational environment for fitness enthusiasts.",
+      "Vesoma is a premier sports medicine facility with highly qualified professionals serving athletes of all levels, featuring a fully-equipped international standard 2,500 sqft gymnasium. We created exciting environmental graphics that transformed their training space into a more motivational environment for fitness enthusiasts.",
     images: {
+      cover: "/images/projects/19/main.jpg",
       main: "/images/projects/19/main.jpg",
       gallery: [
         "/images/projects/19/gallery-1.jpeg",
@@ -350,6 +365,7 @@ items: [
     longDescription:
       "For Tabana's soft-furnishings line, we built a soothing yet stylish identity. Naming, logo, and visual language emphasise comfort, aesthetics, and the intimate nature of home styling.",
     images: {
+      cover: "/images/projects/21/main.png",
       main: "/images/projects/21/main.png",
       gallery: [
         "/images/projects/21/gallery-1.png",
@@ -370,6 +386,7 @@ items: [
     longDescription:
       "A legacy name in laundry services, Tip Top sought modernisation without forsaking heritage. We refreshed their logo and visual system, preserving recognisable elements while injecting contemporary clarity.",
     images: {
+      cover: "/images/projects/22/main.png",
       main: "/images/projects/22/main.png",
       gallery: [
         "/images/projects/22/gallery-1.png",
@@ -392,9 +409,10 @@ items: [
     longDescription:
       "From naming and logo to packaging and social visuals, Farm Stories' identity uses earthy colours, hand-drawn illustrations, and documentary photography to communicate transparency and farm-to-table freshness.",
     images: {
-      main: "/images/projects/23/main.jpg",
+      cover: "/images/projects/23/gallery-1.jpg",
+      main: "/images/projects/23/gallery-1.jpg",
       gallery: [
-        "/images/projects/23/gallery-1.jpg",
+        "/images/projects/23/main.jpg",
         "/images/projects/23/gallery-2.png",
         "/images/projects/23/gallery-3.jpg",
         "/images/projects/23/gallery-4.jpg",
@@ -411,6 +429,7 @@ items: [
     longDescription:
       "High end luxury project based in Ahmedabad ",
     images: {
+      cover: "/images/projects/24/main.jpg",
       main: "/images/projects/24/main.jpg",
       gallery: [
         "/images/projects/24/gallery-1.jpeg",
@@ -429,10 +448,13 @@ items: [
     services: "Environmental Graphics, Wayfinding Signages, Communication Design, Exhibition Design",
     category: ["retail","design"],
     longDescription:
-      "For this retail-fitment brand, we designed an exhibition stall that doubled as a storytelling space. Material samples, interactive demos, and clear narrative flow showcased capabilities and engaged visitors.",
+      "For this retail-fitment brand, we designed an airport themed exhibition stall that doubled as a storytelling space. Material samples, interactive demos, and clear narrative flow showcased capabilities and engaged visitors.",
     images: {
-      main: "/images/projects/25/main.jpg",
+      cover: "/images/projects/25/gallery-3.jpg",
+      main: "/images/projects/25/cover .jpg",
       gallery: [
+        "/images/projects/25/main.jpg",
+        "/images/projects/25/1..JPG",
         "/images/projects/25/gallery-1.jpg",
         "/images/projects/25/gallery-2.jpg",
         "/images/projects/25/gallery-3.jpg",
@@ -448,6 +470,7 @@ items: [
     longDescription:
       "A new entrant in car-care FMCG, Velvesto required instant shelf impact. Naming, logo, packaging, and collateral together create a sleek, masculine identity that conveys trust and innovation.",
     images: {
+      cover: "/images/projects/26/main.png",
       main: "/images/projects/26/main.png",
       gallery: [
         "/images/projects/26/gallery-1.png",
@@ -469,8 +492,10 @@ items: [
     longDescription:
       "This legacy brand, established in 1955 and known for supplying glassware and crockery to the HORECA industry, came to us for a brand transformation. We redesigned their logo and visual identity to feel current while retaining their iconic brand colors and historical legacy. Beyond branding, we helped digitize their business by designing a custom-built website and inventory management system — moving a traditional business into the digital age with ease and elegance.",
     images: {
-      main: "/images/projects/27/main.jpg",
+      cover: "/images/projects/27/cover.png",
+      main: "/images/projects/27/new logo .png",
       gallery: [
+        "/images/projects/27/old logo.png",
           "/images/projects/27/gallery-1.jpg",
         "/images/projects/27/gallery-2.jpg",
         "/images/projects/27/gallery-3.jpg",
@@ -492,6 +517,7 @@ items: [
     longDescription:
       "Based in Goa, RIO Developers required consistent, high-quality branding across villas, commercial buildings, and residential towers. Internal and external signage systems elevate user experience and reinforce brand presence at every touchpoint.",
     images: {
+      cover: "/images/projects/28/main.jpg",
       main: "/images/projects/28/main.jpg",
       gallery: [
         "/images/projects/28/gallery-1.jpeg",
@@ -512,6 +538,7 @@ items: [
     longDescription:
       "1131, a contemporary restobar in Bangalore, engaged us to craft an end-to-end identity. Naming, logo, menus, glassware, signage, and more coalesce into a cohesive guest experience that stands out in a competitive F&B scene.",
     images: {
+      cover: "/images/projects/29/main.png",
       main: "/images/projects/29/main.png",
       gallery: [
         "/images/projects/29/gallery-1.png",
@@ -526,11 +553,12 @@ items: [
     title: "EK AUR",
     year: 2021,
     services:
-      "Communication Design, Brand Identity,Marketing Collaterals, Logo Design , Packaging",
+      "Brand Identity, Logo Design ,Marketing Collaterals, Packaging,Communication Design",
     category: "design",
     longDescription:
       "For this bold cocktail-mixer brand, we created a name, visual identity, and packaging system bursting with energy and playfulness. Vibrant labels and dynamic social creatives establish a unique, youthful voice.",
     images: {
+      cover: "/images/projects/30/main.png",
       main: "/images/projects/30/main.png",
       gallery: [
         "/images/projects/30/gallery-1.jpg",
@@ -554,6 +582,7 @@ items: [
     longDescription:
       "We conceived and executed the 2022-23 admissions campaign for this Bangalore international school. Strategic messaging, aspirational imagery, and multi-channel rollout increased awareness and enrolment.",
     images: {
+      cover: "/images/projects/31/main.png",
       main: "/images/projects/31/main.png",
       gallery: [
         "/images/projects/31/gallery-1.jpg",
@@ -573,6 +602,7 @@ items: [
     longDescription:
       "Fine Art Printings marries traditional craftsmanship with modern production. Branding and collateral communicate archival quality, colour fidelity, and a collaborative approach to working with artists and photographers.",
     images: {
+      cover: "/images/projects/32/main.jpg",
       main: "/images/projects/32/main.jpg",
       gallery: [
         "/images/projects/32/gallery-1.jpg",
@@ -586,28 +616,7 @@ items: [
       ],
     },
   },
-  {
-    id: 33,
-    title: "WEBSITE DESIGN",
-    year: 2025,
-    services: "Communication Design, Exhibition Design",
-    category: "design",
-    longDescription:
-      "We specialize in creating simple, yet highly effective website designs. Our focus is on delivering a user-friendly experience that achieves your goals.",
-    images: {
-      main: "/images/projects/33/main.png",
-      gallery: [
-        "/images/projects/33/gallery-1.png",
-        "/images/projects/33/gallery-2.png",
-        "/images/projects/33/gallery-3.png",
-        "/images/projects/33/gallery-4.png",
-        "/images/projects/33/gallery-5.jpg",
-        "/images/projects/33/gallery-6.jpg",
-        "/images/projects/33/gallery-7.png",
-        "/images/projects/33/gallery-8.png",
-      ],
-    },
-  },
+  
   {
     id: 34,
     title: "PACKAGING DESIGN",
@@ -617,6 +626,7 @@ items: [
     longDescription:
       "From structural dielines to shelf-ready mock-ups, this packaging-design case study shows how thoughtful form, tactile materials, and clear information hierarchy converge to delight consumers and streamline logistics.",
     images: {
+      cover: "/images/projects/34/main.png",
       main: "/images/projects/34/main.png",
       gallery: [
         "/images/projects/34/gallery-1.png",
@@ -626,6 +636,8 @@ items: [
         "/images/projects/34/gallery-5.png",
         "/images/projects/34/gallery-6.png",
         "/images/projects/34/gallery-7.jpg",
+        "/images/projects/34/gallery-8.png",
+        "/images/projects/34/gallery-9.png",
       ],
     },
   },

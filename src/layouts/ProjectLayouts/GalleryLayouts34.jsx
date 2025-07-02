@@ -100,7 +100,38 @@ const GalleryLayout = ({ images, handleImageError }) => (
         className="w-full h-full object-contain object-center cursor-pointer hover:opacity-70 transition-opacity duration-300"
       />
     </div>
+      {/* 2 │ WIDE LEFT */}
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-5 lg:col-span-6 sm:row-span-2
+    ">
+      <img
+        src={images[7]}
+        alt="Gallery 2"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center cursor-pointer hover:opacity-70 transition-opacity duration-300"
+      />
+    </div>
+    {/* 3 │ PORTRAIT RIGHT */}
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-5 lg:col-span- sm:row-span-3
+    ">
+      <img
+        src={images[8]}
+        alt="Gallery 3"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center cursor-pointer hover:opacity-70 transition-opacity duration-300"
+      />
+    </div>
   </div>
+
 );
 
 export default GalleryLayout;

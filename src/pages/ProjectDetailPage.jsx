@@ -71,7 +71,7 @@ const ProjectDetailPage = () => {
             ...x,
             displayCategory:
               projects.categories.find((c) => c.id === first)?.label ?? first,
-            image: x.images.main,
+            image: x.images.cover,
           };
         })
     );
@@ -164,7 +164,11 @@ const ProjectDetailPage = () => {
       </div>
     );
   }
-
+  const formattedServices = (project.services || project.displayCategory || "")
+  .split(",")
+  .map((svc) => svc.trim()) // remove leading/trailing spaces
+  .filter((svc) => svc.length > 0)
+  .sort((a, b) => a.length - b.length); // sort shortest to longest
   /* =======================  RENDER  ======================= */
   return (
     <main className="detail-page-main">
@@ -211,15 +215,12 @@ const ProjectDetailPage = () => {
                 </li>
                 <li>
                   <p className="detail-info-label">Services</p>
-                  <p className="detail-info-value">
-                    {(project.services || project.displayCategory)
-                      .split(",")
-                      .map((svc) => svc.trim())
-                      .sort((a, b) => a.length - b.length)
-                      .map((svc, idx) => (
-                        <span key={idx} className="block">{svc}</span>
-                      ))}
-                  </p>
+<p className="detail-info-value">
+  {formattedServices.map((svc, idx) => (
+    <span key={idx} className="block">{svc}</span>
+  ))}
+</p>
+
                 </li>
                 {project.label && (
                   <li>

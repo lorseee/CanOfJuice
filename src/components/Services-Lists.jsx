@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useLayoutEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -82,13 +83,13 @@ const SECTIONS = [
   },
 ];
 
-const Heading = ({ text }) => (
+const Heading = ({ text,isActive }) => (
   <motion.h2
     layout="position"
-    className="services-heading group relative inline-block cursor-pointer"
+    className="services-heading relative inline-block cursor-pointer"
   >
     {text}
-    <span className="absolute left-0 -bottom-1 h-0.5 w-0 bg-black transition-all duration-300 group-hover:w-full"></span>
+    <span className="absolute left-0 -bottom-1 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
   </motion.h2>
 );
 
@@ -206,7 +207,8 @@ const ServicesLists = () => {
                   )}
                 </AnimatePresence>
               </div>
-
+              
+              <AnimatePresence>
               {active && currentImage && (
                 <motion.div
                   key="img"
@@ -215,14 +217,37 @@ const ServicesLists = () => {
                   exit={{ opacity: 0, scale: 0.98 }}
                   transition={{ duration: 0.2 }}
                   className="services-image"
+                        style={{
+
+                        pointerEvents: "none",
+
+                      
+
+      }}
+
                 >
                   <img
                     src={currentImage}
                     alt={hoveredBullet || title}
                     onError={(e) => (e.currentTarget.style.opacity = 0)}
+                    style={{
+
+          opacity: currentImage ? 1 : 0,
+
+          transition: "opacity 0.2s ease-in-out",
+
+          maxWidth: "100%",
+
+          maxHeight: "100%",
+
+          
+
+        }}
+
                   />
                 </motion.div>
               )}
+              </AnimatePresence>
             </div>
           </motion.div>
         );

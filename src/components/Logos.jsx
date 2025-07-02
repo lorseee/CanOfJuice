@@ -13,7 +13,8 @@ const Logos = () => {
     "/images/brands/brand16.png", "/images/brands/brand17.png", "/images/brands/brand18.png", "/images/brands/brand19.png", "/images/brands/brand20.png",
     "/images/brands/brand21.png", "/images/brands/brand22.png", "/images/brands/brand23.png", "/images/brands/brand24.png", "/images/brands/brand25.png",
     "/images/brands/brand26.png", "/images/brands/brand27.png", "/images/brands/brand28.png", "/images/brands/brand29.png", "/images/brands/brand30.png",
-    "/images/brands/brand31.jpg", "/images/brands/brand32.png", "/images/brands/brand33.png", "/images/brands/brand34.png"
+    "/images/brands/brand31.jpg", "/images/brands/brand32.png", "/images/brands/brand33.png", "/images/brands/brand34.png","/images/brands/brand35.png",
+    "/images/brands/brand36.png"
   ];
   
   useEffect(() => {

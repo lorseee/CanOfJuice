@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projects } from "../constants";
+import { video } from "framer-motion/client";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,7 +16,10 @@ const Projects = () => {
   // Secondary marquee
   const subtitleRef        = useRef(null);
   const subtitleWrapperRef = useRef(null);
-
+  const videoRef = useRef(null);
+  const handlePlay = () => {
+    videoRef.current && videoRef.current.play();
+  }
   const projectRefs = useRef([]);
   const viewAllRef  = useRef(null);
   const leftLineRef = useRef(null);
@@ -244,6 +248,24 @@ const Projects = () => {
              brand collaterals / <br /> branded environments /packaging designs
           </p>
         </div>
+      </section>
+
+      <section className="video-section">
+      <div className="video-container">
+        <video 
+        ref={videoRef}
+          src="/videos/cojvideo.mp4" 
+          alt="video mp4" 
+          autoPlay 
+          loop
+          muted
+          playsInline
+          controls // shows play/pause & volume
+    
+          className="video-media"
+        />
+        
+      </div>
       </section>
     </>
   );

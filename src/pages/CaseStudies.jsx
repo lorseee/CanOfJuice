@@ -53,8 +53,8 @@ export const CASE_STUDIES = [
     title: "Farm Stories – Organic Brand from the Ground Up",
     client: "Farm Stories",
     serviceAreas: "Naming, Branding, Packaging, Social Media",
-    heroImg: "/images/projects/23/main.jpg",
-    metaImgs: ["/images/projects/23/gallery-1.jpg", "/images/projects/23/gallery-2.png"],
+    heroImg: "/images/projects/23/gallery-1.jpg",
+    metaImgs: ["/images/projects/23/main.jpg", "/images/projects/23/gallery-2.png"],
     challenge:
       "Farm Stories needed a brand identity that captured its authenticity, freshness, and small-batch organic roots — without falling into generic 'green-washed' clichés.",
     approach:
@@ -249,7 +249,7 @@ const CaseStudies = () => {
   
 
       <section className="detail-project-content w-full pb-0 mb-0  ">
-      <div className="detail-content-inner pb-0 mb-0 max-h-[75vh] overflow-auto">
+      <div className="detail-content-inner pb-0 mb-0 max-h-[77vh] overflow-auto">
           {/* description + info */}
           <div ref={descRef} className="detail-project-description-grid flex flex-col pb-0 mb-0 ">
             <div className="detail-description-section">
@@ -297,16 +297,16 @@ const CaseStudies = () => {
 
       {/* Challenge Section - Moved closer to description grid */}
       <section className="max-w-6xl mx-auto py-4 px-4">
-        <div className="md:ml-16">
+        <div className="md:ml-18">
           <h2 className="text-4xl font-semibold mb-4">Challenge</h2>
           <p className="text-lg text-[#555] font-light leading-relaxed">{study.challenge}</p>
         </div>
       </section>
 
       {/* Details & Overview - Remaining sections */}
-      <section className="max-w-6xl mx-auto grid md:grid-cols-3 gap-4 py-1 px-4">
+      <section className="max-w-6xl mx-auto grid md:grid-cols-3 gap-3 py-1 px-4">
         {/* Left: Project Description */}
-        <div className="md:col-span-2 space-y-4 md:ml-16 -mt-2">
+        <div className="md:col-span-2 space-y-4 md:ml-18 -mt-2">
           <h2 className="text-3xl font-semibold">Approach & Process</h2>
           <p className="text-base text-[#555] font-light">{study.approach}</p>
 
