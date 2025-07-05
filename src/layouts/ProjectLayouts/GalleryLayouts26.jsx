@@ -103,6 +103,20 @@ const GalleryLayout = ({ images, handleImageError }) => (
         className="w-full h-full object-cover object-center cursor-pointer hover:opacity-85 transition-opacity duration-300"
       />
     </div>
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-4
+    ">
+      <img
+        src={images[7]}
+        alt="Gallery 5"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center cursor-pointer hover:opacity-85 transition-opacity duration-300"
+      />
+    </div>
     
   </div>
   

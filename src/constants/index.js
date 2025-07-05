@@ -481,6 +481,8 @@ items: [
         "/images/projects/26/gallery-4.png",
         "/images/projects/26/gallery-5.png",
         "/images/projects/26/gallery-6.png",
+        "/images/projects/26/gallery-7.jpg",
+        "/images/projects/26/gallery-8.jpg",
 
       ],
     },

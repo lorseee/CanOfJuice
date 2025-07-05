@@ -29,3 +29,67 @@
     object-position: center !important;
     display: block !important;
 }
+
+/* Mobile responsive styles - phones only */
+@media screen and (max-width: 768px) {
+    .hero-section {
+        padding: 0.25rem !important;
+        margin: 0 !important;
+        height: auto !important;
+        background-color: black !important;
+        display: block !important;
+    }
+
+    .hero-container {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 16/9 !important;
+        max-height: none !important;
+        padding-bottom: 4rem !important; /* Increased bottom space */
+    }
+
+    .hero-media {
+        object-fit: contain !important;
+        background-color: black !important;
+        border-radius: 10px;
+        margin-top: 1rem;
+        margin-bottom: 1rem; /* Added more space below the image */
+        margin-left: 0.67rem;
+        margin-right: 10rem;
+        width: 98% !important;
+        height: auto !important;
+        display: block !important;
+    }
+}
+
+/* Extra small phones */
+@media screen and (max-width: 480px) {
+    .hero-section {
+        padding: 0.125rem !important;
+        margin: 0 !important;
+        height: auto !important;
+        background-color: black !important;
+        display: block !important;
+        padding-bottom: 1.3rem !important; /* Slightly more space for extra small phones */
+    }
+
+    .hero-container {
+        width: 98% !important;
+        border-radius: 0.25rem !important;
+        max-height: none !important;
+        padding-bottom: 1rem !important; /* Increased space */
+    }
+
+    .hero-media {
+        object-fit: contain !important;
+        background-color: black !important;
+        border-radius: 10px;
+        margin-top: 1rem;
+        margin-bottom: 1rem; /* More space below image */
+        margin-left: 0.67rem;
+        margin-right: 10rem;
+        width: 95% !important;
+        height: auto !important;
+        display: block !important;
+    }
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -9,6 +9,16 @@ const Info = () => {
   const textRef = useRef(null);
   const countersRef = useRef(null);
   const lagRef = useRef(null);
+  const [isPhone, setIsPhone] = useState(false);
+
+useEffect(() => {
+  const handleResize = () => {
+    setIsPhone(window.innerWidth <= 768);
+  };
+  handleResize(); // set on mount
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -131,10 +141,12 @@ const Info = () => {
             minWidth: "260px",
             display: "flex",
             alignItems: "flex-start",
-            marginTop: "-0.5rem",
-            marginLeft: "2rem",
+            marginTop: isPhone? "1rem": "-0.5rem",
+            marginLeft: isPhone? "-1rem" : "2rem", // Adjust margin for smaller screens
+            
           }}>
             <h1 style={{
+              
               fontSize: "clamp(2.8rem, 6vw, 5.5rem)",
               fontWeight: 800,
               lineHeight: 1.1,

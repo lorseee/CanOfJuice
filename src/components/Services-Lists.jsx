@@ -254,7 +254,10 @@ const ServicesLists = () => {
       })}
 
       <div className="bg-black p-4 mt-16 text-white text-center flex justify-center items-center">
-        <p className="text-4xl" style={{ marginLeft: "2rem", fontSize: "clamp(3.2rem, 4vw, 2rem)", fontFamily: "'Khand', sans-serif" }}>
+        <p className="text-4xl  sm:text-4xl md:text-4xl lg:text-4xl" style={{
+           marginLeft: "2rem", 
+           fontSize: "clamp(3.2rem, 5vw, 1.7rem)", 
+           fontFamily: "'Khand', sans-serif" }}>
           Need a hand? We are happy to help.
         </p>
       </div>

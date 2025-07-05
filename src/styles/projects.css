@@ -52,6 +52,44 @@
     font-size: 3rem;
   }
 }
+/* Desktop default: only show first h2 */
+.marquee-wrapper h2:nth-child(2) {
+  display: none;
+}
+
+/* Mobile (<=768px): show both h2s for looping marquee */
+@media (max-width: 768px) {
+  .heading-wrapper {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .marquee-wrapper {
+    animation: scroll-left 7s linear infinite;
+    display: inline-flex;
+    width: max-content;
+  }
+
+  .projects-heading {
+    display: inline-block;
+    margin-right: 5rem; /* gap between the two */
+  }
+
+  .marquee-wrapper h2:nth-child(2) {
+    display: inline-block;
+  }
+
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}
+
 
 /* ---------- Grid ---------- */
 .projects-grid {
@@ -277,7 +315,13 @@
   padding-left: 0;
   margin-top: -2rem;
 }
-
+@media (max-width: 767px) {
+  .expertise-section .projects-heading {
+    font-size: 3rem;
+    margin-top: -2rem;
+    margin-bottom: 2rem;
+  }
+}
 .expertise-text {
   margin: 0rem 0 3rem 0;
   color: #000;
@@ -326,4 +370,45 @@
     object-fit: cover !important;
     object-position: center !important;
     display: block !important;
+}
+@media screen and (max-width: 768px) {
+    .video-section {
+        padding: 0.25rem !important;
+        margin: 0 !important;
+    height: auto !important;
+    background-color: black !important;
+    display: block !important;
+    }
+    
+    .video-container {
+        width: 95% !important;
+        height: auto !important; /* Allow height to adjust */
+        aspect-ratio: 16/9 !important; /* Maintain video aspect ratio */
+        max-height: 70vh !important; /* Prevent it from being too tall */
+    }
+    
+    .video-media {
+        object-fit: contain !important; /* Show whole video instead of cropping */
+        background-color: black !important; /* Fill letterbox areas with black */
+        margin-top:1rem;
+    margin-bottom:1rem;
+    margin-left: 0.67rem;
+    margin-right: 10rem;
+    width: 95% !important;
+    height: auto !important; 
+     display: block !important;/* Fill letterbox areas with black */
+    }
+}
+
+/* Extra small phones */
+@media screen and (max-width: 480px) {
+    .video-section {
+        padding: 0.125rem !important;
+    }
+    
+    .video-container {
+        width: 98% !important;
+        border-radius: 0.25rem !important;
+        max-height: 60vh !important;
+    }
 }

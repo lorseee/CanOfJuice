@@ -86,6 +86,26 @@ const Projects = () => {
           }
         );
       }
+      const isPhone = window.innerWidth <= 768;
+if (!isPhone && headingRef.current && headingWrapperRef.current) {
+  gsap.fromTo(
+    headingRef.current,
+    { opacity: 0, x: '100%' },
+    {
+      opacity: 1,
+      x: '0%',
+      duration: 2,
+      ease: "power2.inOut",
+      scrollTrigger: {
+        trigger: headingWrapperRef.current,
+        start: "top 80%",
+        end: "top 10%",
+        scrub: 1,
+        toggleActions: "restart none none reverse",
+      },
+    }
+  );
+}
 
       // Cards reveal
       if (projectRefs.current.length) {
@@ -179,7 +199,10 @@ const Projects = () => {
           {/* Primary marquee */}
           <div ref={headingWrapperRef} className="heading-wrapper">
             <h2 ref={headingRef} className="projects-heading">
-              OUR WORK — FEATURED PROJECTS
+              <div className="heading-wrapper marquee-wrapper">
+               <h2 className="projects-heading marquee">OUR WORK — FEATURED PROJECTS</h2>
+              <h2 className="projects-heading marquee">OUR WORK — FEATURED PROJECTS</h2>
+              </div>
               
             </h2>
           </div>
@@ -237,11 +260,10 @@ const Projects = () => {
       <section className="expertise-section">
         <div className="projects-container">
           {/* Secondary marquee */}
-          <div ref={subtitleWrapperRef} className="heading-wrapper">
-            <h2 ref={subtitleRef} className="projects-heading">
-              WE ARE EXPERTS IN CREATING 
-            </h2>
-          </div>
+          <div ref={subtitleWrapperRef} className="heading-wrapper marquee-wrapper">
+  <h2 ref={subtitleRef} className="projects-heading marquee">WE ARE EXPERTS IN CREATING</h2>
+  <h2 className="projects-heading marquee">WE ARE EXPERTS IN CREATING</h2>
+</div>
           {/* Static expertise text */}
           <p className="expertise-text">
             space designs / exhibitions / signage &amp; wayfinding <br /> branded identities /

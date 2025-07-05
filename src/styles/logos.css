@@ -90,7 +90,8 @@
 /* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
   .logos-heading {
-    font-size: 3rem;
+    margin-top:2rem;
+    font-size: 6rem;
   }
   
   .logos-subheading {
@@ -99,7 +100,7 @@
   }
   
   .logo-wrapper {
-    height: 4rem;
+    height: 5rem;
   }
 }
 

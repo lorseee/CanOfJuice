@@ -40,37 +40,3 @@
   color: #fff;
 }
 
-/* Tablet */
-@media (max-width: 1024px) {
-  .content-overlay { max-width: 90%; padding: 2.5rem; }
-  #about h1       { font-size: 2.5rem; }
-  #about p        { font-size: 1.125rem; }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  .content-overlay { max-width: 95%; padding: 1.5rem; }
-  #about h1       { font-size: 2.5rem; }
-  #about p        { font-size: 2rem; max-width: 100%; }
-}
-
-/* Small mobile */
-@media (max-width: 480px) {
-  #about h1 { font-size: 2rem; }
-  #about p  { font-size: 1rem; }
-}
-
-/* Landscape mobile */
-@media (max-height: 600px) and (orientation: landscape) {
-  #about { min-height: 100vh; padding: 3rem 0; }
-}
-
-/* Retina background */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  #about { background-image: url('/images/aboutus@2x.JPG'); }
-}
-
-/* Reduced-motion users */
-@media (prefers-reduced-motion: reduce) {
-  .content-overlay { transition: none; }
-}
