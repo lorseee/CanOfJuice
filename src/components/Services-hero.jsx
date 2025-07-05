@@ -28,7 +28,7 @@ const WorksHero = () => {
     >
       <div className="works-hero-image-container">
         <img
-          src="/images/works-hero.jpg"
+          src="/images/services-hero.jpg"
           alt="Works Hero"
           className="works-hero-image"
           onError={(e) => { 

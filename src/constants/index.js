@@ -294,7 +294,7 @@ items: [
     longDescription:
       "This Bangalore multi-sport facility needed a complete identity. From naming and logo to environmental graphics and merchandise, we created a playful yet professional visual language that unifies the space and energises its community.",
     images: {
-      cover: "/images/projects/17/main.jpg",
+      cover: "/images/projects/17/cover.jpg",
       main: "/images/projects/17/main.jpg",
       gallery: [
         "/images/projects/17/gallery-1.jpeg",
@@ -458,6 +458,8 @@ items: [
         "/images/projects/25/gallery-1.jpg",
         "/images/projects/25/gallery-2.jpg",
         "/images/projects/25/gallery-3.jpg",
+        "/images/projects/25/gallery-4.png",
+        "/images/projects/25/gallery-5.png",
       ],
     },
   },

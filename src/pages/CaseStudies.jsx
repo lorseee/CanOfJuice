@@ -297,7 +297,7 @@ const CaseStudies = () => {
 
       {/* Challenge Section - Moved closer to description grid */}
       <section className="max-w-6xl mx-auto py-4 px-4">
-        <div className="md:ml-18">
+        <div className="md:ml-16">
           <h2 className="text-4xl font-semibold mb-4">Challenge</h2>
           <p className="text-lg text-[#555] font-light leading-relaxed">{study.challenge}</p>
         </div>
@@ -356,45 +356,55 @@ const CaseStudies = () => {
       
       {/* Related Projects */}
       {related.length > 0 && (
-        <div ref={relWrap} className="detail-related-projects-section">
-          <h2>Related&nbsp;Projects</h2>
-          <div className="detail-related-projects-grid">
-            {related.map((r) => (
-              <article
-                key={r.id}
-                ref={pushRel}
-                className="detail-related-project-item"
-                onClick={() => {
-                  if (r.id === 2) {
-                    navigate("/case-studies/2"); // Wework
-                  } else if (r.id === 17) {
-                    navigate("/case-studies/17"); // Banana Sport
-                  } else if (r.id === 10) {
-                    navigate("/case-studies/10"); // Farm Stories
-                  } else {
-                    navigate(`/project/${r.id}`);
-                  }
-                }}
-              >
-                <div className="detail-related-project-image-wrapper">
-                  <img
-                    src={r.image}
-                    alt={r.title}
-                    className="detail-related-project-image"
-                    onError={errImg}
-                  />
-                  <div className="detail-related-project-overlay" />
-                </div>
-                <div className="detail-related-project-content">
-                  <p className="detail-related-project-category">{r.displayCategory}</p>
-                  <h3 className="detail-related-project-title">{r.title}</h3>
-                </div>
-              </article>
-            ))}
+  <div ref={relWrap} className="detail-related-projects-section py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 max-w-none lg:max-w-7xl xl:max-w-8xl 2xl:max-w-[1800px] mx-auto">
+    <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-semibold mb-6 sm:mb-8 lg:mb-12 text-center">
+      Related&nbsp;Projects
+    </h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 xl:gap-10 2xl:gap-12">
+      {related.map((r) => (
+        <article
+          key={r.id}
+          ref={pushRel}
+          className="group cursor-pointer"
+          onClick={() => {
+            if (r.id === 2) {
+              navigate("/case-studies/2"); // Wework
+            } else if (r.id === 17) {
+              navigate("/case-studies/17"); // Banana Sport
+            } else if (r.id === 10) {
+              navigate("/case-studies/10"); // Farm Stories
+            } else {
+              navigate(`/project/${r.id}`);
+            }
+          }}
+        >
+          <div className="relative overflow-hidden rounded-lg sm:rounded-xl lg:rounded-2xl aspect-[4/3] sm:aspect-[3/2] lg:aspect-[4/3] xl:aspect-[3/2] 2xl:aspect-[4/3]">
+            <img
+              src={r.image}
+              alt={r.title}
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              onError={errImg}
+            />
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+            
+            {/* Overlaid text content */}
+            <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4 lg:p-6">
+              <div className="space-y-1 sm:space-y-2">
+                <p className="text-xs sm:text-sm lg:text-base xl:text-lg 2xl:text-xl text-white font-medium uppercase tracking-wide drop-shadow-lg">
+                  {r.displayCategory}
+                </p>
+                <h3 className="text-sm sm:text-base lg:text-lg xl:text-xl 2xl:text-2xl font-semibold text-white group-hover:text-blue-300 transition-colors leading-tight drop-shadow-lg">
+                  {r.title}
+                </h3>
+              </div>
+            </div>
           </div>
-        </div>
-      )}
-      
+        </article>
+      ))}
+    </div>
+  </div>
+)}
+   
       {modalOpen && (
         <div className="image-modal-overlay" onClick={closeModal}>
           <button

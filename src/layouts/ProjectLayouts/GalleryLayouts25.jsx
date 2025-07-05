@@ -84,6 +84,31 @@ const GalleryLayout = ({ images, handleImageError }) => (
         className="w-full h-full object-cover object-center cursor-pointer hover:opacity-85 transition-opacity duration-300"
       />
     </div>
+     <div className="
+      /* Small screens and up: original layout */
+     sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-3
+    ">
+      <img
+        src={images[5]}
+        alt="Gallery 4"
+        onError={handleImageError}
+        className="w-full h-full object-contain object-center cursor-pointer hover:opacity-70 transition-opacity duration-300"
+      />
+    </div>
+    <div className="
+      /* Mobile: square aspect ratio */
+      aspect-square w-full
+      
+      /* Small screens and up: original layout */
+      sm:aspect-auto sm:col-span-4 lg:col-span-6 sm:row-span-3
+    ">
+      <img
+        src={images[6]}
+        alt="Gallery 3"
+        onError={handleImageError}
+        className="w-full h-full object-cover object-center cursor-pointer hover:opacity-70 transition-opacity duration-300"
+      />
+    </div>
 
   </div>
 );

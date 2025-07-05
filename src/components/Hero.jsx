@@ -11,6 +11,10 @@ const Hero = forwardRef(({ id = "hero", ...props }, ref) => {
   
   // Combine refs - use the forwarded ref if available, otherwise use internal ref
   const sectionRef = ref || internalRef;
+  const videoRef = useRef(null);
+    const handlePlay = () => {
+      videoRef.current && videoRef.current.play();
+    }
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -49,9 +53,14 @@ const Hero = forwardRef(({ id = "hero", ...props }, ref) => {
       className="hero-section"
     >
       <div className="hero-container">
-        <img 
-          src="/videos/video.gif" 
-          alt="Hero GIF" 
+        <video  
+        ref={videoRef} 
+          src="/videos/banner.mp4" 
+          alt="Hero GIF"
+          autoPlay
+          loop
+          playsInline
+          muted 
           className="hero-media"
         />
       </div>

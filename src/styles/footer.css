@@ -1,5 +1,4 @@
 /* src/components/footer.css */
-
 @font-face {
   font-family: 'Khand';
   src: url('/fonts/Khand-Bold.ttf') format('truetype');
@@ -34,7 +33,7 @@
   justify-content: space-between;
   height: 7rem;
   width: 100%;
-  padding-top: 4.5rem;
+  padding-top: 3.9rem;
 }
 
 .footer-logo img {
@@ -46,11 +45,15 @@
   display: flex;
   align-items: center;
   margin-left: auto;
+  padding-bottom:-4rem;
+ 
 }
 
 .footer-text p {
   font-family: 'Khand';
   margin: 0;
+  margin-bottom: -2rem;
+  padding-bottom: -4rem;
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -121,11 +124,12 @@
   .footer-logo {
     justify-content: center;
     height: 10rem;
+    padding-top:2rem;
   }
   .footer-logo img {
     height: 10rem;
   }
-
+  
   .footer-body {
     flex-direction: column;
     align-items: center;
@@ -153,7 +157,7 @@
   .footer-logo img {
     height: 6rem;
   }
-
+  
   .footer-contact {
     font-size: 0.8rem;
   }
