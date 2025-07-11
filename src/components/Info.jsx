@@ -85,9 +85,13 @@ useEffect(() => {
             duration: 1.5,
             ease: "power1.out",
             onUpdate: () => {
+              const isPhone = window.innerWidth <= 768;
               const value = Math.ceil(obj.value);
-              const formatted = value === 750000 
-                ? `<span style="white-space: nowrap; font-size: 2.4rem;font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;">${value.toLocaleString()} <span style="font-size: 1.2rem">sqft</span></span>`
+             
+const formatted = value === 750000
+  ? `<span style="white-space: nowrap; font-size: ${isPhone ? '1.8rem' : '2.4rem'}; font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;">
+       ${value.toLocaleString()} <span style="font-size: ${isPhone ? '0.9rem' : '1.2rem'}">sqft</span>
+     </span>`
                 : value + (plus ? "+" : "");
               el.innerHTML = formatted;
             },
@@ -141,20 +145,26 @@ useEffect(() => {
             minWidth: "260px",
             display: "flex",
             alignItems: "flex-start",
-            marginTop: isPhone? "1rem": "-0.5rem",
-            marginLeft: isPhone? "-1rem" : "2rem", // Adjust margin for smaller screens
+            marginTop: isPhone? "3rem": "-1rem",
+            marginLeft: isPhone? "0rem" : "-1rem", // Adjust margin for smaller screens
             
           }}>
             <h1 style={{
               
-              fontSize: "clamp(2.8rem, 6vw, 5.5rem)",
+             fontSize: isPhone ? "clamp(3rem, 5vw, 4rem)" : "clamp(2.8rem, 6vw, 5.5rem)", 
               fontWeight: 800,
               lineHeight: 1.1,
-      
-              
+              whiteSpace: isPhone ? "nowrap" : "normal",
               color: "#000"
             }}>
-              ABOUT OUR <br /> STUDIO
+              {isPhone ? (
+    "ABOUT OUR STUDIO"
+  ) : (
+    <>
+      ABOUT OUR <br /> STUDIO
+    </>
+  )}
+             
             </h1>
           </div>
 
@@ -171,6 +181,8 @@ useEffect(() => {
                   margin: 0,
                   marginBottom: "0.65rem",     // ← give the same spacing you had on <p>’s bottom
                   fontSize: "1.4rem",
+                  marginTop: isPhone? "-0.2rem": "-1rem",
+                  marginLeft: isPhone? "0.1rem" : "-1rem",
                   fontWeight: 700,
                   color: "#000"
                 }}>
@@ -186,9 +198,11 @@ useEffect(() => {
                   key={i}
                   className="desc-line"
                   style={{
-                    fontSize: "1.15rem",
+                    fontSize: isPhone ? "1.35rem":"1.15rem",
                     lineHeight: 1.7,
+                    lineHeight: isPhone ? 1.4 : 1.7,
                     margin: 0,
+                    marginLeft: isPhone ? "-1rem" : "-1rem",
                     marginBottom: "0.65rem",
                     color: "#111"
                   }}
@@ -202,43 +216,56 @@ useEffect(() => {
               ))}
             </div>
             {/* COUNTERS */}
-            <div
-              ref={countersRef}
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "2rem",
-                justifyContent: "flex-start",
-              }}
-            >
-              {[
-                { target: 100, label: "Happy Clients", plus: true },
-                { target: 150, label: "Design Projects", plus: true },
-                { target: 750000, label: <span>Branded&nbsp;Environments</span>, plus: false },
-               
-              ].map((c, idx) => (
-                <div key={idx} style={{
-                  flex: "1 1 100px",
-                  minWidth: "120px",
-                  textAlign: "left"
-                }}>
-                  <div
-                    className="counter-value"
-                    data-target={c.target}
-                    data-plus={c.plus}
-                    style={{
-                      fontSize: "2.4rem",
-                      fontWeight: 800,
-                      marginBottom: ".25rem",
-                      color: "#000",
-                    }}
-                  >
-                    0{c.plus ? "+" : ""}
-                  </div>
-                  <div style={{ fontSize: "0.95rem", color: "#666" }}>{c.label}</div>
-                </div>
-              ))}
-            </div>
+         <div
+  ref={countersRef}
+  style={{
+    display: "flex",
+    flexWrap: isPhone ? "nowrap" : "wrap",
+    gap: isPhone ? "1.2rem" : "2rem", // less space on phones
+    justifyContent: "flex-start",
+  }}
+>
+  {[
+    { target: 100, label: "Happy Clients", plus: true },
+    { target: 150, label: "Design Projects", plus: true },
+    { target: 750000, label: <span>Branded&nbsp;Environments</span>, plus: false },
+  ].map((c, idx) => (
+    <div
+      key={idx}
+      style={{
+        flex: "1 1 auto",
+        minWidth: isPhone ? "90px" : "120px",
+        textAlign: "left",
+      }}
+    >
+      <div
+        className="counter-value"
+        data-target={c.target}
+        data-plus={c.plus}
+        style={{
+          fontSize:
+            isPhone && c.target === 750000 ? "1.6rem" : isPhone ? "1.9rem" : "2.4rem",
+          fontWeight: 800,
+          marginBottom: ".25rem",
+          color: "#000",
+          whiteSpace: "nowrap",
+        }}
+      >
+        0{c.plus ? "+" : ""}
+      </div>
+      <div
+        style={{
+          fontSize: isPhone ? "0.8rem" : "0.95rem",
+          color: "#666",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {c.label}
+      </div>
+    </div>
+  ))}
+</div>
+
           </div>
         </div>
       </section>

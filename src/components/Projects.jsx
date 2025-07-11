@@ -187,6 +187,29 @@ if (!isPhone && headingRef.current && headingWrapperRef.current) {
         );
       }
     });
+    const isPhone = window.innerWidth <= 768;
+if (!isPhone && subtitleRef.current && subtitleWrapperRef.current) {
+  gsap.fromTo(
+    subtitleRef.current,
+    { opacity: 0, x: '100%' 
+
+    },
+    {
+      opacity: 1,
+      x: '0%',
+      duration: 5,
+      ease: "power2.inOut",
+      scrollTrigger: {
+        trigger: subtitleWrapperRef.current,
+        start: "top 80%",
+        end: "top 10%",
+       
+        toggleActions: "restart none none reverse",
+      },
+    }
+  );
+}
+
 
     return () => ctx.revert();
   }, []);

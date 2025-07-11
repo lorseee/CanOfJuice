@@ -73,49 +73,59 @@
 }
 
 /* Mobile responsive styles - phones only */
-@media screen and (max-width: 768px) {
+
+ @media screen and (max-width: 768px) {
   .services-hero {
-    padding: 0 !important;
-    margin: 0 !important;
-    height: auto !important;
-    background-color: black !important;
-    display: block !important;
+    height: auto !important; /* match .services-hero-image-container */
     position: relative;
+    margin-top:-23rem;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    background-color: black !important;
+    padding: 0 !important;
+    
   }
 
   .services-hero-image-container {
+    height: auto!important; /* take full height of parent */
     width: 100% !important;
-    height: auto !important;
-    aspect-ratio: 16/9 !important; /* Force horizontal aspect ratio */
-    max-height: 50vh !important; /* Limit height to 50% of viewport */
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    margin-top: -4rem; /* Move container upwards */
-    margin-bottom: 1rem;
-    overflow: hidden;
+    margin: 0 !important;
+    aspect-ratio: auto !important;
+    max-height: none !important;
   }
 
   .services-hero-image {
-    object-fit: cover !important; /* Cover to fill the horizontal container */
-    background-color: black !important;
-    margin: 0 auto !important;
+    height: auto !important;
     width: 100% !important;
-    height: 100% !important;
-    border-radius: 0;
-    display: block !important;
-    object-position: center center; /* Center the image */
+    padding-bottom:-50rem;
+    margin: 0 !important;
+    object-fit: contain !important;
   }
 
   .services-hero-title {
     font-size: clamp(1.5rem, 8vw, 3rem) !important;
+    color: white !important;
+    position: absolute;
+    inset: 0;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 10;
+    margin-bottom: 0 !important; /* Remove all margins */
+    padding-bottom: -40rem; /* Remove all padding */
   }
+services
+
 
   /* Show help text on mobile */
   .services-hero-help-text {
     display: block !important;
     position: static !important;
-    margin-top: 1rem;
-    padding: 0 1rem;
+    margin: 0 !important; /* Remove all margins */
+    padding: 0.5rem 1rem 0 1rem !important; /* Only top and side padding */
     font-size: 0.85rem;
     line-height: 1.2;
   }
@@ -123,22 +133,42 @@
 
 /* Extra small phones */
 @media screen and (max-width: 480px) {
+  .services-hero {
+    margin-bottom: 0 !important; /* Ensure no bottom margin */
+  }
+  
   .services-hero-image-container {
     width: 100% !important;
-    aspect-ratio: 16/9 !important; /* Maintain horizontal aspect ratio */
-    max-height: 45vh !important; /* Slightly smaller on very small screens */
-    margin-top: -1.5rem; /* Less negative margin for smaller screens */
+    aspect-ratio: 16/9 !important;
+    max-height: auto !important;
+    margin: 0 !important; /* Remove all margins */
   }
 
   .services-hero-image {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
+    margin: 0 !important; /* Remove all margins */
+  }
+  .services-hero-title {
+    font-size: clamp(1.5rem, 8vw, 3rem) !important;
+    color: white !important;
+    position: absolute;
+    inset: 0;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 10;
+    margin-bottom:-20rem; /* Remove all margins */
+    padding-bottom: -40rem
   }
 
   .services-hero-help-text {
-    font-size: 0.8rem !important;
-    padding: 0 0.5rem !important;
+    font-size: 5px !important;
+    padding: 0.25rem 0.5rem 0 0.5rem !important; /* Only top and side padding */
+    margin: 0 !important; /* Remove all margins */
   }
 }
 
@@ -150,25 +180,25 @@
 .services-section{
   max-width:80rem;
   margin:0 auto;
-  padding:0 5rem; /* Removed vertical padding */
+  padding:0 5rem;
   display:flex;
   flex-direction:column;
-  gap:0; /* Remove gap between items */
-  padding-bottom: 4rem; /* Add padding to the bottom of the section */
+  gap:0;
+  padding-bottom: 4rem;
 }
 
 /* Mobile responsive for services section */
 @media screen and (max-width: 768px) {
   .services-section {
-    padding: 0 0.5rem;
-    padding-bottom: 2rem;
+    padding: 0 0.5rem 2rem 0.5rem !important; /* Remove top padding completely */
+    margin-top: -13rem;
   }
 }
 
 @media screen and (max-width: 480px) {
   .services-section {
-    padding: 0 1rem;
-    padding-bottom: 2rem;
+    padding: 0 1rem 2rem 1rem !important; /* Remove top padding completely */
+    margin-top: 0 !important;
   }
 }
 
@@ -182,12 +212,12 @@
   border-bottom:1px solid #fcfdff;
   cursor:pointer;
   overflow:hidden;
-  position: relative; /* Prevent layout shifts */
+  position: relative;
 }
 
 .services-item:last-child {
-  border-bottom: none; /* Remove border from last item */
-  padding-bottom: 4rem; /* Add padding below the last list */
+  border-bottom: none;
+  padding-bottom: 4rem;
 }
 
 .services-item-inner{
@@ -196,7 +226,7 @@
   gap:1rem;
   padding:0.5rem 0;
   transition:padding .35s ease;
-  position: relative; /* Prevent layout shifts */
+  position: relative;
 }
 
 /* Mobile layout: heading -> image -> bullets */
@@ -208,7 +238,7 @@
   overflow:hidden;
   margin-top:0.5rem;
   margin-bottom:0.5rem;
-  order: 2; /* Image comes after heading, before bullets on mobile */
+  order: 2;
 }
 
 .services-image img{
@@ -220,7 +250,7 @@
 /* Mobile responsive for services images */
 @media screen and (max-width: 768px) {
   .services-image {
-    height: 10rem;
+    height: 5rem;
     margin-top: 0.75rem;
     margin-bottom: 0.75rem;
   }
@@ -228,7 +258,7 @@
 
 @media screen and (max-width: 480px) {
   .services-image {
-    height: 8rem;
+    height: 6rem;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
   }
@@ -238,7 +268,7 @@
 @media(min-width:1024px){
   .services-item-inner{
     flex-direction:row;
-    align-items:flex-start; /* Align items to the top */
+    align-items:flex-start;
     gap:3rem;
     padding:2rem 0;
   }
@@ -256,7 +286,7 @@
     overflow:hidden;
     box-shadow:0 20px 40px -12px rgba(0,0,0,.25);
     margin:0;
-    order:initial; /* Reset ordering from mobile */
+    order:initial;
   }
 }
 
@@ -270,15 +300,15 @@
   margin: 0;
   padding: 0.25rem;
   transition: color 0.25s;
-  position: relative; /* required for underline */
-  display: inline-block; /* required for pseudo-element */
+  position: relative;
+  display: inline-block;
   cursor: pointer;
 }
 
 /* Mobile responsive for services heading */
 @media screen and (max-width: 768px) {
   .services-heading {
-    font-size: clamp(1.2rem, 6vw, 3rem);
+    font-size: clamp(1.2rem, 4vw, 3rem);
     padding: 0.5rem;
   }
 }
@@ -311,12 +341,12 @@
   display:flex;
   flex-direction:column;
   gap:0.25rem;
-  position: relative; /* Prevent layout shifts */
+  position: relative;
 }
 
 @media(min-width:1024px){
   .services-text {
-    align-items: flex-start; /* Ensure text starts at the top */
+    align-items: flex-start;
   }
 }
 
@@ -327,8 +357,8 @@
   display:flex;
   flex-direction:column;
   padding: 1rem;
-  gap:0.8rem; /* Increased line spacing */
-  order: 3; /* Bullets come last on mobile */
+  gap:0.8rem;
+  order: 3;
 }
 
 /* Mobile responsive for services bullets */
@@ -350,7 +380,7 @@
   font-family:"Switzer",system-ui,Helvetica,Arial,sans-serif;
   font-size:clamp(.85rem,1.2vw,1.15rem);
   color:#fff;
-  line-height: 1.5; /* Improved readability */
+  line-height: 1.5;
 }
 
 /* Mobile responsive for bullet text */
@@ -386,17 +416,17 @@
    TRANSITIONS / STATES
    ------------------------------------------------------------------ */
 .services-item .services-bullets,
-.services-image{pointer-events:none;}   /* image clicks pass through */
+.services-image{pointer-events:none;}
 
 /* Prevent layout shifts */
 .services-item-inner {
-  min-height: 100px; /* Ensure minimum height */
+  min-height: 100px;
 }
 
 /* Mobile responsive for minimum height */
 @media screen and (max-width: 768px) {
   .services-item-inner {
-    min-height: 80px;
+    min-height: 50px;
   }
 }
 
