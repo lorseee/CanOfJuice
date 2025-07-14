@@ -36,7 +36,7 @@ const WorksHero = () => {
             e.target.src = "/images/default.jpg"; 
           }}
         />
-        <h1 className="services-hero-title ">
+        <h1 className="works-hero-title ">
           OUR SERVICES
         </h1>
       </div>

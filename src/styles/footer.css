@@ -122,9 +122,9 @@
 @media (max-width: 768px) {
   /* Center and enlarge logo on tablets/small desktops */
   .footer-logo {
-    justify-content: center;
+    justify-content: left;
     height: 10rem;
-    padding-top:0rem;
+    padding-top:6rem;
   }
   .footer-logo img {
     height: 10rem;

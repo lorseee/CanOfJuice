@@ -76,7 +76,7 @@ const AboutUs = () => {
     pinST.current = ScrollTrigger.create({
       trigger: section,
       start: "top top",
-      end: "+=250%", // Increased to give more scroll space for animations
+      end: "+=150%", // Increased to give more scroll space for animations
       pin: true,
       pinSpacing: false,
       anticipatePin: 1,

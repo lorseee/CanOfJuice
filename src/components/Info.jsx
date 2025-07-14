@@ -89,8 +89,8 @@ useEffect(() => {
               const value = Math.ceil(obj.value);
              
 const formatted = value === 750000
-  ? `<span style="white-space: nowrap; font-size: ${isPhone ? '1.8rem' : '2.4rem'}; font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;">
-       ${value.toLocaleString()} <span style="font-size: ${isPhone ? '0.9rem' : '1.2rem'}">sqft</span>
+  ? `<span style="white-space: nowrap; font-size: ${isPhone ? '1.7rem' : '2.1rem'}; font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;">
+       ${value.toLocaleString()} <span style="font-size: ${isPhone ? '0.8rem' : '1.0rem'}">sqft</span>
      </span>`
                 : value + (plus ? "+" : "");
               el.innerHTML = formatted;
@@ -228,7 +228,7 @@ const formatted = value === 750000
   {[
     { target: 100, label: "Happy Clients", plus: true },
     { target: 150, label: "Design Projects", plus: true },
-    { target: 750000, label: <span>Branded&nbsp;Environments</span>, plus: false },
+    { target: 750000, label:"Branded Environments", plus: false },
   ].map((c, idx) => (
     <div
       key={idx}
