@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useLayoutEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -252,6 +251,11 @@ const ServicesLists = () => {
           </motion.div>
         );
       })}
+
+      {/* Mobile-only text section */}
+      <div className="mobile-help-text">
+        <p>Need a hand? We are happy to help.</p>
+      </div>
 
       <div className="bg-black p-4 mt-16 text-white text-center flex justify-center items-center">
         <p className="text-4xl  sm:text-4xl md:text-4xl lg:text-4xl" style={{

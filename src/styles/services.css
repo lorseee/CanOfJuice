@@ -19,6 +19,7 @@
 
 /* Services page specific styles */
 .services-container { position: relative; }
+.services-hero-title{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;font-size:clamp(2rem,10vw,5rem);font-weight:900;color:#fff;text-align:center;animation:heroScaleIn 1.2s ease-out forwards;transform-origin:center;}
 
 /* Hero section */
 .services-hero {
@@ -32,6 +33,22 @@
   padding: 0.5rem 1rem;
 }
 
+/* Mobile responsive styles for hero - phones only */
+@media screen and (max-width: 768px) {
+  .services-hero {
+    height: 50vh; /* Reduced height for mobile */
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .services-hero {
+    height: 10vh; /* Further reduced for small phones */
+    padding-top: 1.5rem;
+  }
+}
+
 .services-hero-image-container {
   width: 80%;
   height: 80%;
@@ -39,6 +56,23 @@
   border-radius: 0.5rem;
   overflow: hidden;
   box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05);
+}
+
+/* Mobile responsive for hero image container */
+@media screen and (max-width: 768px) {
+  .services-hero-image-container {
+    width: 90%;
+    height: 70%;
+    margin-top: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .services-hero-image-container {
+    width: 95%;
+    height: 25%;
+    margin-top: -0.5rem;
+  }
 }
 
 .services-hero-image  { 
@@ -55,14 +89,34 @@
   align-items: center;
   font-size: clamp(2rem, 10vw, 5rem);
   font-weight: 800;
-  color: #000;
+  color: #fdf8f8;
+}
+
+/* Mobile responsive for hero title */
+@media screen and (max-width: 768px) {
+  .services-hero-title {
+    align-items:center;
+    justify-content:center;
+    margin-top:-43rem;
+    padding-top: 0rem;
+    font-size: clamp(1.9rem, 8vw, 4rem);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .services-hero-title {
+    padding-top: 0.5rem;
+    font-size: clamp(1.25rem, 7vw, 3.5rem);
+  }
 }
 
 /* Help text for mobile */
 .services-hero-help-text {
   display: none;
   position: absolute;
-  bottom: 1rem;
+  
+  margin-top:-50vh;
+  margin-bottom:10vh;
   left: 0;
   right: 0;
   text-align: center;
@@ -70,121 +124,6 @@
   color: #ccc;
   font-weight: 300;
   z-index: 10;
-}
-
-/* Mobile responsive styles - phones only */
-
- @media screen and (max-width: 768px) {
-  .services-hero {
-    height: auto !important; /* match .services-hero-image-container */
-    position: relative;
-    margin-top:-23rem;
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    background-color: black !important;
-    padding: 0 !important;
-    
-  }
-
-  .services-hero-image-container {
-    height: auto!important; /* take full height of parent */
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
-    overflow: hidden;
-    background-color: black;
-    max-height: none !important;
-  }
-
-  .services-hero-image {
-    height: auto !important;
-    width: 100% !important;
-    padding-bottom:0 !important; /* Remove all padding */
-    margin: 0 !important;
-    object-fit: contain !important;
-  }
-
-  .services-hero-title {
-    font-size: clamp(1.5rem, 8vw, 3rem) ;
-    color: white !important;
-    position: absolute;
-    inset: 0;
-   
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    z-index: 10;
-    margin-bottom: 0 ! important; /* Remove all margins */
-    padding-bottom: 0 ! important; /* Remove all padding */
-  }
-services
-
-
-  /* Show help text on mobile */
-  .services-hero-help-text {
-    display: block !important;
-    position: static !important;
-    margin: 0 !important; /* Remove all margins */
-    padding: 0.5rem 1rem 0 1rem !important; /* Only top and side padding */
-    font-size: 0.85rem;
-    line-height: 1.2;
-  }
-}
-
-/* Extra small phones */
- @media screen and (max-width: 480px) {
-  .services-hero {
-    height: auto !important;  
-    position:relative;
-    top: -50px;         /* Fix height */
-    margin-top: -20rem;          /* Remove negative margin */
-    margin-bottom: -4.5rem;       /* No extra space below */
-    padding-bottom: -20rem;
-    background-color: black !important;
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .services-hero-image-container {
-    width: 100% !important;
-    height: auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  .services-hero-image {
-    width: 100% !important;
-    height: auto !important;
-    object-fit: cover !important;
-  }
-
-  .services-hero-title {
-    font-size: clamp(1.5rem, 5vw, 3rem) !important;
-    margin: 0 !important;
-    padding: 0.5rem 1rem !important;
-    text-align: center;
-    color: white !important;
-    z-index: 10;
-  }
-
-  .services-section {
-    display:flex !important;
-    justify-content:flex-start;
-    margin-top: 0 !important;
-    padding-top: 0rem!important;
-  }
-
-
-  .services-hero-help-text {
-    font-size: 5px !important;
-    padding: 0.25rem 0.5rem 0 0.5rem !important; /* Only top and side padding */
-    margin: 0 !important; /* Remove all margins */
-  }
 }
 
 /* ------------------------------------------------------------------
@@ -205,21 +144,22 @@ services
 /* Mobile responsive for services section */
 @media screen and (max-width: 768px) {
   .services-section {
-    padding: 0 0.5rem 2rem 0.5rem !important; /* Remove top padding completely */
-    margin-top: -13rem;
+    padding: 0 2rem;
+    margin-top: -50vh; /* Move services closer to hero on mobile */
   }
 }
 
 @media screen and (max-width: 480px) {
   .services-section {
-    padding: 0 1rem 2rem 1rem !important; /* Remove top padding completely */
-    margin-top: 0 !important;
+    padding: 0 2rem;
+   
+    margin-top: -65vh; /* Move services even closer on small phones */
   }
 }
 
 /* Ensure the last item has extra bottom padding if needed */
 .services-item:last-child {
-  padding-bottom: 2rem;
+  padding-bottom: 4rem;
 }
 
 /* ── each item row ──────────────────────────────────────────────── */
@@ -234,7 +174,20 @@ services
   border-bottom: none;
   padding-bottom: 4rem;
 }
+@media (max-width: 768px) {
+  .mobile-help-text {
+    display: block;
+  }
+}
 
+/* Optional: More specific mobile breakpoints */
+@media (max-width: 480px) {
+  .mobile-help-text {
+    font-size: 1.25rem;
+    margin-top:-0vh;
+    padding: 1.25rem 0.75rem;
+  }
+}
 .services-item-inner{
   display:flex;
   flex-direction:column;
@@ -318,25 +271,6 @@ services
   position: relative;
   display: inline-block;
   cursor: pointer;
-}
-
-/* Mobile responsive for services heading */
-@media screen and (max-width: 768px) {
-  .services-heading {
-    font-size: clamp(1.2rem, 4vw, 3rem);
-    padding: 0.5rem;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .services-heading {
-    font-size: clamp(1rem, 5vw, 2.5rem);
-    display:flex !important;
-    justify-content: flex-start;
-    margin-top:2rem;
-    padding-top:-10rem;
-    padding: 0.25rem;
-  }
 }
 
 .services-heading::after {

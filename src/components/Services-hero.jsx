@@ -29,14 +29,14 @@ const WorksHero = () => {
       <div className="services-hero-image-container">
         <img
           src="/images/services-hero.jpg"
-          alt="Works Hero"
+          alt="Services Hero"
           className="services-hero-image"
           onError={(e) => { 
             console.log("Hero image failed to load:", e.target.src);
             e.target.src = "/images/default.jpg"; 
           }}
         />
-        <h1 className="works-hero-title ">
+        <h1 className="services-hero-title ">
           OUR SERVICES
         </h1>
       </div>
