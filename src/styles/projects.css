@@ -193,7 +193,7 @@
   .project-content { padding: 2.5rem; }
   .project-card-medium .project-content,
   .project-card-medium-alt .project-content {
-    padding: 1.5rem;
+    padding: 2.5rem;
     justify-content: flex-end;
   }
 }
@@ -240,6 +240,12 @@
     font-size: 0.8rem;
     margin-bottom: 0.1rem;
   }
+  .project-card-medium-alt .project-image-container {
+  padding-top: -0.6rem !important;
+  
+  
+}
+
 }
 
 .project-divider {
@@ -256,7 +262,7 @@
   .project-card-medium .project-divider,
   .project-card-medium-alt .project-divider {
     width: clamp(3rem, 5vw, 4rem);
-    margin-top: 0.15rem;
+    margin-top: 1.5rem;
   }
 }
 

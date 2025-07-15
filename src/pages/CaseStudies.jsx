@@ -75,14 +75,7 @@ export const CASE_STUDIES = [
       "Seamless transition from local to D2C distribution",
       "Unified presence across packaging, digital, and physical touchpoints",
     ],
-    marquee: [
-      "/images/projects/23/marquee1.jpg",
-      "/images/projects/23/marquee2.jpg",
-      "/images/projects/23/marquee3.jpg",
-      "/images/projects/23/marquee4.jpg",
-      "/images/projects/23/marquee5.jpg",
-      "/images/projects/23/marquee6.jpg",
-    ],
+   
   },
 
   {
@@ -162,7 +155,7 @@ const CaseStudies = () => {
   const navigate    = useNavigate();
   const study       = CASE_STUDIES.find(c => c.id === Number(id)) || CASE_STUDIES[0];
   const project     = projects.items.find(p => p.id === Number(id)) || projects.items[0];
-
+  const images = study.metaImgs.concat(study.execImgs);
   // Define related projects based on category
   const related = projects.items
     .filter(p => p.id !== Number(id))
@@ -207,12 +200,12 @@ const CaseStudies = () => {
   };
   
   const next = () => {
-    const images = study.metaImgs.concat(study.execImgs);
+   
     setCurrentImageIndex((prev) => (prev + 1) % images.length);
   };
   
   const prev = () => {
-    const images = study.metaImgs.concat(study.execImgs);
+    
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
   
@@ -306,7 +299,7 @@ const CaseStudies = () => {
       {/* Details & Overview - Remaining sections */}
       <section className="max-w-6xl mx-auto grid md:grid-cols-3 gap-3 py-1 px-4">
         {/* Left: Project Description */}
-        <div className="md:col-span-2 space-y-4 md:ml-18 -mt-2">
+        <div className="md:col-span-2 space-y-4 md:ml-16 -mt-2">
           <h2 className="text-3xl font-semibold">Approach & Process</h2>
           <p className="text-base text-[#555] font-light">{study.approach}</p>
 
@@ -432,7 +425,7 @@ const CaseStudies = () => {
 
           <div className="image-modal-content">
             <img
-              src={study.metaImgs[currentImageIndex] || study.execImgs[currentImageIndex]}
+              src={images[currentImageIndex] }
               alt=""
               className="modal-image"
               onError={e => (e.currentTarget.src = fallback(600, 400))}

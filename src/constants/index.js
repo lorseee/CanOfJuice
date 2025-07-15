@@ -102,7 +102,7 @@ items: [
     },
   },
   {
-    id: 527,
+    id: 35,
     title: "DIGICLARITY",
     year: 2022 & 2024,
     services: "Environmental Graphics, Art Installations, Spatial and Environment Design",
@@ -496,7 +496,7 @@ items: [
     longDescription:
       "This legacy brand, established in 1955 and known for supplying glassware and crockery to the HORECA industry, came to us for a brand transformation. We redesigned their logo and visual identity to feel current while retaining their iconic brand colors and historical legacy. Beyond branding, we helped digitize their business by designing a custom-built website and inventory management system — moving a traditional business into the digital age with ease and elegance.",
     images: {
-      cover: "/images/projects/27/cover.png",
+      cover: "/images/projects/27/cover1.png",
       main: "/images/projects/27/new logo .png",
       gallery: [
         "/images/projects/27/old logo.png",
@@ -645,5 +645,25 @@ items: [
       ],
     },
   },
+
+ {
+  id: 37,
+  title: "Deepak fertilizers",
+  services: "Wayfinding Signages",
+  category: "real-estate",
+  images: {
+    cover: "/images/wip.jpg",
+  }
+},
+{
+  id: 39,
+  title: "Kochar Khush",
+  services: "Wayfinding Signages",
+  category: "real-estate",
+  images: {
+    cover: "/images/wip.jpg",
+  }
+}
+
 ].sort((a, b) => a.id - b.id)
 }

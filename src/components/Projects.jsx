@@ -50,7 +50,7 @@ const Projects = () => {
 
     return {
       ...p,
-      image: p.images.main,
+      image: p.images.cover,
       name: p.title,
       displayCategory,
       className,
@@ -174,7 +174,7 @@ if (!isPhone && headingRef.current && headingWrapperRef.current) {
           {
             opacity: 1,
             x: '0%',
-            duration: 2,
+            duration: 1.5,
             ease: "power2.inOut",
             scrollTrigger: {
               trigger: subtitleWrapperRef.current,
@@ -197,7 +197,7 @@ if (!isPhone && subtitleRef.current && subtitleWrapperRef.current) {
     {
       opacity: 1,
       x: '0%',
-      duration: 5,
+      duration: 2,
       ease: "power2.inOut",
       scrollTrigger: {
         trigger: subtitleWrapperRef.current,
@@ -305,7 +305,7 @@ if (!isPhone && subtitleRef.current && subtitleWrapperRef.current) {
           loop
           muted
           playsInline
-          controls // shows play/pause & volume
+           // shows play/pause & volume
     
           className="video-media"
         />
