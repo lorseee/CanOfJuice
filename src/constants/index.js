@@ -204,7 +204,7 @@ items: [
     longDescription:
       "For this display-fabrication start-up, we created a minimalist workspace that doubles as a live showroom. Modular walls, integrated product lighting, and clean sight-lines allow staff to work efficiently while showcasing capabilities to visiting clients.",
     images: {
-      cover: "/images/projects/9/main.jpg",
+      cover: "/images/projects/11/main.jpg",
       main: "/images/projects/11/main.jpg",
       gallery: [
         "/images/projects/11/gallery-1.jpeg",
@@ -496,7 +496,7 @@ items: [
     longDescription:
       "This legacy brand, established in 1955 and known for supplying glassware and crockery to the HORECA industry, came to us for a brand transformation. We redesigned their logo and visual identity to feel current while retaining their iconic brand colors and historical legacy. Beyond branding, we helped digitize their business by designing a custom-built website and inventory management system — moving a traditional business into the digital age with ease and elegance.",
     images: {
-      cover: "/images/projects/27/cover1.png",
+      cover: "/images/projects/27/bgc.jpg",
       main: "/images/projects/27/new logo .png",
       gallery: [
         "/images/projects/27/old logo.png",
@@ -649,19 +649,19 @@ items: [
  {
   id: 37,
   title: "Deepak fertilizers",
-  services: "Wayfinding Signages",
+  services: "Work in Progress(WIP)",
   category: "real-estate",
   images: {
-    cover: "/images/wip.jpg",
+    cover: "/images/deepak.jpg",
   }
 },
 {
   id: 39,
   title: "Kochar Khush",
-  services: "Wayfinding Signages",
+  services: "Work in Progress(WIP)",
   category: "real-estate",
   images: {
-    cover: "/images/wip.jpg",
+    cover: "/images/kochar.jpg",
   }
 }
 
