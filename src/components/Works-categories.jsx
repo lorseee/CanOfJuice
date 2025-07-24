@@ -172,8 +172,10 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
               <div
                 key={p.id}
                 id={`card-${p.id}`}
-                className="works-card"
+                className={`works-card${p.clickable === false ? " disabled" : ""}`}
+
                 onClick={() => {
+                  if (p.clickable === false) return;
                   if (p.id === 2) {
                     navigate("/case-studies/2"); // Wework
                   } else if (p.id === 17) {
@@ -188,6 +190,7 @@ const WorksCategories = ({ isPageLoaded = true, preserveState = false }) => {
                 }}
                 style={{ transitionDelay: `${Math.min(i * 0.03, 0.3)}s` }}
               >
+               
                 <div className="works-card-image-container">
                   <img src={getImage(p.id)} alt={p.title} className="works-card-image" loading="lazy" onError={onImgError} />
                   <div className="works-card-overlay">

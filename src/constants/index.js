@@ -649,8 +649,9 @@ items: [
  {
   id: 37,
   title: "Deepak fertilizers",
-  services: "Work in Progress(WIP)",
+  services: "Work in Progress",
   category: "real-estate",
+  clickable: false, 
   images: {
     cover: "/images/deepak.jpg",
   }
@@ -658,8 +659,9 @@ items: [
 {
   id: 39,
   title: "Kochar Khush",
-  services: "Work in Progress(WIP)",
+  services: "Work in Progress",
   category: "real-estate",
+  clickable: false, 
   images: {
     cover: "/images/kochar.jpg",
   }
