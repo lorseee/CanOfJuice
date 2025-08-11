@@ -254,7 +254,7 @@ const ServicesLists = () => {
 
       {/* Mobile-only text section */}
       <div className="mobile-help-text">
-        <p>Need a hand? We are happy to help.</p>
+        <p>Ready to revamp your space.</p>
       </div>
 
       <div className="bg-black p-4 mt-16 text-white text-center flex justify-center items-center">
@@ -262,7 +262,7 @@ const ServicesLists = () => {
            marginLeft: "2rem", 
            fontSize: "clamp(3.2rem, 5vw, 1.7rem)", 
            fontFamily: "'Khand', sans-serif" }}>
-          Need a hand? We are happy to help.
+          Ready to revamp your space?
         </p>
       </div>
     </section>
