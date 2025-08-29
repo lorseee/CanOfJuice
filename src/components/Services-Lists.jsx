@@ -12,6 +12,7 @@ const bulletToProjectId = {
   "Environmental Graphics": 12,
   "Wayfinding and Signages": 5,
   "Logo Design": 21,
+  "Website Design": 33,
   "Brand Identity": 10,
   "Packaging Design": 26,
   "Communication Design": 22,
@@ -31,6 +32,7 @@ const bulletToImage = {
   "Environmental Graphics": "/images/projects/12/main.jpg",
   "Wayfinding and Signages": "/images/projects/4/main.jpg",
   "Logo Design": "/images/projects/21/main.png",
+  "Website Design": "/images/projects/33/main.png",
   "Brand Identity": "/images/projects/23/main.jpg",
   "Packaging Design": "/images/projects/26/main.png",
   "Communication Design": "/images/projects/22/main.png",
@@ -61,6 +63,7 @@ const SECTIONS = [
     title: "Visual Design",
     bullets: [
       "Logo Design",
+      "Website Design",
       "Brand Identity",
       "Packaging Design",
       "Communication Design",

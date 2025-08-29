@@ -190,8 +190,7 @@ const formatted = value === 750000
                 </h2>
 
                           {[
-                "We bring spaces to life — from concept, design to on-site execution —",
-                "creating environments that inspire, guide, and connect.",
+                "We bring spaces to life — from concept, design to on-site execution creating environments that inspire, guide, and connect.",
                 "For over 10 years, we've crafted iconic spaces for clients across industries, blending creativity with precision to deliver impactful experiences.",
               ].map((line, i) => (
                 <p

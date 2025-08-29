@@ -620,7 +620,29 @@ items: [
       ],
     },
   },
-  
+  {
+    id: 33,
+    title: "WEBSITE DESIGN",
+    year: 2025,
+    services: "Wayfinding Signages, Communication Design, Exhibition Design",
+    category: "design",
+    longDescription:
+      "We specialize in creating simple, yet highly effective website designs. Our focus is on delivering a user-friendly experience that achieves your goals.",
+    images: {
+      cover: "/images/projects/33/main.png",
+      main: "/images/projects/33/main.png",
+      gallery: [
+        "/images/projects/33/gallery-1.png",
+        "/images/projects/33/gallery-2.png",
+        "/images/projects/33/gallery-3.png",
+        "/images/projects/33/gallery-4.png",
+        "/images/projects/33/gallery-9.png",
+        "/images/projects/33/gallery-10.png",
+        "/images/projects/33/gallery-7.png",
+        "/images/projects/33/gallery-8.png",
+      ],
+    }, 
+  },
   {
     id: 34,
     title: "PACKAGING DESIGN",
